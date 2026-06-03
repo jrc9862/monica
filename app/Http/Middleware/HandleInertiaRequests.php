@@ -42,6 +42,9 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'auth' => fn () => [
+                'ui_density' => optional($request->user())->ui_density ?? 'minimal',
+            ],
             'sentry' => fn () => [
                 'dsn' => config('sentry.dsn'),
                 'tunnel' => config('sentry-tunnel.tunnel-url'),

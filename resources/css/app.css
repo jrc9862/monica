@@ -3,9 +3,40 @@
 @plugin '@tailwindcss/forms';
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant chunky (&:where(.chunky, .chunky *));
 
 @theme {
-  --default-font-family: Nunito, var(--font-sans);
+  /* Fonts */
+  --font-display: 'Silkscreen', cursive;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --default-font-family: var(--font-body);
+
+  /* Stone palette — dark mode base */
+  --color-bg: #1c1917;
+  --color-surface: #292524;
+  --color-surface-raised: #3b3532;
+  --color-border: #44403c;
+  --color-text: #e7e5e4;
+  --color-text-muted: #a8a29e;
+
+  /* Accent — washed-out green-grey */
+  --color-accent: #8a9e89;
+  --color-accent-hover: #9db09c;
+  --color-accent-muted: #5a6e59;
+
+  /* Pixel shadow */
+  --shadow-pixel: 4px 4px 0px #000000;
+  --shadow-pixel-sm: 2px 2px 0px #000000;
+
+  /* No rounded corners */
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-full: 0px;
 }
 
 .icon-breadcrumb {

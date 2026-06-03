@@ -50,8 +50,8 @@ export default {
 }
 
 a {
-  --tw-shadow: 2px 2px 0 #191a1b !important;
-  border-radius: 0.25rem !important;
+  --tw-shadow: 4px 4px 0 #000000 !important;
+  border-radius: 0 !important;
   border-width: 1px !important;
   box-shadow:
     var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
@@ -77,11 +77,7 @@ a {
 
   &:hover {
     box-shadow: none !important;
-    transform: translate(2px, 2px);
+    transform: translate(4px, 4px);
   }
-}
-
-.dark a {
-  --tw-shadow: 2px 2px 0 rgb(242, 242, 245) !important;
 }
 </style>

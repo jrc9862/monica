@@ -86,11 +86,10 @@ defineExpose({ focus: focus });
         :id="realId"
         ref="input"
         :class="[
-          'rounded-md shadow-xs',
-          'bg-white dark:bg-slate-900 dark:text-gray-100 border-gray-300 dark:border-gray-700',
-          'placeholder:text-gray-600 dark:placeholder:text-gray-400',
-          'focus:border-indigo-300 dark:focus:border-indigo-700 focus:ring-3 focus:ring-indigo-200 dark:focus:ring-indigo-800/50',
-          'disabled:bg-slate-50 dark:disabled:bg-slate-700',
+          'bg-surface border-border text-text',
+          'placeholder:text-text-muted',
+          'focus:border-accent focus:ring-2 focus:ring-accent/30 focus:outline-hidden',
+          'disabled:opacity-50',
           props.inputClass,
         ]"
         :value="modelValue"
@@ -124,18 +123,12 @@ defineExpose({ focus: focus });
 
 <style lang="scss" scoped>
 .optional-badge {
-  color: #283e59;
-  background-color: #edf2f9;
-}
-.dark .optional-badge {
-  color: #d4d8dd !important;
-  background-color: #2f3031 !important;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-raised);
 }
 
 .length {
-  background-color: #e5eeff;
-}
-.dark .length {
-  background-color: #2d2f33 !important;
+  background-color: var(--color-surface-raised);
+  color: var(--color-text-muted);
 }
 </style>

@@ -48,6 +48,8 @@
         <timezone :data="data.timezone" />
 
         <maps :data="data.maps" />
+
+        <u-i-density :data="data.ui_density" />
       </div>
     </main>
   </layout>
@@ -64,6 +66,7 @@ import Timezone from '@/Pages/Settings/Preferences/Partials/Timezone.vue';
 import Maps from '@/Pages/Settings/Preferences/Partials/Maps.vue';
 import Locale from '@/Pages/Settings/Preferences/Partials/Locale.vue';
 import HelpPreference from '@/Pages/Settings/Preferences/Partials/HelpPreference.vue';
+import UIDensity from '@/Pages/Settings/Preferences/Partials/UIDensity.vue';
 
 export default {
   components: {
@@ -77,6 +80,7 @@ export default {
     Maps,
     Locale,
     HelpPreference,
+    UIDensity,
   },
 
   props: {

@@ -9,6 +9,11 @@
 
         <link rel="shortcut icon" href="/img/favicon.svg">
 
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
         <!-- Scripts -->
         <script type="text/javascript">
             if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia(
@@ -23,7 +28,7 @@
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+    <body class="font-sans antialiased bg-bg text-text">
         @inertia
     </body>
 </html>

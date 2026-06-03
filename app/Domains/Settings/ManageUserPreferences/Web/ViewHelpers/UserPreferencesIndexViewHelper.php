@@ -21,6 +21,7 @@ class UserPreferencesIndexViewHelper
             'distance_format' => self::dtoDistanceFormat($user),
             'maps' => self::dtoMapsPreferences($user),
             'locale' => self::dtoLocale($user),
+            'ui_density' => self::dtoUIDensity($user),
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),
@@ -203,6 +204,16 @@ class UserPreferencesIndexViewHelper
                 ->sortByCollator('name'),
             'url' => [
                 'store' => route('settings.preferences.locale.store'),
+            ],
+        ];
+    }
+
+    public static function dtoUIDensity(User $user): array
+    {
+        return [
+            'ui_density' => $user->ui_density ?? 'minimal',
+            'url' => [
+                'store' => route('settings.preferences.density.store'),
             ],
         ];
     }

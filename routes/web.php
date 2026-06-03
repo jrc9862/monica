@@ -94,6 +94,7 @@ use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPr
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesUIDensityController;
 use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Domains\Vault\ManageCalendar\Web\Controllers\VaultCalendarController;
 use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
@@ -560,6 +561,7 @@ Route::middleware([
             Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
             Route::post('locale', [PreferencesLocaleController::class, 'store'])->name('locale.store');
             Route::post('help', [PreferencesHelpController::class, 'store'])->name('help.store');
+            Route::post('density', [PreferencesUIDensityController::class, 'store'])->name('density.store');
         });
 
         // notifications

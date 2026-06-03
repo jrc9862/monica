@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Link, Head, router } from '@inertiajs/vue3';
+import { Link, Head, router, usePage } from '@inertiajs/vue3';
 import Toaster from '@/Shared/Toaster.vue';
 import FooterLayout from '@/Layouts/FooterLayout.vue';
 import ChevronIcon from '@/Shared/Icons/ChevronIcon.vue';
@@ -15,9 +15,19 @@ const props = defineProps({
   layoutData: Object,
 });
 
+const page = usePage();
 const checked = ref(isDark());
 
+const applyDensity = (density) => {
+  if (typeof window === 'undefined') return;
+  document.documentElement.classList.remove('chunky', 'minimal');
+  document.documentElement.classList.add(density === 'chunky' ? 'chunky' : 'minimal');
+};
+
 onMounted(() => {
+  const density = page.props.auth?.ui_density ?? 'minimal';
+  applyDensity(density);
+
   if (localStorage.success) {
     flash(localStorage.success, 'success');
     localStorage.removeItem('success');
@@ -49,10 +59,9 @@ const toggleStyle = () => {
     <div class="sm:fixed top-0 z-10 w-full">
       <!-- main nav - only displayed on desktop -->
       <nav
-        class="hidden max-w-8xl mx-auto sm:flex h-10 items-center justify-between border-b border-gray-300 bg-gray-50 px-3 dark:border-slate-600 dark:bg-gray-800 dark:text-slate-200 sm:px-6">
-        <div
-          class="dark:highlight-white/5 items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-0 dark:border-gray-700 dark:bg-gray-400/20 dark:bg-gray-900 sm:flex">
-          <Link :href="layoutData.url.vaults" class="shrink-0 dark:text-sky-400">
+        class="hidden max-w-8xl mx-auto sm:flex h-10 items-center justify-between border-b border-border bg-surface px-3 text-text sm:px-6">
+        <div class="items-center border border-border bg-surface-raised px-2 py-1 text-sm sm:flex">
+          <Link :href="layoutData.url.vaults" class="shrink-0 text-accent">
             {{ layoutData.user.name }}
           </Link>
 
@@ -67,10 +76,10 @@ const toggleStyle = () => {
 
         <!-- search box -->
         <div v-if="insideVault" class="flew-grow relative">
-          <ScanSearch class="absolute start-2 top-2 h-4 w-4 text-gray-400" />
+          <ScanSearch class="absolute start-2 top-2 h-4 w-4 text-text-muted" />
           <input
             type="text"
-            class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center placeholder:text-gray-600 hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:border-gray-700 dark:bg-slate-900 dark:placeholder:text-gray-400 dark:hover:bg-slate-700 sm:text-sm"
+            class="block w-64 border border-border bg-bg px-2 py-1 text-center text-text placeholder:text-text-muted hover:cursor-pointer focus:border-accent focus:outline-hidden sm:text-sm"
             :placeholder="$t('Search something')"
             @focus="goToSearchPage" />
         </div>
@@ -85,33 +94,29 @@ const toggleStyle = () => {
               <DarkModeIcon :checked="checked" />
             </label>
           </div>
-          <Link :href="layoutData.url.settings" class="relative flex items-center gap-1">
-            <Settings
-              class="h-4 w-4 cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-600 dark:hover:text-gray-100" />
-
-            <span class="text-sm dark:text-sky-400">{{ $t('Settings') }}</span>
+          <Link
+            :href="layoutData.url.settings"
+            class="relative flex items-center gap-1 text-text-muted hover:text-accent">
+            <Settings class="h-4 w-4 cursor-pointer" />
+            <span class="text-sm">{{ $t('Settings') }}</span>
           </Link>
           <Link
-            class="relative flex items-center gap-1 cursor-pointer"
+            class="relative flex items-center gap-1 cursor-pointer text-text-muted hover:text-accent"
             method="post"
             :href="route('logout')"
             as="button">
-            <LogOut
-              class="h-4 w-4 cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-600 dark:hover:text-gray-100" />
-
-            <span class="text-sm dark:text-sky-400">{{ $t('Logout') }}</span>
+            <LogOut class="h-4 w-4 cursor-pointer" />
+            <span class="text-sm">{{ $t('Logout') }}</span>
           </Link>
         </div>
       </nav>
 
       <!-- mobile nav -->
-      <div
-        class="sm:hidden pt-3 border-b bg-gray-50 px-3 dark:border-slate-600 dark:bg-gray-800 dark:text-slate-200 sm:px-6">
+      <div class="sm:hidden pt-3 border-b border-border bg-surface px-3 text-text sm:px-6">
         <!-- user / vault & logout -->
-        <div
-          class="flex mb-2 dark:highlight-white/5 items-center justify-between text-sm dark:border-0 dark:border-gray-700 dark:bg-gray-400/20 dark:bg-gray-900">
-          <div class="flex items-center border border-gray-200 rounded-lg bg-white px-2 py-1">
-            <Link :href="layoutData.url.vaults" class="shrink-0 dark:text-sky-400">
+        <div class="flex mb-2 items-center justify-between text-sm">
+          <div class="flex items-center border border-border bg-surface-raised px-2 py-1">
+            <Link :href="layoutData.url.vaults" class="shrink-0 text-accent">
               {{ layoutData.user.name }}
             </Link>
 
@@ -133,7 +138,7 @@ const toggleStyle = () => {
 
           <div class="flex items-center">
             <!-- settings -->
-            <Link :href="layoutData.url.settings" class="border border-gray-200 rounded-lg bg-white px-2 py-1 mr-2">
+            <Link :href="layoutData.url.settings" class="border border-border bg-surface-raised px-2 py-1 mr-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -155,7 +160,7 @@ const toggleStyle = () => {
 
             <!-- logout -->
             <Link
-              class="border border-gray-200 rounded-lg bg-white px-2 py-1"
+              class="border border-border bg-surface-raised px-2 py-1"
               method="post"
               :href="route('logout')"
               as="button">
@@ -191,7 +196,7 @@ const toggleStyle = () => {
           </svg>
           <input
             type="text"
-            class="dark:highlight-white/5 block w-full rounded-md border border-gray-300 px-2 py-1 text-center placeholder:text-gray-600 hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:border-gray-700 dark:bg-slate-900 dark:placeholder:text-gray-400 dark:hover:bg-slate-700 sm:text-sm"
+            class="block w-full border border-border bg-bg px-2 py-1 text-center text-text placeholder:text-text-muted hover:cursor-pointer focus:border-accent focus:outline-hidden sm:text-sm"
             :placeholder="$t('Search something')"
             @focus="goToSearchPage" />
         </div>
@@ -272,9 +277,7 @@ const toggleStyle = () => {
     </div>
 
     <!-- Page Heading -->
-    <header
-      v-if="$slots.header"
-      class="relative mb-8 mt-10 bg-white dark:bg-gray-900 sm:border-b border-gray-200 dark:border-gray-700">
+    <header v-if="$slots.header" class="relative mb-8 mt-10 bg-surface sm:border-b border-border">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <slot name="header" />
       </div>

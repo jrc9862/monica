@@ -22,7 +22,8 @@ class ReminderTriggered extends Notification
     public function __construct(
         private UserNotificationChannel $channel,
         private string $content,
-        private string $contactName
+        private string $contactName,
+        private ?int $scheduledReminderId = null
     ) {}
 
     /**
@@ -74,15 +75,24 @@ class ReminderTriggered extends Notification
             'subject_line' => $this->content,
         ]);
 
-        // content contains the label of the ContactReminder object
-        $content = trans('🔔 Reminder: :label for :contactName', [
-            'label' => $this->content,
-            'contactName' => $this->contactName,
-        ]);
+        $body = "📇 FOLLOW-UP REMINDER\n"
+            ."─────────────────────\n"
+            ."Contact: {$this->contactName}\n"
+            ."Note: {$this->content}";
 
-        return TelegramMessage::create()
-            ->content($content)
+        $message = TelegramMessage::create()
+            ->content($body)
             ->to($this->channel->content);
+
+        if ($this->scheduledReminderId !== null) {
+            $id = $this->scheduledReminderId;
+            $message
+                ->buttonWithCallback('⏩ Snooze 1 week', "snooze:7d:{$id}")
+                ->buttonWithCallback('⏩ Snooze 2 weeks', "snooze:14d:{$id}")
+                ->buttonWithCallback('⏩ Snooze 1 month', "snooze:30d:{$id}");
+        }
+
+        return $message;
     }
 
     /**

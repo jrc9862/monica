@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="'cursor-pointer rounded-md border border-indigo-700 bg-indigo-500 px-3 py-1 font-semibold text-white shadow-xs hover:bg-indigo-700 dark:hover:bg-indigo-400'"
+    :class="'cursor-pointer border border-accent-muted bg-accent px-3 py-1 font-semibold text-bg shadow-pixel-sm transition-[box-shadow,transform] duration-150 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none disabled:translate-x-0 disabled:translate-y-0 disabled:opacity-50 disabled:shadow-pixel-sm'"
     :disabled="state === 'loading' || state === 'disabled'"
     type="submit">
     <span v-if="state === 'loading'"> {{ $t('Loading…') }} </span>

@@ -113,7 +113,7 @@ class ProcessScheduledContactReminders implements ShouldQueue
         }
 
         Notification::route($type, $channel->content)
-            ->notify((new ReminderTriggered($channel, $contactReminder->label, $contactName))->locale($channel->user->locale));
+            ->notify((new ReminderTriggered($channel, $contactReminder->label, $contactName, $scheduledReminder->id))->locale($channel->user->locale));
 
         $this->updateNumberOfTimesTriggered($scheduledReminder->contact_reminder_id);
 

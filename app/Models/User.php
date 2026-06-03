@@ -77,6 +77,13 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
     public const CONTACT_SORT_ORDER_LAST_UPDATED = 'last_updated';
 
     /**
+     * Possible UI density modes.
+     */
+    public const UI_DENSITY_MINIMAL = 'minimal';
+
+    public const UI_DENSITY_CHUNKY = 'chunky';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -100,6 +107,7 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
         'locale',
         'help_shown',
         'contact_sort_order',
+        'ui_density',
     ];
 
     /**
