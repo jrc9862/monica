@@ -18,6 +18,7 @@ services:
       - monica-net
 
   queue:
+    build: .
     image: monica-fork:latest
     restart: unless-stopped
     command: php artisan queue:work --sleep=10 --timeout=0 --tries=3 --queue=high,default,low
@@ -34,6 +35,7 @@ services:
       - monica-net
 
   scheduler:
+    build: .
     image: monica-fork:latest
     restart: unless-stopped
     command: bash -c "while true; do php artisan schedule:run --no-interaction; sleep 60; done"
