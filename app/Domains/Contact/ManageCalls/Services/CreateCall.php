@@ -2,8 +2,10 @@
 
 namespace App\Domains\Contact\ManageCalls\Services;
 
+use App\Domains\Contact\ManageReminders\Services\CreateContactReminder;
 use App\Interfaces\ServiceInterface;
 use App\Models\Call;
+use App\Models\ContactReminder;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
@@ -57,6 +59,7 @@ class CreateCall extends BaseService implements ServiceInterface
 
         $this->createCall();
         $this->updateLastEditedDate();
+        $this->createFollowUpReminder();
 
         return $this->call;
     }
@@ -92,5 +95,27 @@ class CreateCall extends BaseService implements ServiceInterface
     {
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
+    }
+
+    private function createFollowUpReminder(): void
+    {
+        if (! ($this->data['answered'] ?? true)) {
+            return;
+        }
+
+        $followUpDate = Carbon::parse($this->data['called_at'])->addDays(90);
+
+        (new CreateContactReminder)->execute([
+            'account_id' => $this->data['account_id'],
+            'vault_id' => $this->data['vault_id'],
+            'author_id' => $this->data['author_id'],
+            'contact_id' => $this->data['contact_id'],
+            'label' => 'Follow up with '.$this->contact->name,
+            'day' => (int) $followUpDate->format('d'),
+            'month' => (int) $followUpDate->format('m'),
+            'year' => (int) $followUpDate->format('Y'),
+            'type' => ContactReminder::TYPE_ONE_TIME,
+            'frequency_number' => null,
+        ]);
     }
 }
