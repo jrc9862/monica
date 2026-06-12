@@ -9,7 +9,7 @@
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
-              <InertiaLink :href="data.url.back" class="text-blue-500 hover:underline">
+              <InertiaLink :href="data.url.back" class="text-accent hover:underline">
                 {{ $t('All the vaults') }}
               </InertiaLink>
             </li>
@@ -37,7 +37,7 @@
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           @submit.prevent="submit()">
           <div
-            class="section-head border-b border-gray-200 bg-blue-50 p-3 dark:border-gray-700 dark:bg-blue-900 sm:p-5">
+            class="section-head border-b border-gray-200 bg-surface-raised p-3 dark:border-gray-700 dark:bg-surface-raised sm:p-5">
             <h1 class="mb-1 flex justify-center text-2xl font-medium">
               <span>{{ $t('Edit a vault') }}</span>
 
@@ -68,7 +68,7 @@
             <InertiaLink
               :href="data.url.back"
               :text="$t('Cancel')"
-              class="cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1 font-semibold text-gray-700 hover:shadow-xs transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25" />
+              class="cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1 font-semibold text-gray-700 hover:shadow-xs transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-25" />
 
             <primary-button
               :href="'data.url.vault.update'"

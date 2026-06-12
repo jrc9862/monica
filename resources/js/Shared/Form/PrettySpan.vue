@@ -1,6 +1,5 @@
 <template>
-  <span
-    :class="'relative cursor-pointer border-zinc-900 bg-white text-sm dark:border-zinc-100 dark:bg-gray-800 dark:text-gray-100'">
+  <span :class="'relative cursor-pointer border border-border bg-surface-raised text-sm text-text hover:border-accent'">
     {{ text }}
   </span>
 </template>

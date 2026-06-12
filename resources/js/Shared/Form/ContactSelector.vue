@@ -54,10 +54,10 @@ const displayAddContactButton = computed(() => {
 
 const localInputClasses = computed(() => {
   return [
-    'ps-8 w-full rounded-md shadow-xs',
-    'bg-white dark:bg-slate-900 border-gray-300 dark:border-gray-700',
-    'focus:border-indigo-300 focus:ring-3 focus:ring-indigo-200/50',
-    'disabled:bg-slate-50 dark:disabled:bg-slate-900',
+    'ps-8 w-full',
+    'bg-surface border-border text-text',
+    'focus:border-accent focus:ring-2 focus:ring-accent/30 focus:outline-hidden',
+    'disabled:opacity-50',
     props.inputClass,
   ];
 });
@@ -144,20 +144,18 @@ const search = _.debounce(() => {
       </label>
 
       <!-- list of selected contacts -->
-      <ul
-        v-if="localContacts.length > 0"
-        class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <ul v-if="localContacts.length > 0" class="mb-4 border border-border bg-surface">
         <li
           v-for="contact in localContacts"
           :key="contact.id"
-          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list flex items-center justify-between border-b border-border px-3 py-2 hover:bg-surface-raised">
           <Link :href="contact.url">
             {{ contact.name }}
           </Link>
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="inline cursor-pointer text-blue-500 hover:underline" @click="remove(contact)">
+            <li class="inline cursor-pointer text-accent hover:underline" @click="remove(contact)">
               {{ $t('Remove') }}
             </li>
           </ul>
@@ -166,7 +164,7 @@ const search = _.debounce(() => {
 
       <p
         v-if="displayAddContactButton"
-        class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-500 dark:text-gray-900 dark:hover:bg-slate-700"
+        class="inline-block cursor-pointer border border-border bg-surface-raised px-1 py-1 text-xs text-text hover:border-accent"
         @click="showAddContactMode">
         {{ labelCta }}
       </p>
@@ -204,32 +202,30 @@ const search = _.debounce(() => {
         <p class="mb-2 mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           {{ $t('Maybe one of these contacts?') }}
         </p>
-        <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <ul class="border border-border bg-surface">
           <li
             v-for="contact in mostConsultedContacts"
             :key="contact.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+            class="item-list flex items-center justify-between border-b border-border px-3 py-2 hover:bg-surface-raised">
             {{ contact.name }}
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="add(contact)">{{ $t('Add') }}</li>
+              <li class="inline cursor-pointer text-accent hover:underline" @click="add(contact)">{{ $t('Add') }}</li>
             </ul>
           </li>
         </ul>
       </div>
 
       <!-- searching results -->
-      <div
-        v-if="processingSearch"
-        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+      <div v-if="processingSearch" class="mb-6 border border-border bg-surface p-6 text-center text-text-muted">
         <p>{{ $t('Searching…') }}</p>
       </div>
 
       <!-- not enough characters -->
       <div
         v-if="form.searchTerm.length < 3 && form.searchTerm.length !== 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 border border-border bg-surface p-6 text-center text-text-muted">
         <p>{{ $t('Please enter at least 3 characters to initiate a search.') }}</p>
       </div>
 
@@ -237,16 +233,16 @@ const search = _.debounce(() => {
       <div v-if="searchResults.length !== 0 && form.searchTerm.length !== 0" class="mb-3">
         <errors :errors="form.errors" />
 
-        <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <ul class="mb-4 border border-border bg-surface">
           <li
             v-for="contact in searchResults"
             :key="contact.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+            class="item-list flex items-center justify-between border-b border-border px-3 py-2 hover:bg-surface-raised">
             {{ contact.name }}
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="add(contact)">{{ $t('Add') }}</li>
+              <li class="inline cursor-pointer text-accent hover:underline" @click="add(contact)">{{ $t('Add') }}</li>
             </ul>
           </li>
         </ul>
@@ -255,7 +251,7 @@ const search = _.debounce(() => {
       <!-- search results: no results found -->
       <div
         v-if="searchResults.length === 0 && form.searchTerm.length >= 3"
-        class="mb-3 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+        class="mb-3 border border-border bg-surface p-6 text-center text-text-muted">
         <p>{{ $t('No results found') }}</p>
       </div>
     </div>
@@ -264,28 +260,13 @@ const search = _.debounce(() => {
 
 <style lang="scss" scoped>
 .optional-badge {
-  color: #283e59;
-  background-color: #edf2f9;
-}
-
-.dark .optional-badge {
-  color: #d4d8dd !important;
-  background-color: #2f3031 !important;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-raised);
 }
 
 .item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
   &:last-child {
     border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
   }
 }
 </style>

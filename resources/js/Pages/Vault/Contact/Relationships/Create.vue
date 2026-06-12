@@ -9,7 +9,7 @@
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
-              <InertiaLink :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
+              <InertiaLink :href="layoutData.vault.url.contacts" class="text-accent hover:underline">
                 {{ $t('Contacts') }}
               </InertiaLink>
             </li>
@@ -24,7 +24,7 @@
               </svg>
             </li>
             <li class="me-2 inline">
-              <InertiaLink :href="data.url.contact" class="text-blue-500 hover:underline">
+              <InertiaLink :href="data.url.contact" class="text-accent hover:underline">
                 {{ $t('Profile of :name', { name: data.contact.name }) }}
               </InertiaLink>
             </li>
@@ -50,7 +50,8 @@
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
           <!-- header -->
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
+          <div
+            class="section-head border-b border-gray-200 bg-surface-raised p-5 dark:border-gray-700 dark:bg-surface-raised">
             <h1 class="text-center text-2xl font-medium">{{ $t('Add a relationship') }}</h1>
           </div>
 
@@ -63,7 +64,7 @@
               id="types"
               v-model="form.relationship_type_id"
               name="types"
-              class="w-full rounded-md border-gray-300 bg-white px-3 py-2 shadow-xs focus:border-indigo-300 focus:outline-hidden focus:ring-3 focus:ring-indigo-200/50 dark:bg-gray-900 sm:text-sm"
+              class="w-full rounded-md border-gray-300 bg-white px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-gray-900 sm:text-sm"
               @update:model-value="load"
               :data="fromRelationshipOptions" />
           </div>
@@ -307,7 +308,7 @@
                   v-model="form.create_contact_entry"
                   name="create-contact"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
                 <label for="create-contact" class="ms-2 block cursor-pointer text-sm text-gray-900 dark:text-white">
                   {{ $t('Create a contact entry for this person') }}
                 </label>

@@ -14,7 +14,7 @@ defineProps({
 const commonClasses =
   'relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 dark:border-gray-700 leading-5';
 const linkClasses =
-  'hover:text-gray-500 focus:outline-hidden focus:ring-3 ring-gray-300 dark:ring-gray-700 focus:border-blue-300 dark:focus:border-blue-700 active:bg-gray-100 dark:active:bg-gray-900 active:text-gray-700 dark:active:text-gray-300 transition ease-in-out duration-150';
+  'hover:text-gray-500 focus:outline-hidden focus:ring-3 ring-gray-300 dark:ring-gray-700 focus:border-accent dark:focus:border-accent active:bg-gray-100 dark:active:bg-gray-900 active:text-gray-700 dark:active:text-gray-300 transition ease-in-out duration-150';
 </script>
 
 <template>

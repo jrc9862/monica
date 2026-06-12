@@ -33,10 +33,10 @@ defineProps({
 }
 
 .ant-dropdown-menu-item:hover {
-  background-color: #f8fafc; // bg-slate-50
+  background-color: var(--color-surface-raised);
 }
 
 .dark .ant-dropdown-menu-item:hover {
-  background-color: #020617 !important; // bg-slate-950
+  background-color: var(--color-surface-raised) !important;
 }
 </style>

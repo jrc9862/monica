@@ -123,7 +123,7 @@ const destroy = (task) => {
               v-model="task.completed"
               :name="task.id"
               type="checkbox"
-              class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+              class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40"
               @change="toggle(task)" />
             <label :for="task.id" class="ms-2 flex cursor-pointer text-gray-900 dark:text-gray-50">
               {{ task.label }}
@@ -161,7 +161,7 @@ const destroy = (task) => {
     <!-- button to display completed tasks -->
     <p
       v-if="data.completed_tasks_count > 0 && !showCompletedTasks"
-      class="mx-4 mb-6 cursor-pointer text-xs text-blue-500 hover:underline"
+      class="mx-4 mb-6 cursor-pointer text-xs text-accent hover:underline"
       @click="getCompleted()">
       {{ $t('Show completed tasks (:count)', { count: data.completed_tasks_count }) }}
     </p>
@@ -180,7 +180,7 @@ const destroy = (task) => {
                 v-model="task.completed"
                 :name="task.id"
                 type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40"
                 @change="toggle(task)" />
 
               <label :for="task.id" class="ms-2 flex cursor-pointer items-center text-gray-900 dark:text-gray-50">

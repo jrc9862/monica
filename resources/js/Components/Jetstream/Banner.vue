@@ -16,13 +16,13 @@ watchEffect(async () => {
 
 <template>
   <div>
-    <div v-if="show && message" :class="{ 'bg-indigo-500': style === 'success', 'bg-red-700': style === 'danger' }">
+    <div v-if="show && message" :class="{ 'bg-accent-muted': style === 'success', 'bg-red-700': style === 'danger' }">
       <div class="mx-auto max-w-(--breakpoint-xl) px-3 py-2 sm:px-6 lg:px-8">
         <div class="flex flex-wrap items-center justify-between">
           <div class="flex w-0 min-w-0 flex-1 items-center">
             <span
               class="flex rounded-lg p-2"
-              :class="{ 'bg-indigo-600': style === 'success', 'bg-red-600': style === 'danger' }">
+              :class="{ 'bg-accent-muted': style === 'success', 'bg-red-600': style === 'danger' }">
               <svg
                 v-if="style === 'success'"
                 class="h-5 w-5 text-white"
@@ -62,7 +62,7 @@ watchEffect(async () => {
               type="button"
               class="-me-1 flex rounded-md p-2 transition focus:outline-hidden sm:-me-2"
               :class="{
-                'hover:bg-indigo-600 focus:bg-indigo-600': style === 'success',
+                'hover:bg-accent-hover focus:bg-accent-hover': style === 'success',
                 'hover:bg-red-600 focus:bg-red-600': style === 'danger',
               }"
               :aria-label="$t('Dismiss')"

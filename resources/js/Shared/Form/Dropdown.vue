@@ -28,9 +28,9 @@ const input = useTemplateRef('input');
 
 const localDropdownClasses = computed(() => {
   return [
-    'py-2 px-3 ps-2 pe-5 ltr:bg-[right_3px_center] rtl:bg-[left_3px_center] rounded-md shadow-xs sm:text-sm',
-    'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700',
-    'focus:border-indigo-300 focus:ring-3 focus:ring-indigo-200/50 focus:outline-hidden',
+    'py-2 px-3 ps-2 pe-5 ltr:bg-[right_3px_center] rtl:bg-[left_3px_center] sm:text-sm',
+    'bg-surface border-border text-text',
+    'focus:border-accent focus:ring-2 focus:ring-accent/30 focus:outline-hidden',
     props.dropdownClass,
   ];
 });
@@ -113,12 +113,7 @@ defineExpose({ focus: focus });
 
 <style lang="scss" scoped>
 .optional-badge {
-  color: #283e59;
-  background-color: #edf2f9;
-}
-
-.dark .optional-badge {
-  color: #d4d8dd !important;
-  background-color: #2f3031 !important;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-raised);
 }
 </style>

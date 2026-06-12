@@ -16,12 +16,12 @@
 
       <div class="flex gap-4">
         <label class="flex cursor-pointer items-center gap-2">
-          <input v-model="form.ui_density" type="radio" value="minimal" class="text-blue-600" @change="submit" />
+          <input v-model="form.ui_density" type="radio" value="minimal" class="text-accent" @change="submit" />
           <span class="dark:text-gray-300">{{ $t('Minimal') }}</span>
         </label>
 
         <label class="flex cursor-pointer items-center gap-2">
-          <input v-model="form.ui_density" type="radio" value="chunky" class="text-blue-600" @change="submit" />
+          <input v-model="form.ui_density" type="radio" value="chunky" class="text-accent" @change="submit" />
           <span class="dark:text-gray-300">{{ $t('Chunky') }}</span>
         </label>
       </div>

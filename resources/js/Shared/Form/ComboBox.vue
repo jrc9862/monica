@@ -120,12 +120,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .optional-badge {
-  color: #283e59;
-  background-color: #edf2f9;
-}
-
-.dark .optional-badge {
-  color: #d4d8dd !important;
-  background-color: #2f3031 !important;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-raised);
 }
 </style>

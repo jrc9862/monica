@@ -1,6 +1,6 @@
 <template>
   <InertiaLink
-    :class="'flex items-center gap-1 dark:box-s relative border-zinc-900 bg-white text-sm dark:border-zinc-100 dark:bg-gray-800 dark:text-gray-100'"
+    :class="'flex items-center gap-1 relative border border-border bg-surface-raised text-sm text-text hover:border-accent'"
     :href="href"
     preserve-scroll>
     <Plus class="h-4 w-4" v-if="icon === 'plus'" />

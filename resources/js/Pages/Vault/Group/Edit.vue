@@ -55,7 +55,7 @@ const update = () => {
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
-              <Link :href="data.url.back" class="text-blue-500 hover:underline">
+              <Link :href="data.url.back" class="text-accent hover:underline">
                 {{ $t('Groups') }}
               </Link>
             </li>
@@ -70,7 +70,7 @@ const update = () => {
               </svg>
             </li>
             <li class="me-2 inline">
-              <Link :href="data.url.back" class="text-blue-500 hover:underline">{{ data.name }}</Link>
+              <Link :href="data.url.back" class="text-accent hover:underline">{{ data.name }}</Link>
             </li>
             <li class="relative me-2 inline">
               <svg
@@ -93,7 +93,8 @@ const update = () => {
         <form
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="update()">
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
+          <div
+            class="section-head border-b border-gray-200 bg-surface-raised p-5 dark:border-gray-700 dark:bg-surface-raised">
             <h1 class="text-center text-2xl font-medium">
               {{ $t('Edit the group') }}
             </h1>

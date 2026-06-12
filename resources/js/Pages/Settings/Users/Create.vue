@@ -10,7 +10,7 @@ k
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
-              <InertiaLink :href="data.url.settings" class="text-blue-500 hover:underline">
+              <InertiaLink :href="data.url.settings" class="text-accent hover:underline">
                 {{ $t('Settings') }}
               </InertiaLink>
             </li>
@@ -25,7 +25,7 @@ k
               </svg>
             </li>
             <li class="me-2 inline">
-              <InertiaLink :href="data.url.back" class="text-blue-500 hover:underline">
+              <InertiaLink :href="data.url.back" class="text-accent hover:underline">
                 {{ $t('Users') }}
               </InertiaLink>
             </li>
@@ -53,7 +53,8 @@ k
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
           <!-- title -->
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
+          <div
+            class="section-head border-b border-gray-200 bg-surface-raised p-5 dark:border-gray-700 dark:bg-surface-raised">
             <h1 class="mb-1 text-center text-2xl font-medium">
               {{ $t('Invite someone') }}
             </h1>

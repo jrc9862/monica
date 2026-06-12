@@ -131,7 +131,7 @@ defineExpose({
         @focus="showMaxLength"
         @blur="displayMaxLength = false" />
     </div>
-    <p v-if="markdown" class="rounded-b-lg bg-slate-100 px-3 py-2 text-xs dark:bg-slate-900">
+    <p v-if="markdown" class="bg-surface-raised px-3 py-2 text-xs text-text-muted">
       <span>{{ $t('We support Markdown to format the text (bold, lists, headings, etc…).') }}</span>
 
       <a
@@ -139,7 +139,7 @@ defineExpose({
         target="_blank"
         lang="en"
         rel="noopener noreferrer"
-        class="ms-1 text-blue-500 hover:underline">
+        class="ms-1 text-accent hover:underline">
         {{ $t('(Help)') }}
       </a>
     </p>

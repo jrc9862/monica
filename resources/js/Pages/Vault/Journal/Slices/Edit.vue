@@ -40,7 +40,7 @@ const submit = () => {
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
-              <Link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
+              <Link :href="layoutData.vault.url.journals" class="text-accent hover:underline">
                 {{ $t('Journals') }}
               </Link>
             </li>
@@ -55,7 +55,7 @@ const submit = () => {
               </svg>
             </li>
             <li class="relative me-2 inline">
-              <Link :href="data.journal.url.show" class="text-blue-500 hover:underline">{{ data.journal.name }}</Link>
+              <Link :href="data.journal.url.show" class="text-accent hover:underline">{{ data.journal.name }}</Link>
             </li>
             <li class="relative me-2 inline">
               <svg
@@ -68,9 +68,7 @@ const submit = () => {
               </svg>
             </li>
             <li class="relative me-2 inline">
-              <Link :href="data.url.slices_index" class="text-blue-500 hover:underline">{{
-                $t('Slices of life')
-              }}</Link>
+              <Link :href="data.url.slices_index" class="text-accent hover:underline">{{ $t('Slices of life') }}</Link>
             </li>
             <li class="relative me-2 inline">
               <svg
@@ -83,7 +81,7 @@ const submit = () => {
               </svg>
             </li>
             <li class="relative me-2 inline">
-              <Link :href="data.slice.url.show" class="text-blue-500 hover:underline">{{ data.slice.name }}</Link>
+              <Link :href="data.slice.url.show" class="text-accent hover:underline">{{ data.slice.name }}</Link>
             </li>
             <li class="relative me-2 inline">
               <svg
@@ -106,7 +104,8 @@ const submit = () => {
         <form
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
+          <div
+            class="section-head border-b border-gray-200 bg-surface-raised p-5 dark:border-gray-700 dark:bg-surface-raised">
             <h1 class="text-center text-2xl font-medium">{{ $t('Edit the slice of life') }}</h1>
           </div>
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">

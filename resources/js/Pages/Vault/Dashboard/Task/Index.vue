@@ -16,7 +16,7 @@
           <div class="mb-2 flex items-center">
             <avatar :data="task.contact.avatar" :class="'me-2 h-5 w-5 rounded-full'" />
 
-            <InertiaLink :href="task.contact.url.show" class="text-blue-500 hover:underline">
+            <InertiaLink :href="task.contact.url.show" class="text-accent hover:underline">
               {{ task.contact.name }}
             </InertiaLink>
           </div>
@@ -33,7 +33,7 @@
                   v-model="currentTask.completed"
                   :name="currentTask.id"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40"
                   @change="toggle(currentTask)" />
 
                 <label

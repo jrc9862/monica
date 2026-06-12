@@ -14,7 +14,7 @@ defineProps({
 
 <template>
   <button
-    :class="'dark:box-s relative border-zinc-900 bg-white text-sm dark:border-zinc-100 dark:bg-gray-800 dark:text-gray-100 flex'"
+    :class="'relative flex border border-border bg-surface-raised text-sm text-text hover:border-accent'"
     :disabled="state === 'loading' || state === 'disabled'"
     type="submit">
     <span v-if="state === 'loading'">
@@ -45,12 +45,13 @@ defineProps({
 }
 
 .save {
-  background-color: #fcf27e;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
 }
 
 .dark .save {
-  background-color: #d0c10d !important;
-  color: rgb(31 41 55) !important; // text-gray-800
+  background-color: var(--color-accent) !important;
+  color: var(--color-bg) !important;
 }
 
 button {

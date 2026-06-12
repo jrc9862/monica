@@ -90,7 +90,7 @@ const toggleStyle = () => {
             <label for="dark-mode-toggle" class="relative inline-flex cursor-pointer">
               <input id="dark-mode-toggle" v-model="checked" type="checkbox" class="peer hidden" @click="toggleStyle" />
               <div
-                class="peer me-2 h-4 w-7 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[14px] after:top-[2px] after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
+                class="peer me-2 h-4 w-7 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[14px] after:top-[2px] after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
               <DarkModeIcon :checked="checked" />
             </label>
           </div>
