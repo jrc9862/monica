@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { flash } from '@/methods';
 import { trans } from 'laravel-vue-i18n';
@@ -50,6 +50,8 @@ const showEmotionField = () => {
   emotionFieldShown.value = true;
   form.emotion_id = 1;
 };
+
+const isInPerson = computed(() => form.type === 'in_person');
 
 const showCreateCallModal = () => {
   form.errors = [];
@@ -155,10 +157,10 @@ const destroy = (call) => {
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
         <PhoneCall class="h-4 w-4 text-gray-600" />
 
-        <span class="font-semibold"> {{ $t('Calls') }} </span>
+        <span class="font-semibold"> {{ $t('Calls & Meetings') }} </span>
       </div>
       <pretty-button
-        :text="$t('Log a call')"
+        :text="$t('Log a call or meeting')"
         :icon="'plus'"
         :class="'w-full sm:w-fit'"
         @click="showCreateCallModal()" />
@@ -194,12 +196,12 @@ const destroy = (call) => {
             </DatePicker>
           </div>
 
-          <!-- audio or video -->
+          <!-- type -->
           <div class="border-e border-gray-200 p-5 dark:border-gray-700">
-            <p class="mb-2 block text-sm">{{ $t('Nature of the call') }}</p>
+            <p class="mb-2 block text-sm">{{ $t('Type') }}</p>
 
-            <div class="flex">
-              <div class="me-6 flex items-center">
+            <div class="flex gap-6">
+              <div class="flex items-center">
                 <input
                   id="audio"
                   v-model="form.type"
@@ -210,7 +212,7 @@ const destroy = (call) => {
                 <label
                   for="audio"
                   class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t('Audio-only call') }}
+                  {{ $t('Audio call') }}
                 </label>
               </div>
 
@@ -228,13 +230,28 @@ const destroy = (call) => {
                   {{ $t('Video call') }}
                 </label>
               </div>
+
+              <div class="flex items-center">
+                <input
+                  id="in_person"
+                  v-model="form.type"
+                  value="in_person"
+                  name="type"
+                  type="radio"
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                <label
+                  for="in_person"
+                  class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {{ $t('In-person meeting') }}
+                </label>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- who called -->
+        <!-- who initiated -->
         <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-          <p class="mb-2 block text-sm">{{ $t('Who called?') }}</p>
+          <p class="mb-2 block text-sm">{{ isInPerson ? $t('Who initiated the meeting?') : $t('Who called?') }}</p>
 
           <div class="mb-4 flex">
             <div class="me-6 flex items-center">
@@ -246,11 +263,11 @@ const destroy = (call) => {
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label for="me" class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ $t('I called') }}
+                {{ isInPerson ? $t('I arranged it') : $t('I called') }}
               </label>
             </div>
 
-            <div class="flex items-center">
+            <div v-if="!isInPerson" class="flex items-center">
               <input
                 id="me_not_answered"
                 v-model="form.who_initiated"
@@ -261,7 +278,7 @@ const destroy = (call) => {
               <label
                 for="me_not_answered"
                 class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ $t('I called, but :name didn’t answer', { name: data.contact_name }) }}
+                {{ $t("I called, but :name didn't answer", { name: data.contact_name }) }}
               </label>
             </div>
           </div>
@@ -278,11 +295,15 @@ const destroy = (call) => {
               <label
                 for="contact"
                 class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ $t(':Name called', { name: data.contact_name }) }}
+                {{
+                  isInPerson
+                    ? $t(':Name arranged it', { name: data.contact_name })
+                    : $t(':Name called', { name: data.contact_name })
+                }}
               </label>
             </div>
 
-            <div class="flex items-center">
+            <div v-if="!isInPerson" class="flex items-center">
               <input
                 id="contact_not_answered"
                 v-model="form.who_initiated"
@@ -293,7 +314,7 @@ const destroy = (call) => {
               <label
                 for="contact_not_answered"
                 class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ $t(':Name called, but I didn’t answer', { name: data.contact_name }) }}
+                {{ $t(":Name called, but I didn't answer", { name: data.contact_name }) }}
               </label>
             </div>
           </div>
@@ -444,12 +465,12 @@ const destroy = (call) => {
                 </DatePicker>
               </div>
 
-              <!-- audio or video -->
+              <!-- type -->
               <div class="border-e border-gray-200 p-5 dark:border-gray-700">
-                <p class="mb-2 block text-sm">{{ $t('Nature of the call') }}</p>
+                <p class="mb-2 block text-sm">{{ $t('Type') }}</p>
 
-                <div class="flex">
-                  <div class="me-6 flex items-center">
+                <div class="flex gap-6">
+                  <div class="flex items-center">
                     <input
                       id="audio"
                       v-model="form.type"
@@ -460,7 +481,7 @@ const destroy = (call) => {
                     <label
                       for="audio"
                       class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {{ $t('Audio-only call') }}
+                      {{ $t('Audio call') }}
                     </label>
                   </div>
 
@@ -478,13 +499,28 @@ const destroy = (call) => {
                       {{ $t('Video call') }}
                     </label>
                   </div>
+
+                  <div class="flex items-center">
+                    <input
+                      id="in_person"
+                      v-model="form.type"
+                      value="in_person"
+                      name="type"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    <label
+                      for="in_person"
+                      class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {{ $t('In-person meeting') }}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- who called -->
+            <!-- who initiated -->
             <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-              <p class="mb-2 block text-sm">{{ $t('Who called?') }}</p>
+              <p class="mb-2 block text-sm">{{ isInPerson ? $t('Who initiated the meeting?') : $t('Who called?') }}</p>
 
               <div class="mb-4 flex">
                 <div class="me-6 flex items-center">
@@ -498,11 +534,11 @@ const destroy = (call) => {
                   <label
                     for="me"
                     class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ $t('I called') }}
+                    {{ isInPerson ? $t('I arranged it') : $t('I called') }}
                   </label>
                 </div>
 
-                <div class="flex items-center">
+                <div v-if="!isInPerson" class="flex items-center">
                   <input
                     id="me_not_answered"
                     v-model="form.who_initiated"
@@ -513,7 +549,7 @@ const destroy = (call) => {
                   <label
                     for="me_not_answered"
                     class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ $t('I called, but :name didn’t answer', { name: data.contact_name }) }}
+                    {{ $t("I called, but :name didn't answer", { name: data.contact_name }) }}
                   </label>
                 </div>
               </div>
@@ -530,11 +566,15 @@ const destroy = (call) => {
                   <label
                     for="contact"
                     class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ $t(':Name called', { name: data.contact_name }) }}
+                    {{
+                      isInPerson
+                        ? $t(':Name arranged it', { name: data.contact_name })
+                        : $t(':Name called', { name: data.contact_name })
+                    }}
                   </label>
                 </div>
 
-                <div class="flex items-center">
+                <div v-if="!isInPerson" class="flex items-center">
                   <input
                     id="contact_not_answered"
                     v-model="form.who_initiated"
@@ -545,7 +585,7 @@ const destroy = (call) => {
                   <label
                     for="contact_not_answered"
                     class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ $t(':Name called, but I didn’t answer', { name: data.contact_name }) }}
+                    {{ $t(":Name called, but I didn't answer", { name: data.contact_name }) }}
                   </label>
                 </div>
               </div>

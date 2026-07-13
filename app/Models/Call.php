@@ -19,6 +19,8 @@ class Call extends Model
 
     public const TYPE_VIDEO = 'video';
 
+    public const TYPE_IN_PERSON = 'in_person';
+
     public const INITIATOR_ME = 'me';
 
     public const INITIATOR_CONTACT = 'contact';
