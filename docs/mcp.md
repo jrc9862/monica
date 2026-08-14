@@ -302,6 +302,33 @@ extensions disabled. Note that the user agent tells you who is calling: `python-
 is Anthropic's backend, `Claude-User` is a real tool call from your session,
 and a normal browser UA is you.
 
+**Connector fails with "returned an error when connecting" despite `POST /mcp 200`**
+laravel/mcp answers a failed JSON-RPC call with HTTP 200 and an error body, and
+does not report the exception — so the access log looks healthy. Set
+`MCP_DEBUG_PAYLOADS=true` in the `.env` that `docker-compose.yml` loads via
+`env_file` (the host one, not the copy inside the image), recreate the container
+so the variable is injected, and clear the config cache:
+
+```bash
+echo 'MCP_DEBUG_PAYLOADS=true' >> .env
+docker compose up -d
+docker compose exec app printenv MCP_DEBUG_PAYLOADS   # must print true
+docker compose exec app php artisan config:clear
+```
+
+Retry, then read the bodies: `docker compose logs app | grep -E "MCP request|MCP response"`.
+Turn the flag off afterwards — response bodies contain vault data.
+
+Two causes found this way, both fixed:
+
+- Claude requests protocol version `2025-11-25`, which laravel/mcp v0.1.1 rejects
+  with `-32602 Unsupported protocol version`. `MonicaServer::handle()` now
+  negotiates an unknown version down to the newest supported one.
+- The route's guard order was `auth:api,sanctum`. Passport's `TokenGuard` throws
+  on a non-JWT bearer token rather than returning null, so a valid Sanctum PAT
+  never reached the Sanctum guard and Claude Code always got 401. The order is
+  now `auth:sanctum,api`; do not swap it back.
+
 **Route/config drift after deploy**
 Laravel caches routes and config in production. After pulling new code:
 

@@ -146,6 +146,53 @@ class McpAuthTest extends TestCase
     }
 
     /** @test */
+    public function an_unsupported_protocol_version_is_negotiated_down_instead_of_rejected(): void
+    {
+        // Claude requests 2025-11-25, which laravel/mcp v0.1.1 does not know.
+        // The handshake must still succeed, answering with a supported version.
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'initialize',
+                'params' => [
+                    'protocolVersion' => '2025-11-25',
+                    'capabilities' => [],
+                    'clientInfo' => ['name' => 'Anthropic/ClaudeAI', 'version' => '1.0.0'],
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('result.protocolVersion', '2025-06-18');
+        $response->assertJsonMissingPath('error');
+    }
+
+    /** @test */
+    public function a_supported_protocol_version_is_echoed_unchanged(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'initialize',
+                'params' => [
+                    'protocolVersion' => '2024-11-05',
+                    'capabilities' => [],
+                    'clientInfo' => ['name' => 'old', 'version' => '1'],
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('result.protocolVersion', '2024-11-05');
+    }
+
+    /** @test */
     public function a_bearer_token_without_its_id_prefix_still_authenticates(): void
     {
         // Monica's Settings → API screen shows the token without the "<id>|"
