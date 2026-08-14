@@ -34,13 +34,14 @@ class TelegramWebhookController extends Controller
      */
     private function handleCallbackQuery(Request $request)
     {
-        try {
-            $callbackQuery = $request->callback_query;
-            $callbackData = $callbackQuery['data'] ?? '';
-            $chatId = (string) ($callbackQuery['message']['chat']['id'] ?? '');
-        } catch (Exception $e) {
-            return response()->json(['message' => 'Accepted'], 202);
+        $callbackQuery = $request->callback_query;
+
+        if (! is_array($callbackQuery)) {
+            return response('Accepted', 202);
         }
+
+        $callbackData = $callbackQuery['data'] ?? '';
+        $chatId = (string) ($callbackQuery['message']['chat']['id'] ?? '');
 
         // expected format: snooze:{period}:{scheduled_id}
         if (! \Safe\preg_match('/^snooze:(7d|14d|30d):(\d+)$/', $callbackData, $matches)) {
@@ -70,7 +71,7 @@ class TelegramWebhookController extends Controller
                 'period' => $period,
             ]);
         } catch (Exception $e) {
-            return response()->json(['message' => 'Error: '.$e->getMessage()], 500);
+            return response('Error: '.$e->getMessage(), 500);
         }
 
         return response('OK', 200);
@@ -83,13 +84,12 @@ class TelegramWebhookController extends Controller
      */
     private function handleMessage(Request $request)
     {
-        try {
-            $messageText = $request->message['text'];
-        } catch (Exception $e) {
-            return response()->json([
-                'code' => $e->getCode(),
-                'message' => 'Accepted with error: \''.$e->getMessage().'\'',
-            ], 202);
+        $messagePayload = $request->message;
+        $messageText = is_array($messagePayload) ? ($messagePayload['text'] ?? null) : null;
+
+        if (! is_string($messageText)) {
+            // No usable text (e.g. a non-text update); ack with 202 so Telegram stops retrying.
+            return response('Accepted', 202);
         }
 
         // check if the message matches the expected pattern.
@@ -104,7 +104,13 @@ class TelegramWebhookController extends Controller
         $verificationKey = $message->remove('/start ')->rtrim();
 
         // Get Telegram ID from the request.
-        $chatId = $request->message['chat']['id'];
+        $chatId = $messagePayload['chat']['id'] ?? null;
+
+        if (! is_int($chatId) && ! is_string($chatId)) {
+            // No usable chat id; ack with 202 so Telegram stops retrying instead of
+            // crashing on the NOT NULL content column.
+            return response('Accepted', 202);
+        }
 
         // Get the User ID from the cache using the temp code as key.
         try {
@@ -114,7 +120,7 @@ class TelegramWebhookController extends Controller
         }
 
         // Update user with the Telegram Chat ID
-        $channel->content = $chatId;
+        $channel->content = (string) $chatId;
         $channel->active = true;
         $channel->save();
 

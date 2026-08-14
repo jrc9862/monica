@@ -25,6 +25,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Passport\Passport;
 use LaravelWebauthn\Facades\Webauthn;
 use LaravelWebauthn\Listeners\LoginViaRemember;
 use League\CommonMark\Environment\Environment;
@@ -150,6 +151,16 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip()));
         RateLimiter::for('oauth2-socialite', fn (Request $request) => Limit::perMinute(5)->by(optional($request->user())->id ?: $request->ip()));
+        RateLimiter::for('mcp', fn (Request $request) => Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip()));
+
+        Passport::tokensCan([
+            'read' => 'Read contacts, notes, reminders and other vault data',
+            'write' => 'Create and update contacts, notes, reminders and other vault data',
+        ]);
+        Passport::defaultScopes(['read']);
+        Passport::tokensExpireIn(now()->addHours(12));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::authorizationView('oauth.authorize');
 
         Webauthn::updateViewResponseUsing(WebauthnUpdateResponse::class);
         Webauthn::destroyViewResponseUsing(WebauthnDestroyResponse::class);

@@ -36,10 +36,13 @@ class SnoozeContactReminder extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
+        // validateRules() already restricts period to this set; the default
+        // arm documents the invariant and keeps the match exhaustive.
         $newScheduledAt = Carbon::now()->add(match ($data['period']) {
             '7d' => '7 days',
             '14d' => '14 days',
             '30d' => '30 days',
+            default => throw new \InvalidArgumentException('Unsupported snooze period: '.$data['period']),
         });
 
         DB::table('contact_reminder_scheduled')
