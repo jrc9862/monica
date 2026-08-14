@@ -4,8 +4,10 @@ namespace Tests\Feature\Mcp;
 
 use App\Mcp\Tools\CreateNote;
 use App\Models\Contact;
+use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -113,6 +115,52 @@ class McpAuthTest extends TestCase
             'id' => 1,
             'method' => 'ping',
         ]);
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function a_real_bearer_token_authenticates_and_completes_the_initialize_handshake(): void
+    {
+        // Sanctum::actingAs() injects the user directly and never parses a bearer
+        // token, so this is the only test covering the header path Claude Code uses.
+        // Build the user with the factory rather than createUser(), which would
+        // call Sanctum::actingAs() and authenticate the request without the header.
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'initialize',
+                'params' => [
+                    'protocolVersion' => '2025-06-18',
+                    'capabilities' => [],
+                    'clientInfo' => ['name' => 'test', 'version' => '1'],
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('result.serverInfo.name', 'Monica');
+    }
+
+    /** @test */
+    public function a_bearer_token_without_its_id_prefix_still_authenticates(): void
+    {
+        // Monica's Settings → API screen shows the token without the "<id>|"
+        // prefix. Sanctum falls back to hashing the whole string when no pipe is
+        // present, so the bare token is valid — don't "fix" this into a 401.
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+        $withoutPrefix = Str::after($token, '|');
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$withoutPrefix])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'ping',
+            ]);
 
         $response->assertStatus(200);
     }

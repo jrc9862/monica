@@ -41,7 +41,15 @@ Passport signs OAuth tokens with an RSA keypair. Generate it once:
 
 ```bash
 docker compose exec app php artisan passport:keys
+docker compose exec app chown www-data:www-data storage/oauth-private.key storage/oauth-public.key
 ```
+
+The `chown` matters: `docker compose exec` runs as **root**, so `passport:keys`
+writes the keys `root:root` with `0600` perms, and Apache (running as
+`www-data`) then can't read them — the symptom is a 500 on `/oauth/authorize`
+with `Key path ".../storage/oauth-private.key" does not exist or is not
+readable`. Re-owning them to `www-data` fixes it. Verify with
+`docker compose exec app ls -l storage/oauth-*.key`.
 
 By default (see `config/passport.php`, `PASSPORT_PRIVATE_KEY` /
 `PASSPORT_PUBLIC_KEY` unset) Passport writes `oauth-private.key` and
@@ -271,6 +279,28 @@ claude.ai couldn't fetch `/.well-known/oauth-protected-resource` or
 step 4b actually includes both well-known paths (and their subpaths — some
 clients probe path-suffixed variants), and that the Bypass policy's IP range
 is current.
+
+**500 on `/oauth/authorize`: "Key path … oauth-private.key does not exist or is not readable"**
+Passport keys are missing, or they exist but Apache can't read them. `docker compose exec`
+runs as root, so keys generated that way land as `root:root 0600` and `www-data` is locked
+out. Regenerate and fix ownership — see step 2.
+
+**Consent succeeds but the connector never finishes**
+Tail the flow while retrying, and read the last line:
+
+```bash
+docker compose logs -f app | grep -Ei "oauth|/mcp"
+```
+
+A complete flow ends with `POST /oauth/token … 200` (user agent `python-httpx`)
+followed by `POST /mcp … 200` (user agent `Claude-User`). If the log stops at
+`POST /oauth/authorize … 302`, Anthropic never attempted the token exchange:
+the browser redirect to `https://claude.ai/api/mcp/auth_callback?code=…` didn't
+complete, so claude.ai never received the code. That's client-side, not a Monica
+or Cloudflare problem — retry the connector in a clean browser profile with
+extensions disabled. Note that the user agent tells you who is calling: `python-httpx`
+is Anthropic's backend, `Claude-User` is a real tool call from your session,
+and a normal browser UA is you.
 
 **Route/config drift after deploy**
 Laravel caches routes and config in production. After pulling new code:
