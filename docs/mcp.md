@@ -223,6 +223,22 @@ Mitigations:
 
 ## 8. Available tools (Phase 1)
 
+The five `delete-*` tools are **disabled by default** — deleting a record from
+chat is rarely wanted and cannot be undone. Disabled tools are withheld from
+`tools/list` and are not callable; `tools/call` answers "Tool not found".
+
+Override with a comma-separated list of tool names in the `.env` that
+`docker-compose.yml` loads:
+
+```
+MCP_DISABLED_TOOLS=delete-note,delete-task   # only these two off
+MCP_DISABLED_TOOLS=                          # everything on
+```
+
+Recreate the container (`docker compose up -d`) so `env_file` re-injects the
+value, then `php artisan config:clear`. Claude caches the tool list per
+conversation, so start a new one to see the change.
+
 | Tool              | Description                       |
 | ----------------- | --------------------------------- |
 | `list-vaults`     | List vaults the caller can access |

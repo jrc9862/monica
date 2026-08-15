@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Mcp;
 
+use App\Mcp\Servers\MonicaServer;
 use App\Mcp\Tools\CreateNote;
 use App\Models\Contact;
 use App\Models\User;
@@ -143,6 +144,73 @@ class McpAuthTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonPath('result.serverInfo.name', 'Monica');
+    }
+
+    /** @test */
+    public function tools_list_returns_every_registered_tool_in_one_page(): void
+    {
+        // The package default paginates at 15, which would hide the task tools
+        // from any client that does not follow the cursor.
+        config(['mcp.disabled_tools' => []]);
+
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', ['jsonrpc' => '2.0', 'id' => 1, 'method' => 'tools/list']);
+
+        $response->assertStatus(200);
+        $this->assertCount(count((new MonicaServer)->tools), $response->json('result.tools'));
+        $this->assertNull($response->json('result.nextCursor'));
+    }
+
+    /** @test */
+    public function disabled_tools_are_not_advertised(): void
+    {
+        config(['mcp.disabled_tools' => ['delete-note', 'delete-task']]);
+
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', ['jsonrpc' => '2.0', 'id' => 1, 'method' => 'tools/list']);
+
+        $names = array_column($response->json('result.tools'), 'name');
+
+        $this->assertNotContains('delete-note', $names);
+        $this->assertNotContains('delete-task', $names);
+        $this->assertContains('create-note', $names);
+    }
+
+    /** @test */
+    public function a_disabled_tool_cannot_be_called(): void
+    {
+        config(['mcp.disabled_tools' => ['delete-note']]);
+
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'tools/call',
+                'params' => ['name' => 'delete-note', 'arguments' => ['note_id' => 'whatever']],
+            ]);
+
+        // Withheld from the registry entirely, so it resolves to "Tool not found"
+        // (laravel/mcp reports this as an isError result, not a JSON-RPC error).
+        $response->assertJsonPath('result.isError', true);
+        $this->assertStringContainsString('Tool not found', $response->getContent());
+    }
+
+    /** @test */
+    public function the_destructive_tools_are_disabled_by_default(): void
+    {
+        $this->assertEqualsCanonicalizing(
+            ['delete-contact', 'delete-note', 'delete-call', 'delete-reminder', 'delete-task'],
+            config('mcp.disabled_tools')
+        );
     }
 
     /** @test */

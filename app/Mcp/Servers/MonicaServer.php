@@ -19,6 +19,13 @@ class MonicaServer extends Server
         automatically creates a 90-day follow-up reminder.
         EOT;
 
+    /**
+     * laravel/mcp paginates tools/list at 15 by default, so the last six tools
+     * are only reachable if the client follows the nextCursor. Serve the whole
+     * set in one page instead.
+     */
+    public int $defaultPaginationLength = 30;
+
     public array $tools = [
         \App\Mcp\Tools\ListVaults::class,
         \App\Mcp\Tools\SearchContacts::class,
@@ -42,6 +49,29 @@ class MonicaServer extends Server
         \App\Mcp\Tools\ToggleTask::class,
         \App\Mcp\Tools\DeleteTask::class,
     ];
+
+    /**
+     * Drop tools listed in config('mcp.disabled_tools') before the server
+     * serves anything. Both tools/list and tools/call resolve through the
+     * registered set, so a disabled tool is neither advertised nor callable.
+     */
+    public function boot(): void
+    {
+        $disabled = config('mcp.disabled_tools', []);
+
+        if ($disabled === []) {
+            return;
+        }
+
+        $this->registeredTools = array_values(array_filter(
+            $this->registeredTools,
+            fn ($tool) => ! in_array(
+                (is_string($tool) ? app($tool) : $tool)->name(),
+                $disabled,
+                true
+            )
+        ));
+    }
 
     /**
      * Negotiate the protocol version down instead of failing the handshake.
