@@ -63,11 +63,11 @@ const destroy = (metric) => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -123,9 +123,9 @@ const destroy = (metric) => {
         <!-- modal to create a journal metric -->
         <form
           v-if="createJournalMetricModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
           @submit.prevent="submit()">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-input
@@ -148,11 +148,11 @@ const destroy = (metric) => {
         </form>
 
         <div v-if="localMetrics.length !== 0">
-          <ul class="metric-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <ul class="metric-list mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <li
               v-for="metric in localMetrics"
               :key="metric.id"
-              class="flex items-center justify-between border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="flex items-center justify-between border-b border-border px-5 py-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <span>{{ metric.label }}</span>
 
               <!-- actions -->
@@ -168,7 +168,7 @@ const destroy = (metric) => {
         <!-- blank state -->
         <div
           v-if="localMetrics.length === 0"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
           <img src="/img/journal_blank_index.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-44 w-44" />
           <p class="px-5 pb-5 pt-2 text-center">
             {{ $t('Journal metrics let you track data accross all your journal entries.') }}

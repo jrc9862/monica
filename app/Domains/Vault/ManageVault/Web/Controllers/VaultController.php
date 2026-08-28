@@ -69,6 +69,7 @@ class VaultController extends Controller
 
         return Inertia::render('Vault/Dashboard/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'statistics' => VaultShowViewHelper::statistics($vault),
             'lastUpdatedContacts' => VaultShowViewHelper::lastUpdatedContacts($vault),
             'upcomingReminders' => VaultShowViewHelper::upcomingReminders($vault, Auth::user()),
             'favorites' => VaultShowViewHelper::favorites($vault, Auth::user()),

@@ -1,11 +1,11 @@
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">

@@ -1,9 +1,9 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <CloudUpload class="h-4 w-4 text-gray-600" />
+        <CloudUpload class="h-4 w-4 text-text" />
 
         <span class="font-semibold">
           {{ $t('Documents') }}
@@ -25,8 +25,8 @@
     <!-- not enough space in storage -->
     <div
       v-if="!data.canUploadFile"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <p class="bg-gray-100 p-3 text-center">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+      <p class="bg-bg p-3 text-center">
         <span class="me-1">⚠️</span>
         {{ $t('You don’t have enough space left in your account. Please upgrade.') }}
       </p>
@@ -34,11 +34,11 @@
 
     <!-- documents -->
     <div v-if="localDocuments.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <ul class="mb-4 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <li
           v-for="document in localDocuments"
           :key="document.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <!-- document -->
           <div class="flex items-center justify-between px-3 py-2">
             <span class="flex items-center">
@@ -66,7 +66,7 @@
     <!-- blank state -->
     <div
       v-if="localDocuments.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_document.svg" :alt="$t('Documents')" class="mx-auto mt-4 h-16 w-16" />
       <p class="px-5 pb-5 pt-2 text-center">
         {{ $t('There are no documents yet.') }}
@@ -76,7 +76,7 @@
     <!-- uploadcare api key not set -->
     <div
       v-if="!data.uploadcare.publicKey"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="p-5 text-center">
         {{ $t('The keys to manage uploads have not been set in this Monica instance.') }}
       </p>

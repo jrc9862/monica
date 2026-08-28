@@ -112,9 +112,9 @@ const updatePosition = (event) => {
     <!-- modal to create a quick fact template entry -->
     <form
       v-if="createEntryModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -139,7 +139,7 @@ const updatePosition = (event) => {
     <!-- list of templates -->
     <div
       v-if="localEntries.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <draggable
         :list="localEntries"
         item-key="id"
@@ -149,7 +149,7 @@ const updatePosition = (event) => {
         <template #item="{ element }">
           <div
             v-if="editEntryId !== element.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+            class="item-list flex items-center justify-between border-b border-border py-2 pe-5 ps-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
             <!-- icon to move position -->
             <div class="me-2 flex">
               <svg
@@ -186,9 +186,9 @@ const updatePosition = (event) => {
 
           <form
             v-else
-            class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+            class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
             @submit.prevent="update(element)">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <errors :errors="form.errors" />
 
               <text-input

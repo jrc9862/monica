@@ -1,6 +1,8 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
 import Layout from '@/Layouts/Layout.vue';
+import ScreenHeader from '@/Shared/Crm/ScreenHeader.vue';
+import CrmCardGrid from '@/Shared/Crm/CrmCardGrid.vue';
+import CrmCard from '@/Shared/Crm/CrmCard.vue';
 
 defineProps({
   layoutData: Object,
@@ -9,30 +11,33 @@ defineProps({
 </script>
 
 <template>
-  <Layout :layout-data="layoutData" :inside-vault="true">
-    <main class="relative sm:mt-20">
-      <div class="mx-auto max-w-md px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
-        <h2 class="mb-6 text-center text-lg">{{ $t('All the reports') }}</h2>
-        <div class="mb-12 rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
-          <ul>
-            <li class="mb-2 flex justify-start">
-              <Link :href="data.url.addresses" class="text-accent hover:underline">
-                {{ $t('List of addresses of the contacts in the vault') }}
-              </Link>
-            </li>
-            <li class="mb-2 flex justify-start">
-              <Link :href="data.url.mood_tracking_events" class="text-accent hover:underline">
-                {{ $t('Mood tracking events') }}
-              </Link>
-            </li>
-            <li class="flex justify-start">
-              <Link :href="data.url.important_date_summary" class="text-accent hover:underline">
-                {{ $t('Important date summary') }}
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </main>
+  <Layout :title="$t('Reports')" :layout-data="layoutData" :inside-vault="true">
+    <div class="min-w-0 flex-1 p-6">
+      <ScreenHeader :title="$t('Reports for this vault')" />
+
+      <CrmCardGrid>
+        <CrmCard
+          :href="data.url.addresses"
+          icon="location"
+          :title="$t('Addresses')"
+          :description="$t('List of addresses of the contacts in the vault')" />
+
+        <CrmCard
+          :href="data.url.mood_tracking_events"
+          icon="face"
+          tint="var(--mint)"
+          tint-fg="var(--green)"
+          :title="$t('Mood')"
+          :description="$t('Mood tracking events')" />
+
+        <CrmCard
+          :href="data.url.important_date_summary"
+          icon="cake"
+          tint="var(--sun)"
+          tint-fg="var(--yellow)"
+          :title="$t('Important dates')"
+          :description="$t('Important date summary')" />
+      </CrmCardGrid>
+    </div>
   </Layout>
 </template>

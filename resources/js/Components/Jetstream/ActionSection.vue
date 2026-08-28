@@ -26,8 +26,8 @@ defineProps({
       </template>
     </JetSectionTitle>
 
-    <div class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <div class="border-b border-gray-200 px-5 py-4 dark:border-gray-700">
+    <div class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+      <div class="border-b border-border px-5 py-4 dark:border-border">
         <slot name="content" />
       </div>
     </div>

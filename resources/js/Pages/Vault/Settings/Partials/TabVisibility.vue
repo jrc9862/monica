@@ -31,9 +31,9 @@ const update = () => {
       </h3>
     </div>
 
-    <div class="mb-6 rounded-xs border border-gray-200 text-sm dark:border-gray-700">
+    <div class="mb-6 rounded-xs border border-border text-sm dark:border-border">
       <!-- help text -->
-      <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
+      <div class="flex rounded-t border-b border-border bg-bg px-3 py-2 dark:border-border dark:bg-surface">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 pe-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             stroke-linecap="round"
@@ -46,9 +46,9 @@ const update = () => {
           <p>{{ $t('You might need to reload the page to see the changes.') }}</p>
         </div>
       </div>
-      <ul class="rounded-b rounded-t bg-white dark:bg-gray-900">
+      <ul class="rounded-b rounded-t bg-surface dark:bg-surface">
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-calendar" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-calendar"
@@ -57,12 +57,12 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Calendar tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Calendar tab') }} </span>
           </label>
         </li>
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-journal" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-journal"
@@ -71,12 +71,12 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Journals tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Journals tab') }} </span>
           </label>
         </li>
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-group" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-group"
@@ -85,12 +85,12 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Groups tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Groups tab') }} </span>
           </label>
         </li>
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-companies" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-companies"
@@ -99,12 +99,12 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Companies tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Companies tab') }} </span>
           </label>
         </li>
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-tasks" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-tasks"
@@ -113,12 +113,12 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Tasks tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Tasks tab') }} </span>
           </label>
         </li>
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-reports" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-reports"
@@ -127,12 +127,12 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Reports tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Reports tab') }} </span>
           </label>
         </li>
         <li
-          class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <label for="toggle-files" class="relative inline-flex cursor-pointer items-center">
             <input
               id="toggle-files"
@@ -141,8 +141,8 @@ const update = () => {
               class="peer hidden"
               @change="update" />
             <div
-              class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-accent/40" />
-            <span class="ms-3 dark:text-gray-300"> {{ $t('Show Files tab') }} </span>
+              class="peer h-6 w-11 rounded-full bg-bg after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-border after:bg-surface after:transition-all after:content-[''] peer-checked:bg-accent peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-hidden peer-focus:ring-4 peer-focus:ring-accent/40 dark:border-border dark:bg-surface dark:peer-focus:ring-accent/40" />
+            <span class="ms-3 dark:text-text"> {{ $t('Show Files tab') }} </span>
           </label>
         </li>
       </ul>

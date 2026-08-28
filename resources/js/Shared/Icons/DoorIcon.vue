@@ -8,7 +8,7 @@ defineProps({
   <svg
     v-if="type == 'exit'"
     xmlns="http://www.w3.org/2000/svg"
-    class="me-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
+    class="me-1 inline-block h-4 w-4 cursor-pointer text-text dark:text-text sm:h-4 sm:w-4"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor">

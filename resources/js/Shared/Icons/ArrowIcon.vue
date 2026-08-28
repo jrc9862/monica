@@ -13,7 +13,7 @@ defineProps({
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
-    class="h-6 w-6 inline text-gray-600">
+    class="h-6 w-6 inline text-text">
     <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
   </svg>
 
@@ -36,7 +36,7 @@ defineProps({
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
-    class="h-6 w-6 inline text-gray-600">
+    class="h-6 w-6 inline text-text">
     <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
   </svg>
 

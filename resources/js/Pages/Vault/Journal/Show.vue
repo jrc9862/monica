@@ -25,10 +25,10 @@ const destroy = () => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b sm:border-gray-300 dark:border-gray-700">
+    <nav class="bg-surface dark:bg-surface sm:border-b sm:border-border dark:border-border">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-center gap-1 text-sm">
-          <div class="text-gray-600 dark:text-gray-400">
+          <div class="text-text dark:text-text">
             {{ $t('You are here:') }}
           </div>
           <div class="inline">
@@ -57,7 +57,7 @@ const destroy = () => {
           <div class="mb-8 inline-flex rounded-md shadow-xs">
             <Link
               :href="data.url.show"
-              class="inline-flex items-center rounded-s-lg border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-accent hover:bg-gray-100 hover:text-accent-hover dark:border-gray-600 dark:bg-gray-400 dark:font-bold dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
+              class="inline-flex items-center rounded-s-lg border border-border bg-bg px-4 py-2 text-sm font-medium text-accent hover:bg-hover hover:text-accent-hover dark:border-border dark:bg-surface dark:font-bold dark:text-white dark:hover:bg-hover dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -76,8 +76,8 @@ const destroy = () => {
 
             <Link
               :href="data.url.photo_index"
-              :class="{ 'bg-gray-100 text-accent dark:bg-gray-400 dark:font-bold': defaultTab === 'life_events' }"
-              class="inline-flex items-center rounded-e-md border-b border-s border-t border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-accent-hover dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
+              :class="{ 'bg-bg text-accent dark:bg-surface dark:font-bold': defaultTab === 'life_events' }"
+              class="inline-flex items-center rounded-e-md border-b border-s border-t border-border bg-surface px-4 py-2 text-sm font-medium text-text hover:bg-hover hover:text-accent-hover dark:border-border dark:bg-surface dark:text-white dark:hover:bg-hover dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -106,7 +106,7 @@ const destroy = () => {
             <ul v-if="data.years.length > 0" class="mb-8">
               <li v-for="year in data.years" :key="year.year" class="mb-2 flex items-center justify-between last:mb-0">
                 <Link :href="year.url.show" class="text-accent hover:underline">{{ year.year }}</Link>
-                <span class="text-sm text-gray-400">{{ year.posts }}</span>
+                <span class="text-sm text-text-muted">{{ year.posts }}</span>
               </li>
             </ul>
 
@@ -117,7 +117,7 @@ const destroy = () => {
             <ul v-if="data.tags.length > 0">
               <li v-for="tag in data.tags" :key="tag.id" class="mb-2 flex items-center justify-between">
                 <span>{{ tag.name }}</span>
-                <span class="text-sm text-gray-400">{{ tag.count }}</span>
+                <span class="text-sm text-text-muted">{{ tag.count }}</span>
               </li>
             </ul>
 
@@ -139,29 +139,29 @@ const destroy = () => {
               <div v-for="month in data.months" :key="month.id" class="text-center">
                 <div class="mb-1 text-xs">{{ month.month }}</div>
 
-                <div :class="month.color" class="h-3 rounded-md border border-gray-200 dark:border-gray-700"></div>
+                <div :class="month.color" class="h-3 rounded-md border border-border dark:border-border"></div>
               </div>
             </div>
 
             <!-- list of posts -->
             <ul
               v-if="data.months.length > 0 && data.years.length > 0"
-              class="post-list mb-6 rounded-lg border border-b-0 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              class="post-list mb-6 rounded-lg border border-b-0 border-border bg-surface dark:border-border dark:bg-surface">
               <!-- loop on months -->
               <li v-for="month in data.months" :key="month.id">
                 <div v-if="month.posts.length > 0">
                   <div
-                    class="border-b border-gray-200 bg-gray-100 px-5 py-2 text-sm font-semibold dark:border-gray-700 dark:bg-gray-900">
+                    class="border-b border-border bg-bg px-5 py-2 text-sm font-semibold dark:border-border dark:bg-surface">
                     {{ month.month_human_format }}
                   </div>
 
-                  <ul class="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                  <ul class="border-b border-border bg-surface dark:border-border dark:bg-surface">
                     <li
                       v-for="post in month.posts"
                       :key="post.id"
-                      class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                      class="flex items-center border-b border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                       <!-- written at -->
-                      <div class="me-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
+                      <div class="me-4 rounded-lg border border-border p-2 text-center leading-tight">
                         <span class="block text-xs uppercase">{{ post.written_at_day }}</span>
                         <span class="text-xl">{{ post.written_at_day_number }}</span>
                       </div>
@@ -179,7 +179,7 @@ const destroy = () => {
                         <!-- photo -->
                         <div
                           v-if="post.photo"
-                          class="mr-2 rounded-md border border-gray-200 p-1 shadow-xs hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                          class="mr-2 rounded-md border border-border p-1 shadow-xs hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                           <img :src="post.photo.url.show" :alt="post.photo.id" />
                         </div>
                       </div>
@@ -190,7 +190,7 @@ const destroy = () => {
             </ul>
 
             <!-- blank state -->
-            <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            <div v-else class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <p class="p-5 text-center">
                 <img src="/img/journal_blank_index.svg" class="mx-auto block h-32 w-32 py-6" />
 
@@ -216,10 +216,10 @@ const destroy = () => {
               <div v-for="slice in data.slices" :key="slice.id" class="mb-6 last:mb-0">
                 <img v-if="slice.cover_image" class="h-32 w-full rounded-t" :src="slice.cover_image" alt="" />
                 <div
-                  class="rounded-b border-b border-s border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+                  class="rounded-b border-b border-s border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
                   :class="slice.cover_image ? '' : 'border-t'">
                   <Link :href="slice.url.show" class="font-semibold">{{ slice.name }}</Link>
-                  <p class="text-xs text-gray-600">{{ slice.date_range }}</p>
+                  <p class="text-xs text-text">{{ slice.date_range }}</p>
                 </div>
               </div>
             </div>
@@ -227,7 +227,7 @@ const destroy = () => {
             <!-- no slices of life yet -->
             <div
               v-if="data.slices.length === 0"
-              class="mb-1 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              class="mb-1 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <img src="/img/journal_slice_of_life_blank.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-14 w-14" />
               <p class="px-5 pb-5 pt-2 text-center">{{ $t('Group journal entries together with slices of life.') }}</p>
             </div>

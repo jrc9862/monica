@@ -1,33 +1,33 @@
 <template>
   <div class="mb-4">
-    <div class="ms-4 border-s border-gray-200 dark:border-gray-700">
+    <div class="ms-4 border-s border-border dark:border-border">
       <div v-for="feedItem in feed" :key="feedItem.id" class="mb-8">
         <!-- action & user -->
         <div class="mb-2 flex">
           <div class="relative -start-[11px] top-[3px] w-6">
             <avatar
               :data="feedItem.author.avatar"
-              :class="'relative h-5 w-5 rounded-full border border-gray-200 dark:border-gray-800'" />
+              :class="'relative h-5 w-5 rounded-full border border-border dark:border-border'" />
           </div>
 
           <div class="flex flex-col md:flex-row w-full md:items-center justify-between">
             <!-- action description -->
-            <p class="me-2 text-gray-400">
+            <p class="me-2 text-text-muted">
               <!-- author name + link to profile -->
               <InertiaLink
                 v-if="feedItem.author.url"
                 :href="feedItem.author.url"
-                class="font-medium text-gray-800 hover:underline dark:text-gray-200"
+                class="font-medium text-text hover:underline dark:text-text"
                 >{{ feedItem.author.name }}</InertiaLink
               >
-              <span v-else class="font-medium text-gray-800 dark:text-gray-200">{{ feedItem.author.name }}</span>
+              <span v-else class="font-medium text-text dark:text-text">{{ feedItem.author.name }}</span>
 
               <!-- action done -->
               <span class="ms-2">{{ feedItem.sentence }}</span>
             </p>
 
             <!-- date of the action -->
-            <p class="mb-1 md:mb-0 flex items-center gap-1 text-sm text-gray-400">
+            <p class="mb-1 md:mb-0 flex items-center gap-1 text-sm text-text-muted">
               <span>{{ feedItem.created_at }}</span>
 
               <CalendarDays class="h-3 w-3" />
@@ -144,7 +144,7 @@
 
         <!-- details -->
         <div v-if="feedItem.description" class="ms-6">
-          <div class="rounded-lg border border-gray-300 px-3 py-2">
+          <div class="rounded-lg border border-border px-3 py-2">
             <span class="text-sm">
               {{ feedItem.description }}
             </span>
@@ -160,7 +160,7 @@
     </div>
 
     <!-- loading mode -->
-    <div v-if="loading" class="mb-5 rounded-lg border border-gray-200 p-20 text-center">
+    <div v-if="loading" class="mb-5 rounded-lg border border-border p-20 text-center">
       <loading />
     </div>
 
@@ -168,7 +168,7 @@
     <div class="text-center" v-if="paginator.hasMorePages">
       <span
         @click="load()"
-        class="cursor-pointer rounded-xs border border-gray-200 px-3 py-1 text-sm text-accent hover:border-gray-500 dark:border-gray-700">
+        class="cursor-pointer rounded-xs border border-border px-3 py-1 text-sm text-accent hover:border-accent dark:border-border">
         {{ $t('Load previous entries') }}
       </span>
     </div>

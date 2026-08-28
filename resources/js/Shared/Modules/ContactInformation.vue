@@ -151,9 +151,9 @@ const destroy = () => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <Headset class="h-4 w-4 text-gray-600" />
+        <Headset class="h-4 w-4 text-text" />
 
         <span class="font-semibold">
           {{ $t('Contact information') }}
@@ -169,9 +169,9 @@ const destroy = () => {
     <!-- add a contact information modal -->
     <form
       v-if="adding"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 dark:border-gray-700">
+      <div class="border-b border-border dark:border-border">
         <div v-if="form.errors.length > 0" class="p-5">
           <Errors :errors="form.errors" />
         </div>
@@ -191,8 +191,8 @@ const destroy = () => {
         </div>
 
         <!-- content -->
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-          <label class="mb-2 block text-sm dark:text-gray-100" for="newData">
+        <div class="border-b border-border p-5 dark:border-border">
+          <label class="mb-2 block text-sm dark:text-text" for="newData">
             {{ $t('Content') }}
           </label>
           <div class="relative flex">
@@ -233,7 +233,7 @@ const destroy = () => {
     <!-- blank state -->
     <div
       v-if="localData.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_contact.svg" :alt="$t('Contact informations')" class="mx-auto mt-4 h-20 w-20" />
       <p class="px-5 pb-5 pt-2 text-center">
         {{ $t('There are no contact informations yet.') }}
@@ -243,11 +243,11 @@ const destroy = () => {
     <template v-else v-for="(contactInformationGroup, gid) in data.contact_information_groups" :key="gid">
       <div v-if="localData[gid] !== undefined && localData[gid].length > 0">
         <p>{{ contactInformationGroup }}</p>
-        <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <ul class="mb-4 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
           <li
             v-for="info in localData[gid]"
             :key="info.id"
-            class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+            class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
             <!-- contact information -->
             <div v-if="editingId !== info.id" class="flex items-center justify-between px-3 py-2">
               <div>
@@ -258,10 +258,10 @@ const destroy = () => {
                   target="_blank">
                   {{ info.data }}
                 </a>
-                <span v-if="info.contact_information_kind" class="me-2 text-xs text-gray-500">
+                <span v-if="info.contact_information_kind" class="me-2 text-xs text-text-muted">
                   — {{ info.contact_information_kind.name }}
                 </span>
-                <span v-if="info.label !== info.data" class="ms-2 text-xs text-gray-500"> ({{ info.label }}) </span>
+                <span v-if="info.label !== info.data" class="ms-2 text-xs text-text-muted"> ({{ info.label }}) </span>
               </div>
 
               <!-- actions -->
@@ -276,8 +276,8 @@ const destroy = () => {
             </div>
 
             <!-- edit info modal -->
-            <form v-if="editingId === info.id" class="bg-gray-50 dark:bg-gray-900" @submit.prevent="update(info)">
-              <div class="border-b border-gray-200 dark:border-gray-700">
+            <form v-if="editingId === info.id" class="bg-bg dark:bg-surface" @submit.prevent="update(info)">
+              <div class="border-b border-border dark:border-border">
                 <div v-if="form.errors.length > 0" class="p-5">
                   <Errors :errors="form.errors" />
                 </div>
@@ -295,8 +295,8 @@ const destroy = () => {
                 </div>
 
                 <!-- content -->
-                <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-                  <label class="mb-2 block text-sm dark:text-gray-100" for="rename">
+                <div class="border-b border-border p-5 dark:border-border">
+                  <label class="mb-2 block text-sm dark:text-text" for="rename">
                     {{ $t('Content') }}
                   </label>
                   <div class="relative flex">

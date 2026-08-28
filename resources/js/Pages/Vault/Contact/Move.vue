@@ -21,11 +21,11 @@ const move = (vault) => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -51,13 +51,13 @@ const move = (vault) => {
       </div>
     </nav>
 
-    <main class="relative sm:mt-24">
+    <main class="relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <h2 class="mb-6 text-center text-lg">Move {{ data.contact.name }} to another vault</h2>
-        <div class="mb-6 rounded-xs border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <div class="mb-6 rounded-xs border border-border bg-surface dark:border-border dark:bg-surface">
           <!-- help -->
           <div
-            class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900 dark:bg-slate-900">
+            class="flex rounded-t border-b border-border bg-bg px-3 py-2 dark:border-border dark:bg-surface dark:bg-surface">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 grow pe-2"
@@ -80,11 +80,11 @@ const move = (vault) => {
             </p>
           </div>
 
-          <ul v-if="data.vaults" class="rounded-b bg-white dark:bg-gray-900">
+          <ul v-if="data.vaults" class="rounded-b bg-surface dark:bg-surface">
             <li
               v-for="vault in data.vaults"
               :key="vault.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <div class="flex items-center justify-between px-5 py-2">
                 <span>{{ vault.name }}</span>
 

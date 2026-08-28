@@ -39,11 +39,11 @@ const destroy = () => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -91,7 +91,7 @@ const destroy = () => {
                 d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
             </svg>
 
-            <p class="text-center text-gray-600">
+            <p class="text-center text-text">
               {{ $tChoice(':count contact|:count contacts', data.contact_count, { count: data.contact_count }) }}
             </p>
           </div>
@@ -111,7 +111,7 @@ const destroy = () => {
                 d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
             </svg>
 
-            <p class="text-center text-gray-600">{{ $t('Group type: :name', { name: data.type.label }) }}</p>
+            <p class="text-center text-text">{{ $t('Group type: :name', { name: data.type.label }) }}</p>
           </div>
 
           <!-- actions -->
@@ -131,7 +131,7 @@ const destroy = () => {
         <div v-for="role in data.roles" :key="role.id" class="mb-8">
           <p
             v-if="role.contacts.length > 0"
-            class="mb-2 me-2 inline-block rounded-xs bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 last:me-0">
+            class="mb-2 me-2 inline-block rounded-xs bg-bg px-2 py-1 text-xs font-semibold text-text last:me-0">
             {{ role.label }}
           </p>
 
@@ -139,12 +139,12 @@ const destroy = () => {
             <div
               v-for="contact in role.contacts"
               :key="contact.id"
-              class="rounded-lg border border-gray-200 bg-white p-3 text-center hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+              class="rounded-lg border border-border bg-surface p-3 text-center hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <avatar :data="contact.avatar" :class="'inline-block h-14 w-14 rounded-full'" />
 
               <Link :href="contact.url" class="text-accent hover:underline">{{ contact.name }}</Link>
 
-              <span v-if="contact.age" class="ms-1 text-xs text-gray-500">({{ contact.age }})</span>
+              <span v-if="contact.age" class="ms-1 text-xs text-text-muted">({{ contact.age }})</span>
             </div>
           </div>
         </div>

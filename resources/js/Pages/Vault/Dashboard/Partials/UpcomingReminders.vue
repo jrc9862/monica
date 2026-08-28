@@ -1,108 +1,53 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import CrmAvatar from '@/Shared/CrmAvatar.vue';
+import PanelHeader from '@/Shared/Crm/PanelHeader.vue';
+import CrmIcon from '@/Shared/Icons/CrmIcon.vue';
+
+defineProps({
+  data: { type: Object, default: null },
+});
+</script>
+
 <template>
-  <div class="mb-10">
-    <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
-      <span class="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
+  <div>
+    <PanelHeader icon="calendar" :title="$t('Reminders for the next 30 days')" :size="16" />
+
+    <div v-if="data.reminders.length > 0" class="crm-card overflow-hidden">
+      <Link
+        v-for="reminder in data.reminders"
+        :key="reminder.id"
+        :href="reminder.contact.url.show"
+        class="crm-row-hover block px-[18px] py-4"
+        style="border-bottom: 1px solid var(--divider)">
+        <div class="mb-0.5 flex items-center gap-2">
+          <span class="whitespace-nowrap" style="font: 400 11px var(--mono); color: var(--muted)">
+            {{ reminder.scheduled_at }}
+          </span>
+          <CrmAvatar :data="reminder.contact.avatar" :size="18" />
+          <span style="font: 500 13px var(--mono); color: var(--primary)">{{ reminder.contact.name }}</span>
+        </div>
+        <div
+          style="
+            font:
+              400 15px Inter,
+              sans-serif;
+            color: var(--ink);
+          ">
+          {{ reminder.label }}
+        </div>
+      </Link>
+    </div>
+
+    <div v-else class="crm-card flex items-center gap-3 p-[18px]">
+      <span class="crm-tint h-[38px] w-[38px]" style="background: var(--primary-soft); color: var(--primary)">
+        <CrmIcon name="bell" :size="18" />
       </span>
-
-      {{ $t('Reminders for the next 30 days') }}
-    </h3>
-
-    <!-- list of reminders -->
-    <div v-if="data.reminders.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <li
-          v-for="reminder in data.reminders"
-          :key="reminder.id"
-          class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:hover:bg-slate-900">
-          <div class="flex items-center">
-            <p class="me-3 text-xs text-gray-400">
-              {{ reminder.scheduled_at }}
-            </p>
-            <div class="flex items-center text-sm">
-              <avatar :data="reminder.contact.avatar" :class="'me-2 h-4 w-4 rounded-full'" />
-
-              <InertiaLink :href="reminder.contact.url.show" class="text-accent hover:underline">
-                {{ reminder.contact.name }}
-              </InertiaLink>
-            </div>
-          </div>
-          <p class="text-sm">
-            {{ reminder.label }}
-          </p>
-        </li>
-      </ul>
+      <p class="crm-meta-12">{{ $t('No upcoming reminders.') }}</p>
     </div>
 
-    <!-- blank state -->
-    <div
-      v-if="data.reminders.length === 0"
-      class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
-      <img src="/img/dashboard_blank_reminders.svg" :alt="$t('Reminders')" class="me-2 h-14 w-14" />
-      <p class="px-5 text-center">
-        {{ $t('No upcoming reminders.') }}
-      </p>
-    </div>
-
-    <div v-if="data.reminders.length > 0" class="text-center">
-      <InertiaLink
-        :href="data.url.index"
-        class="rounded-xs border border-gray-200 px-3 py-1 text-sm text-accent hover:border-gray-500 dark:border-gray-700">
-        {{ $t('View all') }}
-      </InertiaLink>
+    <div v-if="data.reminders.length > 0" class="mt-3 text-center">
+      <Link :href="data.url.index" class="crm-btn-quiet">{{ $t('View all') }}</Link>
     </div>
   </div>
 </template>
-
-<script>
-import { Link } from '@inertiajs/vue3';
-import Avatar from '@/Shared/Avatar.vue';
-
-export default {
-  components: {
-    InertiaLink: Link,
-    Avatar,
-  },
-
-  props: {
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-};
-</script>
-
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>

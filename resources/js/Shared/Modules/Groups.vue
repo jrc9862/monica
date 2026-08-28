@@ -1,11 +1,11 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <Handshake class="h-4 w-4 text-gray-600" />
+        <Handshake class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Groups') }} </span>
+        <span class="crm-title"> {{ $t('Groups') }} </span>
       </div>
       <pretty-button
         :text="$t('Add to group')"
@@ -16,14 +16,14 @@
 
     <form
       v-if="addGroupMode"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 dark:border-gray-700">
+      <div class="border-b border-border dark:border-border">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div class="border-b border-border p-5 dark:border-border">
           <!-- group type -->
           <dropdown
             v-model.number="form.group_id"
@@ -36,7 +36,7 @@
         </div>
 
         <!-- name -->
-        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="chooseGroupTypeShown" class="border-b border-border p-5 dark:border-border">
           <text-input
             ref="newName"
             v-model="form.name"
@@ -50,7 +50,7 @@
             @esc-key-pressed="addPetModalShown = false" />
         </div>
 
-        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="chooseGroupTypeShown" class="border-b border-border p-5 dark:border-border">
           <!-- group type -->
           <dropdown
             v-model.number="form.group_type_id"
@@ -80,11 +80,11 @@
     </form>
 
     <!-- groups -->
-    <ul v-if="filteredGroups.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0 dark:border-gray-700">
+    <ul v-if="filteredGroups.length > 0" class="mb-4 rounded-lg border border-border last:mb-0 dark:border-border">
       <li
         v-for="group in filteredGroups"
         :key="group.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+        class="item-list flex items-center justify-between border-b border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
         <div>
           <p class="font-semibold">{{ group.name }}</p>
 
@@ -112,7 +112,7 @@
     <!-- blank state -->
     <div
       v-if="localGroups.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_group.svg" :alt="$t('Groups')" class="mx-auto mt-4 h-14 w-14" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('The contact does not belong to any group yet.') }}</p>
     </div>

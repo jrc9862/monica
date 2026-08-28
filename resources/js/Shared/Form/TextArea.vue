@@ -102,7 +102,7 @@ defineExpose({
 
 <template>
   <div>
-    <label v-if="label" class="mb-2 block relative text-sm dark:text-gray-100" :for="id">
+    <label v-if="label" class="mb-2 block relative text-sm dark:text-text" :for="id">
       {{ label }}
       <span v-if="!required" class="optional-badge rounded-xs px-[3px] py-px text-xs">
         {{ $t('optional') }}
@@ -110,7 +110,7 @@ defineExpose({
 
       <span
         v-if="maxlength && displayMaxLength"
-        class="length absolute end-0 top-0 rounded-xs px-1 py-[3px] text-xs dark:text-gray-100">
+        class="length absolute end-0 top-0 rounded-xs px-1 py-[3px] text-xs dark:text-text">
         {{ charactersLeft }}
       </span>
     </label>

@@ -1,15 +1,15 @@
 <template>
   <div class="mb-4">
-    <div class="pb-1 mb-2 items-center justify-between border-b border-gray-200 dark:border-gray-700 flex">
+    <div class="pb-1 mb-2 items-center justify-between border-b border-border dark:border-border flex">
       <div class="text-xs">{{ $t('Labels') }}</div>
       <span v-if="!editLabelModalShown" class="relative cursor-pointer" @click="showEditModal">
-        <Pencil class="h-3 w-3 text-gray-400" />
+        <Pencil class="h-3 w-3 text-text-muted" />
       </span>
 
       <!-- close button -->
       <span
         v-if="editLabelModalShown"
-        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        class="cursor-pointer text-xs text-text dark:text-text"
         @click="editLabelModalShown = false">
         {{ $t('Close') }}
       </span>
@@ -18,9 +18,9 @@
     <!-- edit labels -->
     <div
       v-if="editLabelModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <!-- filter list of labels -->
-      <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+      <div class="border-b border-border p-2 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -36,11 +36,11 @@
       </div>
 
       <!-- labels in vault -->
-      <ul class="label-list overflow-auto bg-white dark:bg-gray-900" :class="filteredLabels.length > 0 ? 'h-40' : ''">
+      <ul class="label-list overflow-auto bg-surface dark:bg-surface" :class="filteredLabels.length > 0 ? 'h-40' : ''">
         <!-- case if the label does not exist and needs to be created -->
         <li
           v-if="showCreateNewLabel"
-          class="cursor-pointer border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+          class="cursor-pointer border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface hover:dark:bg-surface"
           @click="store()">
           {{ $t('Create new label') }} <span class="italic">"{{ form.search }}"</span>
         </li>
@@ -48,7 +48,7 @@
         <li
           v-for="label in filteredLabels"
           :key="label.id"
-          class="flex cursor-pointer items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+          class="flex cursor-pointer items-center justify-between border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @click="set(label)">
           <div>
             <span class="me-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color" />
@@ -61,7 +61,7 @@
         <!-- blank state when there is no label at all -->
         <li
           v-if="filteredLabels.length === 0 && form.search.length === ''"
-          class="border-b border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800">
+          class="border-b border-border px-3 py-2 text-sm text-text hover:bg-hover dark:border-border dark:bg-surface dark:text-text dark:hover:bg-hover">
           {{ $t('Please type a few characters to create a new label.') }}
         </li>
       </ul>
@@ -79,7 +79,7 @@
     </div>
 
     <!-- blank state -->
-    <p v-if="localLabels.length === 0" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('Not set') }}</p>
+    <p v-if="localLabels.length === 0" class="text-sm text-text dark:text-text">{{ $t('Not set') }}</p>
   </div>
 </template>
 

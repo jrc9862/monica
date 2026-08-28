@@ -1,11 +1,11 @@
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:border-b border-gray-200 dark:border-gray-700">
+    <nav class="bg-surface dark:bg-surface sm:border-b border-border dark:border-border">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -44,7 +44,7 @@
       </div>
     </nav>
 
-    <main class="relative sm:mt-20">
+    <main class="relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
@@ -60,7 +60,7 @@
         </div>
 
         <!-- help text -->
-        <div class="mb-6 flex rounded-xs border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
+        <div class="mb-6 flex rounded-xs border bg-bg px-3 py-2 text-sm dark:border-border dark:bg-surface">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 grow pe-2"
@@ -88,9 +88,9 @@
         <!-- modal to create a post template -->
         <form
           v-if="createPostTemplateModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
           @submit.prevent="submit()">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-input
@@ -123,7 +123,7 @@
             <template #item="{ element }">
               <div v-if="editPostTemplateId !== element.id">
                 <div
-                  class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+                  class="item-list mb-2 rounded-lg border border-border bg-surface py-2 pe-5 ps-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                   <div class="mb-3 flex items-center justify-between">
                     <!-- icon to move position -->
                     <div class="me-2 flex">
@@ -164,7 +164,7 @@
 
                   <!-- available sections -->
                   <div class="ms-8">
-                    <p class="mb-1 text-sm text-gray-500">{{ $t('Sections:') }}</p>
+                    <p class="mb-1 text-sm text-text-muted">{{ $t('Sections:') }}</p>
 
                     <draggable
                       :list="element.post_template_sections"
@@ -175,7 +175,7 @@
                       <template #item="{ element: element2 }">
                         <div v-if="editSectionId !== element2.id">
                           <div
-                            class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+                            class="item-list mb-2 rounded-lg border border-border bg-surface py-2 pe-5 ps-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                             <div class="flex items-center justify-between">
                               <!-- icon to move position -->
                               <div class="me-2 flex">
@@ -221,9 +221,9 @@
                         <!-- edit a section form -->
                         <form
                           v-else
-                          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+                          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
                           @submit.prevent="updateSection(element2)">
-                          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+                          <div class="border-b border-border p-5 dark:border-border">
                             <errors :errors="form.errors" />
 
                             <text-input
@@ -262,9 +262,9 @@
                     <!-- form: create new section -->
                     <form
                       v-if="createSectionModalShown && postTemplateId === element.id"
-                      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+                      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
                       @submit.prevent="submitSection(element)">
-                      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+                      <div class="border-b border-border p-5 dark:border-border">
                         <errors :errors="form.errors" />
 
                         <text-input
@@ -302,7 +302,7 @@
                         !createSectionModalShown &&
                         postTemplateId !== element.id
                       "
-                      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
                       <p class="p-5 text-center">
                         {{ $t('No roles yet.') }}
 
@@ -319,9 +319,9 @@
 
               <form
                 v-else
-                class="item-list mb-2 rounded-lg border border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+                class="item-list mb-2 rounded-lg border border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
                 @submit.prevent="update(element)">
-                <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+                <div class="border-b border-border p-5 dark:border-border">
                   <errors :errors="form.errors" />
 
                   <text-input

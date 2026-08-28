@@ -12,11 +12,11 @@ defineProps({
 <template>
   <Layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -60,7 +60,7 @@ defineProps({
 
             <div
               v-if="data.wikipedia.description"
-              class="rounded-xs border border-gray-200 p-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="rounded-xs border border-border p-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <p class="mb-3">{{ data.wikipedia.description }}</p>
 
               <img :src="data.wikipedia.thumbnail" :alt="'Image of ' + data.city" class="mb-2 rounded-xs" />
@@ -73,11 +73,11 @@ defineProps({
 
           <!-- right -->
           <div>
-            <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            <ul class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <li
                 v-for="address in data.addresses"
                 :key="address.id"
-                class="item-list border-b border-gray-200 px-3 pb-2 pt-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                class="item-list border-b border-border px-3 pb-2 pt-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                 <span class="mb-1 block">{{ address.address }}</span>
                 <ul class="list">
                   <li v-for="contact in address.contacts" :key="contact.id" class="me-3 inline">

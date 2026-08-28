@@ -16,7 +16,10 @@ class UpdateNote extends Tool
 
     public function description(): string
     {
-        return 'Update the title and body of an existing note. body is required by Monica even on update, so re-send it along with any changes.';
+        return 'Update the title and body of an existing note. This replaces the note rather than patching it: '
+            .'omitting title clears the existing title. Read the note with list-notes first and send back both '
+            .'fields, editing only what you mean to change. body is required by Monica even when you are only '
+            .'changing the title.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema
@@ -25,8 +28,8 @@ class UpdateNote extends Tool
             ->string('contact_id')
             ->description('The id of the contact the note belongs to.')
             ->required()
-            ->string('note_id')
-            ->description('The id of the note to update.')
+            ->integer('note_id')
+            ->description('The id of the note to update, as returned by list-notes.')
             ->required()
             ->string('vault_id')
             ->description('The vault the contact belongs to. Required if the user has access to more than one vault.')

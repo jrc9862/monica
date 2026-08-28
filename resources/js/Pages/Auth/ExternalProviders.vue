@@ -29,22 +29,22 @@ const open = (provider) => {
 
 <template>
   <div v-if="providersExists">
-    <fieldset class="border-t border-gray-300 dark:border-gray-700">
+    <fieldset class="border-t border-border dark:border-border">
       <legend class="mx-auto px-4 text-l italic">
         {{ $t('Or') }}
       </legend>
     </fieldset>
-    <p class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
+    <p class="mb-3 block text-sm font-medium text-text dark:text-text">
       {{ $t('Simply connect with:') }}
     </p>
     <div class="flex flex-wrap">
       <JetButton
         v-for="(provider, id) in providers"
         :key="id"
-        class="cursor-pointer mb-2 me-2 inline w-32 align-middle !bg-white !text-gray-800 hover:!bg-gray-400 !focus:border-gray-100 !focus:ring-gray-700"
+        class="cursor-pointer mb-2 me-2 inline w-32 align-middle !bg-surface !text-text hover:!bg-surface !focus:border-border !focus:ring-gray-700"
         :href="route('login.provider', { driver: id })"
         @click.prevent="open(id)">
-        <img :src="provider.logo" :alt="provider.name" class="relative me-2 h-4 w-4 align-middle bg-white" />
+        <img :src="provider.logo" :alt="provider.name" class="relative me-2 h-4 w-4 align-middle bg-surface" />
         <span class="align-middle">
           {{ provider.name }}
         </span>

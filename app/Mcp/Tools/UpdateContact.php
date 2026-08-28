@@ -16,7 +16,10 @@ class UpdateContact extends Tool
 
     public function description(): string
     {
-        return 'Update an existing contact\'s name fields. first_name is required by Monica even on update, so it is re-sent along with any changed fields.';
+        return 'Update an existing contact\'s name fields. This replaces the whole name record rather than '
+            .'patching it: every name field you omit is cleared. Read the contact with get-contact first, then '
+            .'send back all of its current values with only the ones you mean to change edited. first_name is '
+            .'required by Monica even when it is not what you are changing.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema

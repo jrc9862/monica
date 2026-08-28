@@ -1,121 +1,119 @@
 <template>
-  <layout :layout-data="layoutData" :inside-vault="true">
-    <main class="relative sm:mt-24">
-      <div class="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
-        <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <!-- left -->
+  <layout :title="$t('Files')" :layout-data="layoutData" :inside-vault="true">
+    <div class="min-w-0 flex-1 p-6">
+      <div class="special-grid grid grid-cols-1 gap-6">
+        <!-- left -->
+        <div>
+          <!-- filters -->
           <div>
-            <!-- filters -->
-            <div>
-              <ul class="mb-4">
-                <li class="border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'index' }">
-                  <InertiaLink :href="data.statistics.url.index">
-                    {{ $t('All files') }}
-                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.all }})</span>
-                  </InertiaLink>
-                </li>
-              </ul>
-
-              <p class="mb-2 ps-2 text-sm text-gray-500">
-                {{ $t('Or filter by type') }}
-              </p>
-              <ul>
-                <li class="mb-2 border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'documents' }">
-                  <InertiaLink :href="data.statistics.url.documents">
-                    {{ $t('Documents') }}
-                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.documents }})</span>
-                  </InertiaLink>
-                </li>
-                <li class="mb-2 border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'photos' }">
-                  <InertiaLink :href="data.statistics.url.photos">
-                    {{ $t('Photos') }}
-                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.photos }})</span>
-                  </InertiaLink>
-                </li>
-                <li class="mb-2 border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'avatars' }">
-                  <InertiaLink :href="data.statistics.url.avatars">
-                    {{ $t('Avatars') }}
-                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.avatars }})</span>
-                  </InertiaLink>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- right -->
-          <div class="p-3 sm:px-3 sm:py-0">
-            <errors :errors="errors" />
-
-            <!-- title + cta -->
-            <div class="mb-6 flex items-center justify-between">
-              <h3>
-                <span class="me-1"> 📸 </span>
-                {{ $t('All the files') }}
-              </h3>
-            </div>
-
-            <!-- file list -->
-            <ul
-              v-if="data.files.length > 0"
-              class="file-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-              <li
-                v-for="file in data.files"
-                :key="file.id"
-                class="items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 sm:flex">
-                <!-- left part -->
-                <div class="mb-4 block items-center sm:mb-0 sm:flex">
-                  <!-- created at -->
-                  <p class="me-2 text-sm text-gray-400">
-                    {{ file.created_at }}
-                  </p>
-
-                  <!-- file name -->
-                  <p class="me-4 flex max-w-none sm:max-w-sm">
-                    <span class="block truncate">{{ file.name }}</span>
-
-                    <span class="ms-2">
-                      <span class="rounded-xs border bg-surface-raised px-1 py-0 font-mono text-xs text-accent">
-                        {{ file.size }}
-                      </span>
-                    </span>
-                  </p>
-
-                  <!-- avatar -->
-                  <div v-if="file.object.type === 'contact'" class="flex items-center">
-                    <avatar :data="file.object.avatar" :class="'me-2 h-4 w-4 rounded-full'" />
-                    <InertiaLink :href="file.object.url.show" class="text-sm text-accent hover:underline">
-                      {{ file.object.name }}
-                    </InertiaLink>
-                  </div>
-                </div>
-
-                <!-- right part -->
-                <ul class="text-sm">
-                  <li class="me-4 inline">
-                    <a :href="file.url.download" class="text-accent hover:underline">{{ $t('Download') }}</a>
-                  </li>
-                  <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">
-                    {{ $t('Delete') }}
-                  </li>
-                </ul>
+            <ul class="mb-4">
+              <li class="border-s-2 ps-2" :class="{ 'border-accent': tab === 'index' }">
+                <InertiaLink :href="data.statistics.url.index">
+                  {{ $t('All files') }}
+                  <span class="text-sm text-text-muted">({{ data.statistics.statistics.all }})</span>
+                </InertiaLink>
               </li>
             </ul>
 
-            <!-- pagination -->
-            <Pagination :items="paginator" />
+            <p class="mb-2 ps-2 text-sm text-text-muted">
+              {{ $t('Or filter by type') }}
+            </p>
+            <ul>
+              <li class="mb-2 border-s-2 ps-2" :class="{ 'border-accent': tab === 'documents' }">
+                <InertiaLink :href="data.statistics.url.documents">
+                  {{ $t('Documents') }}
+                  <span class="text-sm text-text-muted">({{ data.statistics.statistics.documents }})</span>
+                </InertiaLink>
+              </li>
+              <li class="mb-2 border-s-2 ps-2" :class="{ 'border-accent': tab === 'photos' }">
+                <InertiaLink :href="data.statistics.url.photos">
+                  {{ $t('Photos') }}
+                  <span class="text-sm text-text-muted">({{ data.statistics.statistics.photos }})</span>
+                </InertiaLink>
+              </li>
+              <li class="mb-2 border-s-2 ps-2" :class="{ 'border-accent': tab === 'avatars' }">
+                <InertiaLink :href="data.statistics.url.avatars">
+                  {{ $t('Avatars') }}
+                  <span class="text-sm text-text-muted">({{ data.statistics.statistics.avatars }})</span>
+                </InertiaLink>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-            <!-- blank state -->
-            <div
-              v-if="data.files.length === 0"
-              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-              <p class="p-5 text-center">
-                {{ $t('There are no files yet.') }}
-              </p>
-            </div>
+        <!-- right -->
+        <div class="p-3 sm:px-3 sm:py-0">
+          <errors :errors="errors" />
+
+          <!-- title + cta -->
+          <div class="mb-5 flex items-center justify-between">
+            <span class="crm-section-title">
+              {{ $t('Files in this vault') }}
+              <span style="font: 400 20px var(--mono); color: var(--muted)">· {{ data.files.length }}</span>
+            </span>
+          </div>
+
+          <!-- file list -->
+          <ul
+            v-if="data.files.length > 0"
+            class="file-list mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+            <li
+              v-for="file in data.files"
+              :key="file.id"
+              class="items-center justify-between border-b border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover sm:flex">
+              <!-- left part -->
+              <div class="mb-4 block items-center sm:mb-0 sm:flex">
+                <!-- created at -->
+                <p class="me-2 text-sm text-text-muted">
+                  {{ file.created_at }}
+                </p>
+
+                <!-- file name -->
+                <p class="me-4 flex max-w-none sm:max-w-sm">
+                  <span class="block truncate">{{ file.name }}</span>
+
+                  <span class="ms-2">
+                    <span class="rounded-xs border bg-surface-raised px-1 py-0 font-mono text-xs text-accent">
+                      {{ file.size }}
+                    </span>
+                  </span>
+                </p>
+
+                <!-- avatar -->
+                <div v-if="file.object.type === 'contact'" class="flex items-center">
+                  <avatar :data="file.object.avatar" :class="'me-2 h-4 w-4 rounded-full'" />
+                  <InertiaLink :href="file.object.url.show" class="text-sm text-accent hover:underline">
+                    {{ file.object.name }}
+                  </InertiaLink>
+                </div>
+              </div>
+
+              <!-- right part -->
+              <ul class="text-sm">
+                <li class="me-4 inline">
+                  <a :href="file.url.download" class="text-accent hover:underline">{{ $t('Download') }}</a>
+                </li>
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">
+                  {{ $t('Delete') }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- pagination -->
+          <Pagination :items="paginator" />
+
+          <!-- blank state -->
+          <div
+            v-if="data.files.length === 0"
+            class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+            <p class="p-5 text-center">
+              {{ $t('There are no files yet.') }}
+            </p>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   </layout>
 </template>
 
@@ -203,7 +201,7 @@ export default {
 }
 
 .special-grid {
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 230px 1fr;
 }
 
 @media (max-width: 480px) {

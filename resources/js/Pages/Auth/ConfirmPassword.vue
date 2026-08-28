@@ -19,7 +19,7 @@ const submit = () => {
 
 <template>
   <JetGuestLayout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <div class="mb-4 text-sm text-text dark:text-text">
       {{ $t('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 

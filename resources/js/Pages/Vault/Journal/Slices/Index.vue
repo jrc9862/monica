@@ -44,11 +44,11 @@ const submit = () => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -105,9 +105,9 @@ const submit = () => {
         <!-- modal to create a new slice of life -->
         <form
           v-if="createSliceOfLifeModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
           @submit.prevent="submit()">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-input
@@ -130,11 +130,11 @@ const submit = () => {
         </form>
 
         <div v-if="localSlices.length !== 0">
-          <ul class="slice-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <ul class="slice-list mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <li
               v-for="slice in localSlices"
               :key="slice.id"
-              class="border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="border-b border-border px-5 py-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <Link :href="slice.url.show" class="text-accent hover:underline">{{ slice.name }}</Link>
               <span v-if="slice.date_range" class="mt-1 block text-xs">{{ slice.date_range }}</span>
             </li>
@@ -144,7 +144,7 @@ const submit = () => {
         <!-- blank state -->
         <div
           v-if="localSlices.length === 0"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
           <img src="/img/journal_slice_of_life_blank.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-44 w-44" />
           <p class="px-5 pb-5 pt-2 text-center">{{ $t('Group journal entries together with slices of life.') }}</p>
         </div>

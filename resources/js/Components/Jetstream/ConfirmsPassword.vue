@@ -107,8 +107,8 @@ const closeModal = () => {
           <WebauthnTest ref="webauthn" @success="confirm()" />
         </div>
 
-        <fieldset v-if="webauthnEnabled" class="mt-5 border-t border-gray-300 dark:border-gray-700">
-          <legend class="mx-auto px-4 text-l italic text-gray-600 dark:text-gray-200">
+        <fieldset v-if="webauthnEnabled" class="mt-5 border-t border-border dark:border-border">
+          <legend class="mx-auto px-4 text-l italic text-text dark:text-text">
             {{ $t('Or') }}
           </legend>
         </fieldset>

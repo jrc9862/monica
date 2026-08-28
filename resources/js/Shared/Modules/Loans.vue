@@ -149,11 +149,11 @@ const toggle = (loan) => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <HandCoins class="h-4 w-4 text-gray-600" />
+        <HandCoins class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Loans') }} </span>
+        <span class="crm-title"> {{ $t('Loans') }} </span>
       </div>
       <pretty-button
         :text="$t('Record a loan')"
@@ -166,11 +166,11 @@ const toggle = (loan) => {
       <!-- add a loan modal -->
       <form
         v-if="createLoanModalShown"
-        class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+        class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
         @submit.prevent="submit()">
-        <div class="border-b border-gray-200 dark:border-gray-700">
+        <div class="border-b border-border dark:border-border">
           <!-- loan options -->
-          <div class="border-b border-gray-200 px-5 pb-3 pt-5 dark:border-gray-700">
+          <div class="border-b border-border px-5 pb-3 pt-5 dark:border-border">
             <ul>
               <li class="me-5 inline-block">
                 <div class="flex items-center">
@@ -180,10 +180,8 @@ const toggle = (loan) => {
                     value="object"
                     name="name-order"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                  <label
-                    for="object"
-                    class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                  <label for="object" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ $t('The loan is an object') }}
                   </label>
                 </div>
@@ -197,10 +195,8 @@ const toggle = (loan) => {
                     value="monetary"
                     name="name-order"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                  <label
-                    for="monetary"
-                    class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                  <label for="monetary" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ $t('The loan is monetary') }}
                   </label>
                 </div>
@@ -209,7 +205,7 @@ const toggle = (loan) => {
           </div>
 
           <!-- name -->
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <text-input
               ref="nameInput"
               v-model="form.name"
@@ -224,7 +220,7 @@ const toggle = (loan) => {
           </div>
 
           <!-- amount + currency -->
-          <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5 dark:border-gray-700">
+          <div v-if="form.type === 'monetary'" class="flex border-b border-border p-5 dark:border-border">
             <text-input
               ref="label"
               v-model="form.amount_lent"
@@ -250,7 +246,7 @@ const toggle = (loan) => {
           </div>
 
           <!-- loaned at -->
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <p class="mb-2 block text-sm">{{ $t('When was the loan made?') }}</p>
 
             <DatePicker
@@ -261,7 +257,7 @@ const toggle = (loan) => {
               :is-dark="isDark()">
               <template #default="{ inputValue, inputEvents }">
                 <input
-                  class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                  class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                   :value="inputValue"
                   v-on="inputEvents" />
               </template>
@@ -269,7 +265,7 @@ const toggle = (loan) => {
           </div>
 
           <!-- loaned by or to -->
-          <div class="flex items-center items-stretch border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center items-stretch border-b border-border dark:border-border">
             <contact-selector
               v-model="form.loaners"
               :search-url="layoutData.vault.url.search_contacts_only"
@@ -278,7 +274,7 @@ const toggle = (loan) => {
               :label="$t('Who makes the loan?')"
               :add-multiple-contacts="true"
               :required="true"
-              :class="'flex-1 border-e border-gray-200 p-5 dark:border-gray-700'" />
+              :class="'flex-1 border-e border-border p-5 dark:border-border'" />
 
             <contact-selector
               v-model="form.loanees"
@@ -331,8 +327,8 @@ const toggle = (loan) => {
 
         <div
           v-if="editedLoanId !== loan.id"
-          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
-          <div class="border-b border-gray-200 px-3 py-2 dark:border-gray-700">
+          class="item-list w-full rounded-lg border border-border bg-surface hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
+          <div class="border-b border-border px-3 py-2 dark:border-border">
             <div class="flex items-center justify-between">
               <div>
                 <span class="me-2 block">
@@ -346,7 +342,7 @@ const toggle = (loan) => {
                   {{ loan.description }}
                 </span>
               </div>
-              <span v-if="loan.loaned_at_human_format" class="me-2 text-sm text-gray-500">{{
+              <span v-if="loan.loaned_at_human_format" class="me-2 text-sm text-text-muted">{{
                 loan.loaned_at_human_format
               }}</span>
             </div>
@@ -382,11 +378,11 @@ const toggle = (loan) => {
         <!-- edit loan modal -->
         <form
           v-if="editedLoanId === loan.id"
-          class="mb-6 w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+          class="mb-6 w-full rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
           @submit.prevent="update(loan)">
-          <div class="border-b border-gray-200 dark:border-gray-700">
+          <div class="border-b border-border dark:border-border">
             <!-- loan options -->
-            <div class="border-b border-gray-200 px-5 pb-3 pt-5 dark:border-gray-700">
+            <div class="border-b border-border px-5 pb-3 pt-5 dark:border-border">
               <ul>
                 <li class="me-5 inline-block">
                   <div class="flex items-center">
@@ -396,10 +392,8 @@ const toggle = (loan) => {
                       value="object"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                    <label
-                      for="object"
-                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                    <label for="object" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('The loan is an object') }}
                     </label>
                   </div>
@@ -413,10 +407,10 @@ const toggle = (loan) => {
                       value="monetary"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                     <label
                       for="monetary"
-                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('The loan is monetary') }}
                     </label>
                   </div>
@@ -425,7 +419,7 @@ const toggle = (loan) => {
             </div>
 
             <!-- name -->
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <text-input
                 ref="name"
                 v-model="form.name"
@@ -440,7 +434,7 @@ const toggle = (loan) => {
             </div>
 
             <!-- amount + currency -->
-            <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5 dark:border-gray-700">
+            <div v-if="form.type === 'monetary'" class="flex border-b border-border p-5 dark:border-border">
               <text-input
                 ref="label"
                 v-model="form.amount_lent"
@@ -466,7 +460,7 @@ const toggle = (loan) => {
             </div>
 
             <!-- loaned at -->
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <p class="mb-2 block text-sm">{{ $t('When was the loan made?') }}</p>
 
               <DatePicker
@@ -477,7 +471,7 @@ const toggle = (loan) => {
                 :is-dark="isDark()">
                 <template #default="{ inputValue, inputEvents }">
                   <input
-                    class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                    class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                     :value="inputValue"
                     v-on="inputEvents" />
                 </template>
@@ -485,7 +479,7 @@ const toggle = (loan) => {
             </div>
 
             <!-- loaned by or to -->
-            <div class="flex items-center items-stretch border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center items-stretch border-b border-border dark:border-border">
               <contact-selector
                 v-model="form.loaners"
                 :search-url="layoutData.vault.url.search_contacts_only"
@@ -494,7 +488,7 @@ const toggle = (loan) => {
                 :label="$t('Who makes the loan?')"
                 :add-multiple-contacts="true"
                 :required="true"
-                :class="'flex-1 border-e border-gray-200 p-5 dark:border-gray-700'" />
+                :class="'flex-1 border-e border-border p-5 dark:border-border'" />
 
               <contact-selector
                 v-model="form.loanees"
@@ -534,7 +528,7 @@ const toggle = (loan) => {
     <!-- blank state -->
     <div
       v-if="localLoans.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_loan.svg" :alt="$t('Loans')" class="mx-auto mt-4 h-14 w-14" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no loans yet.') }}</p>
     </div>

@@ -1,15 +1,13 @@
 <template>
-  <div class="rounded-lg border border-gray-300 dark:border-gray-700">
+  <div class="rounded-lg border border-border dark:border-border">
     <!-- contact information -->
-    <div
-      v-if="!contactViewMode"
-      class="flex items-center border-b border-gray-300 px-3 py-2 text-sm dark:border-gray-700">
+    <div v-if="!contactViewMode" class="flex items-center border-b border-border px-3 py-2 text-sm dark:border-border">
       <avatar
         :data="data.contact.avatar"
-        :class="'relative me-2 h-5 w-5 rounded-full border border-gray-200 dark:border-gray-800'" />
+        :class="'relative me-2 h-5 w-5 rounded-full border border-border dark:border-border'" />
 
       <div class="flex flex-col">
-        <InertiaLink :href="data.contact.url" class="text-gray-800 hover:underline dark:text-gray-200">{{
+        <InertiaLink :href="data.contact.url" class="text-text hover:underline dark:text-text">{{
           data.contact.name
         }}</InertiaLink>
       </div>

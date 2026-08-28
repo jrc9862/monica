@@ -12,9 +12,9 @@ defineProps({
 });
 
 const commonClasses =
-  'relative inline-flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 dark:border-gray-700 leading-5';
+  'relative inline-flex items-center px-4 py-2 text-sm font-medium bg-surface border border-border dark:border-border leading-5';
 const linkClasses =
-  'hover:text-gray-500 focus:outline-hidden focus:ring-3 ring-gray-300 dark:ring-gray-700 focus:border-accent dark:focus:border-accent active:bg-gray-100 dark:active:bg-gray-900 active:text-gray-700 dark:active:text-gray-300 transition ease-in-out duration-150';
+  'hover:text-text focus:outline-hidden focus:ring-3 ring-gray-300 dark:ring-gray-700 focus:border-accent dark:focus:border-accent active:bg-bg dark:active:bg-surface active:text-text dark:active:text-text-muted transition ease-in-out duration-150';
 </script>
 
 <template>
@@ -26,14 +26,14 @@ const linkClasses =
     <div class="flex flex-1 justify-between sm:hidden">
       <span
         v-if="items.currentPage === 1"
-        :class="[commonClasses, 'rounded-md', 'text-gray-500', 'dark:bg-gray-900', 'cursor-default']">
+        :class="[commonClasses, 'rounded-md', 'text-text-muted', 'dark:bg-surface', 'cursor-default']">
         <span v-html="$t('Previous')"></span>
       </span>
       <Link
         v-else
         :href="items.previousPageUrl"
         preserve-scroll
-        :class="[commonClasses, linkClasses, 'rounded-md', 'text-gray-700', 'dark:text-gray-300', 'dark:bg-gray-900']">
+        :class="[commonClasses, linkClasses, 'rounded-md', 'text-text', 'dark:text-text', 'dark:bg-surface']">
         <span v-html="$t('Previous')"></span>
       </Link>
 
@@ -41,26 +41,18 @@ const linkClasses =
         v-if="items.lastPage > 1"
         :href="items.nextPageUrl"
         preserve-scroll
-        :class="[
-          commonClasses,
-          linkClasses,
-          'ms-3',
-          'rounded-md',
-          'text-gray-700',
-          'dark:text-gray-300',
-          'dark:bg-gray-900',
-        ]">
+        :class="[commonClasses, linkClasses, 'ms-3', 'rounded-md', 'text-text', 'dark:text-text', 'dark:bg-surface']">
         <span v-html="$t('Next')"></span>
       </Link>
       <span
         v-else
-        :class="[commonClasses, 'ms-3', 'rounded-md', 'text-gray-500', 'cursor-default', 'dark:bg-gray-900']">
+        :class="[commonClasses, 'ms-3', 'rounded-md', 'text-text-muted', 'cursor-default', 'dark:bg-surface']">
         <span v-html="$t('Next')"></span>
       </span>
     </div>
 
     <div class="hidden sm:flex sm:flex-1 sm:flex-col sm:items-center sm:justify-between">
-      <p v-if="withSummary" class="mb-2 text-xs leading-5 text-gray-700 dark:text-gray-300">
+      <p v-if="withSummary" class="mb-2 text-xs leading-5 text-text dark:text-text">
         <span v-if="items.firstItem">
           {{
             $t('Showing :first to :last of :total results', {
@@ -87,10 +79,10 @@ const linkClasses =
             commonClasses,
             'px-2',
             'rounded-s-md',
-            'text-gray-500',
+            'text-text-muted',
             'focus:z-10',
             'cursor-default',
-            'dark:bg-gray-900',
+            'dark:bg-surface',
           ]"
           :aria-label="$t('Previous')"
           aria-hidden="true"
@@ -108,10 +100,10 @@ const linkClasses =
             linkClasses,
             'px-2',
             'rounded-s-md',
-            'text-gray-500',
-            'dark:bg-gray-900',
-            'hover:text-gray-400',
-            'dark:hover:text-gray-600',
+            'text-text-muted',
+            'dark:bg-surface',
+            'hover:text-text',
+            'dark:hover:text-text',
             'focus:z-10',
           ]"
           :aria-label="$t('Previous')">
@@ -122,20 +114,13 @@ const linkClasses =
           <span
             v-if="link.url === null"
             aria-disabled="true"
-            :class="[
-              commonClasses,
-              '-ms-px',
-              'text-gray-700',
-              'dark:text-gray-500',
-              'dark:bg-gray-900',
-              'cursor-default',
-            ]"
+            :class="[commonClasses, '-ms-px', 'text-text', 'dark:text-text', 'dark:bg-surface', 'cursor-default']"
             v-html="link.label">
           </span>
           <span
             v-else-if="link.active"
             aria-current="page"
-            :class="[commonClasses, '-ms-px', 'text-gray-500', 'bg-gray-100', 'dark:bg-gray-800', 'cursor-default']"
+            :class="[commonClasses, '-ms-px', 'text-text-muted', 'bg-bg', 'dark:bg-surface', 'cursor-default']"
             v-html="link.label">
           </span>
           <Link
@@ -146,9 +131,9 @@ const linkClasses =
               commonClasses,
               linkClasses,
               '-ms-px',
-              'text-gray-700',
-              'dark:text-gray-300',
-              'dark:bg-gray-900',
+              'text-text',
+              'dark:text-text',
+              'dark:bg-surface',
               'focus:z-10',
             ]"
             :aria-label="$t('Go to page :page', { page: link.label })">
@@ -167,10 +152,10 @@ const linkClasses =
             '-ms-px',
             'px-2',
             'rounded-e-md',
-            'text-gray-500',
-            'dark:bg-gray-900',
-            'hover:text-gray-400',
-            'dark:hover:text-gray-600',
+            'text-text-muted',
+            'dark:bg-surface',
+            'hover:text-text',
+            'dark:hover:text-text',
             'focus:z-10',
           ]"
           :aria-label="$t('Next')">
@@ -184,8 +169,8 @@ const linkClasses =
             '-ms-px',
             'px-2',
             'rounded-e-md',
-            'text-gray-500',
-            'dark:bg-gray-900',
+            'text-text-muted',
+            'dark:bg-surface',
             'focus:z-10',
             'cursor-default',
           ]"

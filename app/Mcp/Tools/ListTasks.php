@@ -16,7 +16,7 @@ class ListTasks extends Tool
 
     public function description(): string
     {
-        return 'List the tasks for a contact, including whether each one is completed.';
+        return 'List the tasks for a contact, including whether each one is completed. Returns at most the 50 newest tasks; there is no pagination, so a full result may mean older tasks exist that are not shown.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema

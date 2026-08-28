@@ -53,7 +53,7 @@ defineProps({
     </template>
 
     <div v-if="publicKey !== null">
-      <h1 class="mb-4 max-w-xl text-gray-600 dark:text-gray-400">
+      <h1 class="mb-4 max-w-xl text-text dark:text-text">
         {{ $t('Please confirm access to your account by validating your security key.') }}
       </h1>
 
@@ -61,7 +61,7 @@ defineProps({
     </div>
 
     <div v-if="twoFactor">
-      <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+      <div class="mb-4 text-sm text-text dark:text-text">
         <template v-if="!recovery">
           {{
             $t(
@@ -105,7 +105,7 @@ defineProps({
         <div class="mt-4 flex items-center justify-end">
           <button
             type="button"
-            class="cursor-pointer text-sm text-gray-600 underline hover:text-gray-900 dark:text-gray-400"
+            class="cursor-pointer text-sm text-text underline hover:text-text dark:text-text"
             @click.prevent="toggleRecovery">
             <template v-if="!recovery">
               {{ $t('Use a recovery code') }}

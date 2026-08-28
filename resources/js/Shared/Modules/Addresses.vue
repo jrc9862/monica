@@ -148,9 +148,9 @@ const destroy = () => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <MapPinHouse class="h-4 w-4 text-gray-600" />
+        <MapPinHouse class="h-4 w-4 text-text" />
 
         <span class="font-semibold">
           {{ $t('Addresses') }}
@@ -167,10 +167,10 @@ const destroy = () => {
       <!-- add an address modal -->
       <form
         v-if="createAddressModalShown"
-        class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+        class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
         @submit.prevent="submit()">
         <!-- radio button: choose existing or create new address -->
-        <div v-if="data.addresses_in_vault.length > 0" class="mb-2 border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="data.addresses_in_vault.length > 0" class="mb-2 border-b border-border p-5 dark:border-border">
           <div class="mb-2 flex items-center">
             <input
               id="chooseExisting"
@@ -178,10 +178,8 @@ const destroy = () => {
               @change="choiceChooseExisting = true"
               name="exist"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label
-              for="chooseExisting"
-              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="chooseExisting" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('Choose an existing address') }}
             </label>
           </div>
@@ -193,10 +191,8 @@ const destroy = () => {
               @change="choiceChooseExisting = false"
               name="exist"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label
-              for="createNew"
-              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="createNew" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('Create a new address') }}
             </label>
           </div>
@@ -205,12 +201,12 @@ const destroy = () => {
         <!-- existing addresses -->
         <div
           v-if="choiceChooseExisting && props.data.addresses_in_vault.length > 0"
-          class="h-40 overflow-auto border-b border-gray-200 p-3 dark:border-gray-700">
-          <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          class="h-40 overflow-auto border-b border-border p-3 dark:border-border">
+          <ul class="rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <li
               v-for="address in props.data.addresses_in_vault"
               :key="address.id"
-              class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="item-list border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <!-- detail of the address type -->
               <div class="flex items-center">
                 <input
@@ -219,10 +215,10 @@ const destroy = () => {
                   :value="address.id"
                   name="date-format"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                 <label
                   :for="'address-' + address.id"
-                  class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                   {{ address.address }}
                 </label>
               </div>
@@ -233,12 +229,12 @@ const destroy = () => {
         <!-- create new address -->
         <div
           v-if="!choiceChooseExisting || props.data.addresses_in_vault.length === 0"
-          class="border-b border-gray-200 dark:border-gray-700">
+          class="border-b border-border dark:border-border">
           <div v-if="form.errors.length > 0" class="p-5">
             <errors :errors="form.errors" />
           </div>
 
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="grid grid-cols-2 gap-4 border-b border-border p-5 dark:border-border">
             <dropdown
               v-model.number="form.address_type_id"
               :data="data.address_types"
@@ -249,7 +245,7 @@ const destroy = () => {
           </div>
 
           <!-- street  -->
-          <div class="grid gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="grid gap-4 border-b border-border p-5 dark:border-border">
             <text-input
               ref="line_1"
               v-model="form.line_1"
@@ -264,7 +260,7 @@ const destroy = () => {
           </div>
 
           <!-- apartment + city -->
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="grid grid-cols-2 gap-4 border-b border-border p-5 dark:border-border">
             <text-input
               ref="line_2"
               v-model="form.line_2"
@@ -290,7 +286,7 @@ const destroy = () => {
           </div>
 
           <!-- province + postal code + country -->
-          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="grid grid-cols-3 gap-4 border-b border-border p-5 dark:border-border">
             <text-input
               v-model="form.province"
               :label="$t('Province')"
@@ -332,8 +328,8 @@ const destroy = () => {
               v-model="form.is_past_address"
               :name="form.is_past_address"
               type="checkbox"
-              class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
-            <label :for="form.is_past_address" class="ms-2 cursor-pointer text-gray-900 dark:text-gray-100">
+              class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
+            <label :for="form.is_past_address" class="ms-2 cursor-pointer text-text dark:text-text">
               {{ $t('This address is not active anymore') }}
             </label>
           </div>
@@ -348,11 +344,11 @@ const destroy = () => {
       <!-- list of addresses -->
       <div
         v-if="localActiveAddresses.length > 0"
-        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <div
           v-for="address in localActiveAddresses"
           :key="address.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <div v-if="address.id !== editedAddressId" class="flex items-center justify-between p-3">
             <!-- address detail -->
             <div>
@@ -390,16 +386,13 @@ const destroy = () => {
           </div>
 
           <!-- edit address -->
-          <form
-            v-if="address.id === editedAddressId"
-            class="bg-gray-50 dark:bg-gray-900"
-            @submit.prevent="update(address)">
-            <div class="border-b border-gray-200 dark:border-gray-700">
+          <form v-if="address.id === editedAddressId" class="bg-bg dark:bg-surface" @submit.prevent="update(address)">
+            <div class="border-b border-border dark:border-border">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid grid-cols-2 gap-4 border-b border-border p-5 dark:border-border">
                 <dropdown
                   v-model.number="form.address_type_id"
                   :data="data.address_types"
@@ -410,7 +403,7 @@ const destroy = () => {
               </div>
 
               <!-- street  -->
-              <div class="grid gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid gap-4 border-b border-border p-5 dark:border-border">
                 <text-input
                   ref="line_1"
                   v-model="form.line_1"
@@ -425,7 +418,7 @@ const destroy = () => {
               </div>
 
               <!-- apartment + city -->
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid grid-cols-2 gap-4 border-b border-border p-5 dark:border-border">
                 <text-input
                   ref="line_2"
                   v-model="form.line_2"
@@ -451,7 +444,7 @@ const destroy = () => {
               </div>
 
               <!-- province + postal code + country -->
-              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid grid-cols-3 gap-4 border-b border-border p-5 dark:border-border">
                 <text-input
                   v-model="form.province"
                   :label="$t('Province')"
@@ -493,8 +486,8 @@ const destroy = () => {
                   v-model="form.is_past_address"
                   :name="form.is_past_address"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
-                <label :for="form.is_past_address" class="ms-2 cursor-pointer text-gray-900 dark:text-gray-100">
+                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
+                <label :for="form.is_past_address" class="ms-2 cursor-pointer text-text dark:text-text">
                   {{ $t('This address is not active anymore') }}
                 </label>
               </div>
@@ -511,7 +504,7 @@ const destroy = () => {
       <!-- blank state -->
       <div
         v-if="localActiveAddresses.length === 0"
-        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <img src="/img/contact_blank_address.svg" :alt="$t('Addresses')" class="mx-auto mt-4 h-14 w-14" />
         <p class="px-5 pb-5 pt-2 text-center">
           {{ $t('There are no active addresses yet.') }}
@@ -529,11 +522,11 @@ const destroy = () => {
       <!-- list of previous addresses -->
       <div
         v-if="localInactiveAddresses.length > 0 && inactiveAddressesShown"
-        class="mx-4 mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mx-4 mb-4 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <div
           v-for="address in localInactiveAddresses"
           :key="address.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <div v-if="address.id !== editedAddressId" class="flex items-center justify-between p-3">
             <!-- address detail -->
             <div>
@@ -571,16 +564,13 @@ const destroy = () => {
           </div>
 
           <!-- edit address -->
-          <form
-            v-if="address.id === editedAddressId"
-            class="bg-gray-50 dark:bg-gray-900"
-            @submit.prevent="update(address)">
-            <div class="border-b border-gray-200 dark:border-gray-700">
+          <form v-if="address.id === editedAddressId" class="bg-bg dark:bg-surface" @submit.prevent="update(address)">
+            <div class="border-b border-border dark:border-border">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid grid-cols-2 gap-4 border-b border-border p-5 dark:border-border">
                 <dropdown
                   v-model.number="form.address_type_id"
                   :data="data.address_types"
@@ -591,7 +581,7 @@ const destroy = () => {
               </div>
 
               <!-- street  -->
-              <div class="grid gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid gap-4 border-b border-border p-5 dark:border-border">
                 <text-input
                   ref="line_1"
                   v-model="form.line_1"
@@ -606,7 +596,7 @@ const destroy = () => {
               </div>
 
               <!-- apartment + city -->
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid grid-cols-2 gap-4 border-b border-border p-5 dark:border-border">
                 <text-input
                   ref="line_2"
                   v-model="form.line_2"
@@ -632,7 +622,7 @@ const destroy = () => {
               </div>
 
               <!-- province + postal code + country -->
-              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="grid grid-cols-3 gap-4 border-b border-border p-5 dark:border-border">
                 <text-input
                   v-model="form.province"
                   :label="$t('Province')"
@@ -674,8 +664,8 @@ const destroy = () => {
                   v-model="form.is_past_address"
                   name="is_past_address"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
-                <label for="is_past_address" class="ms-2 cursor-pointer text-gray-900 dark:text-gray-100">
+                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
+                <label for="is_past_address" class="ms-2 cursor-pointer text-text dark:text-text">
                   {{ $t('This address is not active anymore') }}
                 </label>
               </div>

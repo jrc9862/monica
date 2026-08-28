@@ -1,11 +1,11 @@
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:border-b border-gray-200 dark:border-gray-700">
+    <nav class="bg-surface dark:bg-surface sm:border-b border-border dark:border-border">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -44,7 +44,7 @@
       </div>
     </nav>
 
-    <main class="relative sm:mt-16">
+    <main class="relative">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 sm:mt-0">
@@ -52,7 +52,7 @@
         </div>
 
         <!-- help text -->
-        <div class="mb-10 flex rounded-xs border bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900">
+        <div class="mb-10 flex rounded-xs border bg-bg px-3 py-2 text-sm dark:bg-surface">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 pe-2"
@@ -87,7 +87,7 @@
             <div>
               <!-- search a module -->
               <div
-                class="module-list rounded-t-md border-x border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                class="module-list rounded-t-md border-x border-t border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                 <text-input
                   v-model="form.search"
                   :type="'text'"
@@ -101,11 +101,11 @@
 
               <!-- list of modules -->
               <ul
-                class="h-80 overflow-auto rounded-b border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                class="h-80 overflow-auto rounded-b border border-border bg-surface dark:border-border dark:bg-surface">
                 <li
                   v-for="module in data.modules"
                   :key="module.id"
-                  class="module-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  class="module-list border-b border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                   <span>{{ module.name }}</span>
                 </li>
               </ul>
@@ -113,13 +113,13 @@
           </div>
 
           <!-- middle -->
-          <div class="rounded-lg border border-gray-200 dark:border-gray-700">
-            <h3 class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">Module details</h3>
+          <div class="rounded-lg border border-border dark:border-border">
+            <h3 class="border-b border-border px-5 py-2 dark:border-border">Module details</h3>
 
             <errors :errors="form.errors" />
 
             <!-- module details -->
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <text-input
                 v-model="form.search"
                 :type="'text'"
@@ -132,17 +132,17 @@
             </div>
 
             <!-- content of the module -->
-            <div class="border-b border-gray-200 bg-gray-100 p-5 dark:border-gray-700">
+            <div class="border-b border-border bg-bg p-5 dark:border-border">
               <div
-                class="mb-2 rounded-xs border border-gray-300 bg-white px-5 py-3 text-center dark:bg-gray-900"
+                class="mb-2 rounded-xs border border-border bg-surface px-5 py-3 text-center dark:bg-surface"
                 @click="addRow()">
                 + Add row
               </div>
 
               <div v-for="row in form.rows" :key="row.realId" class="mb-2">
-                <div class="rounded-xs border border-gray-300 bg-white dark:bg-gray-900">
+                <div class="rounded-xs border border-border bg-surface dark:bg-surface">
                   <!-- row options -->
-                  <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
+                  <div class="flex justify-between border-b border-border px-3 py-1 text-xs dark:border-border">
                     <div>
                       <div class="relative me-3 inline cursor-pointer">
                         <svg
@@ -205,9 +205,9 @@
                     <div
                       v-for="field in row.fields"
                       :key="field.id"
-                      class="border-e border-gray-200 last:border-e-0 dark:border-gray-700">
+                      class="border-e border-border last:border-e-0 dark:border-border">
                       <!-- row options -->
-                      <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
+                      <div class="flex justify-between border-b border-border px-3 py-1 text-xs dark:border-border">
                         <div>
                           <div class="relative me-3 inline cursor-pointer">
                             <svg

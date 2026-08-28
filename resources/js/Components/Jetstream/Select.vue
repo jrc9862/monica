@@ -30,11 +30,11 @@ const props = defineProps({
   },
   contentClasses: {
     type: Array,
-    default: () => ['py-1', 'bg-white', 'dark:bg-gray-800'],
+    default: () => ['py-1', 'bg-surface', 'dark:bg-surface'],
   },
   inputClasses: {
     type: Array,
-    default: () => ['p-1', 'px-2', 'appearance-none', 'outline-hidden', 'w-full', 'dark:bg-gray-900'],
+    default: () => ['p-1', 'px-2', 'appearance-none', 'outline-hidden', 'w-full', 'dark:bg-surface'],
   },
 });
 
@@ -120,7 +120,7 @@ const alignmentClasses = computed(() => {
 <template>
   <div ref="main" class="relative" :class="$attrs.class">
     <div
-      class="flex rounded-md border border-gray-300 p-1 shadow-xs focus-within:border-accent focus-within:ring-3 focus-within:ring-accent/30 dark:border-gray-600 dark:shadow-gray-700">
+      class="flex rounded-md border border-border p-1 shadow-xs focus-within:border-accent focus-within:ring-3 focus-within:ring-accent/30 dark:border-border dark:shadow-gray-700">
       <input
         v-model="proxySelect"
         :id="$attrs.id"
@@ -134,7 +134,7 @@ const alignmentClasses = computed(() => {
             proxySelect = '';
             close();
           "
-          class="flex h-full w-6 cursor-pointer items-center text-gray-400 outline-hidden focus:outline-hidden dark:text-gray-600">
+          class="flex h-full w-6 cursor-pointer items-center text-text-muted outline-hidden focus:outline-hidden dark:text-text">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
@@ -151,7 +151,7 @@ const alignmentClasses = computed(() => {
           </svg>
         </button>
       </div>
-      <div class="flex w-8 items-center border-s border-gray-200 py-1 pe-1 ps-2 text-gray-300 dark:border-gray-600">
+      <div class="flex w-8 items-center border-s border-border py-1 pe-1 ps-2 text-text-muted dark:border-border">
         <button
           @click.prevent="
             open = !open;
@@ -159,7 +159,7 @@ const alignmentClasses = computed(() => {
               select.focus();
             }
           "
-          class="h-6 w-6 cursor-pointer text-gray-600 outline-hidden focus:outline-hidden dark:text-gray-300">
+          class="h-6 w-6 cursor-pointer text-text outline-hidden focus:outline-hidden dark:text-text">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
@@ -196,13 +196,13 @@ const alignmentClasses = computed(() => {
           <div
             v-for="option in filtered"
             :key="option.id"
-            class="w-full cursor-pointer rounded-t border-b border-gray-100 hover:bg-teal-100 dark:border-gray-900 dark:bg-gray-800"
+            class="w-full cursor-pointer rounded-t border-b border-border hover:bg-teal-100 dark:border-border dark:bg-surface"
             @click="
               proxySelect = option.name;
               close();
             ">
             <div
-              class="relative flex w-full items-center border-s-2 border-transparent bg-white p-2 ps-2 hover:border-teal-600 hover:bg-teal-600 hover:text-teal-100 dark:bg-gray-800 dark:hover:border-teal-400 dark:hover:bg-teal-400 dark:hover:text-teal-900">
+              class="relative flex w-full items-center border-s-2 border-transparent bg-surface p-2 ps-2 hover:border-teal-600 hover:bg-teal-600 hover:text-teal-100 dark:bg-surface dark:hover:border-teal-400 dark:hover:bg-teal-400 dark:hover:text-teal-900">
               <div class="flex w-full items-center">
                 <div class="mx-2 leading-6">
                   {{ option.name }}

@@ -14,7 +14,7 @@
     </div>
 
     <!-- help text -->
-    <div class="mb-6 flex rounded-xs border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
+    <div class="mb-6 flex rounded-xs border bg-bg px-3 py-2 text-sm dark:border-border dark:bg-surface">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6 pe-2"
@@ -34,21 +34,19 @@
     </div>
 
     <!-- normal mode -->
-    <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+    <div v-if="!editMode" class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="px-5 py-2">
         <span class="mb-2 block">{{ $t('Current way of displaying dates:') }}</span>
-        <span class="mb-2 block rounded-xs bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{
-          localHumanDateFormat
-        }}</span>
+        <span class="mb-2 block rounded-xs bg-bg px-5 py-2 text-sm dark:bg-surface">{{ localHumanDateFormat }}</span>
       </p>
     </div>
 
     <!-- edit mode -->
     <form
       v-if="editMode"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
+      <div class="border-b border-border px-5 py-2 dark:border-border">
         <errors :errors="form.errors" />
 
         <div v-for="date in data.dates" :key="date.id" class="mb-2 flex items-center">
@@ -58,10 +56,10 @@
             :value="date.format"
             name="date-format"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            class="h-4 w-4 border-border text-sky-500 dark:border-border" />
           <label
             :for="'input' + date.id"
-            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ date.value }}
           </label>
         </div>

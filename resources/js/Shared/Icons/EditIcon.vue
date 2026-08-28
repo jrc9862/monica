@@ -1,7 +1,7 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600 dark:text-gray-400"
+    class="icon-sidebar relative inline h-3 w-3 text-text-muted hover:text-text dark:text-text"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor">

@@ -8,7 +8,7 @@ defineProps({
   <svg
     v-if="isFavorite"
     xmlns="http://www.w3.org/2000/svg"
-    class="h-4 w-4 text-gray-400 hover:cursor-pointer hover:text-yellow-500"
+    class="h-4 w-4 text-text-muted hover:cursor-pointer hover:text-yellow-500"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"

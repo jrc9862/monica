@@ -17,7 +17,7 @@ class ListCalls extends Tool
 
     public function description(): string
     {
-        return 'List the most recent calls logged with a contact, newest first.';
+        return 'List the calls logged with a contact, newest first. Returns at most the 20 most recent calls; there is no pagination, so a full result may mean older calls exist that are not shown.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema

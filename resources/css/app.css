@@ -5,38 +5,425 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant chunky (&:where(.chunky, .chunky *));
 
+/* ---------------------------------------------------------------------------
+   Design tokens — "Blocks" CRM overhaul.
+   The palette lives on :root as raw tokens (--bg, --ink, --primary…), and the
+   Tailwind --color-* scale is aliased onto them so every existing utility
+   (bg-surface, text-text, border-border, text-accent) follows the theme.
+   Dark mode re-values the same set under .dark / [data-theme="dark"].
+--------------------------------------------------------------------------- */
+
 @theme {
-  /* Fonts */
-  --font-display: 'Silkscreen', cursive;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-display: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --default-font-family: var(--font-body);
 
-  /* Stone palette — dark mode base */
-  --color-bg: #1c1917;
-  --color-surface: #292524;
-  --color-surface-raised: #3b3532;
-  --color-border: #44403c;
-  --color-text: #e7e5e4;
-  --color-text-muted: #a8a29e;
+  --color-bg: #f6fafd;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-border: #eaeef4;
+  --color-text: #092c4c;
+  --color-text-muted: #7e92a2;
+  --color-accent: #5f7a45;
+  --color-accent-hover: #4a6b33;
+  --color-accent-muted: #e9efdd;
+  --color-hover: #f1f6fb;
+  --color-divider: #ebebeb;
+  --color-field: #ffffff;
 
-  /* Accent — washed-out green-grey */
-  --color-accent: #8a9e89;
-  --color-accent-hover: #9db09c;
-  --color-accent-muted: #5a6e59;
+  --shadow-pixel: 4px 4px 0px #092c4c;
+  --shadow-pixel-sm: 2px 2px 0px #092c4c;
 
-  /* Pixel shadow */
-  --shadow-pixel: 4px 4px 0px #000000;
-  --shadow-pixel-sm: 2px 2px 0px #000000;
+  --radius: 2px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
+  --radius-full: 2px;
+}
 
-  /* No rounded corners */
-  --radius: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-full: 0px;
+:root {
+  --bg: #f6fafd;
+  --bar: rgba(246, 250, 253, 0.92);
+  --rail: rgba(238, 246, 251, 0.92);
+  --card: #ffffff;
+  --line: #eaeef4;
+  --divider: #ebebeb;
+  --ink: #092c4c;
+  --ink2: #526477;
+  --muted: #7e92a2;
+  --faint: #d6e1e6;
+  --primary: #5f7a45;
+  --primary-soft: #e9efdd;
+  --on-primary: #ffffff;
+  --on-primary-dim: rgba(255, 255, 255, 0.74);
+  --primary-strong: #4a6b33;
+  --stamp: #092c4c;
+  --logo: #092c4c;
+  --field: #ffffff;
+  --hover: #f1f6fb;
+  --scrim: rgba(9, 44, 76, 0.28);
+  --shadow: none;
+  --pop: 0 12px 40px rgba(9, 44, 76, 0.14);
+  --mint: #d8f3e6;
+  --green: #5c913b;
+  --blush: #fde1e4;
+  --pink: #ea596e;
+  --sun: #fff3d6;
+  --yellow: #f4900c;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --track-off: #d6e1e6;
+
+  /* Tailwind scale aliases — keep in sync with the tokens above. */
+  --color-bg: var(--bg);
+  --color-surface: var(--card);
+  --color-surface-raised: var(--card);
+  --color-border: var(--line);
+  --color-text: var(--ink);
+  --color-text-muted: var(--muted);
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary-strong);
+  --color-accent-muted: var(--primary-soft);
+  --color-hover: var(--hover);
+  --color-divider: var(--divider);
+  --color-field: var(--field);
+  --shadow-pixel: 4px 4px 0 var(--stamp);
+  --shadow-pixel-sm: 2px 2px 0 var(--stamp);
+}
+
+:where(.dark, [data-theme='dark']) {
+  --bg: #131517;
+  --bar: rgba(19, 21, 23, 0.94);
+  --rail: rgba(23, 25, 28, 0.94);
+  --card: #1a1d20;
+  --line: #282c30;
+  --divider: #282c30;
+  --ink: #edeeef;
+  --ink2: #b3b8bc;
+  --muted: #868c91;
+  --faint: #4a5055;
+  --primary: #93b172;
+  --primary-soft: #262b20;
+  --on-primary: #131517;
+  --on-primary-dim: rgba(19, 21, 23, 0.72);
+  --primary-strong: #4a6b33;
+  --stamp: #4b5257;
+  --logo: #93b172;
+  --field: #171a1c;
+  --hover: #202427;
+  --scrim: rgba(8, 9, 10, 0.62);
+  --shadow: none;
+  --pop: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --mint: #1d2b26;
+  --green: #77b255;
+  --blush: #2e2326;
+  --pink: #ea596e;
+  --sun: #302b1d;
+  --yellow: #f4900c;
+  --track-off: #2a3b4f;
+}
+
+@layer base {
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Animations
+--------------------------------------------------------------------------- */
+
+@keyframes crmFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes crmRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes crmToast {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.crm-fade {
+  animation: crmFade 0.25s ease;
+}
+.crm-rise {
+  animation: crmRise 0.2s ease;
+}
+.crm-toast-in {
+  animation: crmToast 0.25s ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Type — JetBrains Mono carries every machine-ish label, Inter carries content.
+--------------------------------------------------------------------------- */
+
+.crm-label {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.crm-title {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.crm-meta {
+  font: 400 11px var(--mono);
+  color: var(--muted);
+}
+
+.crm-meta-12 {
+  font: 400 12px var(--mono);
+  color: var(--muted);
+}
+
+.crm-mono-13 {
+  font: 500 13px var(--mono);
+}
+
+.crm-figure {
+  font: 700 52px/58px var(--mono);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.crm-figure-sm {
+  font: 700 34px/42px var(--mono);
+}
+
+.crm-name {
+  font:
+    700 16px Inter,
+    sans-serif;
+  color: var(--ink);
+}
+
+.crm-section-title {
+  font:
+    700 20px Inter,
+    sans-serif;
+  color: var(--ink);
+}
+
+.crm-body {
+  font:
+    400 16px/28px Inter,
+    sans-serif;
+  color: var(--ink2);
+}
+
+/* ---------------------------------------------------------------------------
+   Surfaces
+--------------------------------------------------------------------------- */
+
+.crm-card {
+  border-radius: 2px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.crm-card-hover:hover {
+  border-color: var(--primary);
+}
+
+.crm-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+
+.crm-divider-list > * + * {
+  border-top: 1px solid var(--divider);
+}
+
+.crm-row-hover:hover {
+  background: var(--hover);
+}
+
+/* ---------------------------------------------------------------------------
+   Controls
+--------------------------------------------------------------------------- */
+
+/* The press: the button moves into its own shadow. */
+.crm-press {
+  border-radius: 2px;
+  border: 1px solid var(--stamp);
+  box-shadow: 4px 4px 0 var(--stamp);
+  transition:
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.crm-press:hover {
+  box-shadow: none;
+  transform: translate(4px, 4px);
+}
+
+.crm-press:disabled {
+  box-shadow: none;
+  transform: none;
+}
+
+.crm-btn {
+  height: 46px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  background: var(--primary);
+  color: var(--on-primary);
+  font: 500 12px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* The hero CTA sits on a moss block: fixed white surface, moss ink. */
+.crm-btn-on-moss {
+  background: #ffffff;
+  color: var(--primary-strong);
+  border-color: var(--primary-strong);
+  box-shadow: 4px 4px 0 var(--primary-strong);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.crm-btn-quiet {
+  height: 32px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink2);
+  font: 500 11px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.crm-btn-quiet:hover {
+  color: var(--ink);
+}
+
+.crm-icon-btn {
+  width: 50px;
+  height: 50px;
+  flex: none;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.crm-chip {
+  height: 28px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 2px;
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font: 500 11px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.crm-chip:hover {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.crm-chip-active {
+  background: var(--primary-soft);
+}
+
+.crm-input {
+  height: 46px;
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  background: var(--field);
+  color: var(--ink);
+  padding: 0 14px;
+  font:
+    400 14px Inter,
+    sans-serif;
+  outline: none;
+}
+
+.crm-input:focus {
+  border-color: var(--primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Misc
+--------------------------------------------------------------------------- */
+
+.crm-tint {
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.crm-no-scrollbar {
+  scrollbar-width: none;
+}
+.crm-no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 .icon-breadcrumb {

@@ -63,11 +63,11 @@ const destroy = (date) => {
 <template>
   <Layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -106,7 +106,7 @@ const destroy = (date) => {
       </div>
     </nav>
 
-    <main class="relative sm:mt-20">
+    <main class="relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
@@ -132,11 +132,11 @@ const destroy = (date) => {
           <!-- list of dates -->
           <ul
             v-if="localDates.length > 0"
-            class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <li
               v-for="date in localDates"
               :key="date.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <!-- detail of the important date -->
               <div v-if="editedDateId === 0" class="flex items-center justify-between px-5 py-2">
                 <span class="text-base">
@@ -144,7 +144,7 @@ const destroy = (date) => {
 
                   <span
                     v-if="date.type"
-                    class="ms-2 inline-block rounded-xs bg-neutral-200 px-1 py-0 text-xs text-neutral-500 last:me-0">
+                    class="ms-2 inline-block rounded-xs bg-bg px-1 py-0 text-xs text-text-muted last:me-0">
                     {{ date.type.label }}
                   </span>
                 </span>
@@ -172,7 +172,7 @@ const destroy = (date) => {
           </ul>
 
           <!-- blank state -->
-          <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <div v-else class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <p class="p-5 text-center">
               {{
                 $t(

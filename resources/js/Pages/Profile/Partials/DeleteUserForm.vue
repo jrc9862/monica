@@ -48,7 +48,7 @@ const closeModal = () => {
     </template>
 
     <template #content>
-      <div class="max-w-xl text-sm text-gray-600 dark:text-gray-200">
+      <div class="max-w-xl text-sm text-text dark:text-text">
         <p class="mb-4 text-center text-xl font-semibold text-red-500">{{ $t('⚠️ Danger zone') }}</p>
 
         <p>

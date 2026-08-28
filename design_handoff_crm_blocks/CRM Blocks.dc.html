@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="./components/repo-icons.js"></script>
+<style>
+:root{
+--bg:#F6FAFD; --bar:rgba(246,250,253,.92); --rail:rgba(238,246,251,.92); --card:#FFFFFF;
+--line:#EAEEF4; --divider:#EBEBEB; --ink:#092C4C; --ink2:#526477; --muted:#7E92A2;
+--faint:#D6E1E6; --primary:#5F7A45; --primary-soft:#E9EFDD; --on-primary:#FFFFFF; --on-primary-dim:rgba(255,255,255,.74); --primary-strong:#4A6B33; --stamp:#092C4C; --logo:#092C4C; --field:#FFFFFF;
+--scrim:rgba(9,44,76,.28); --shadow:none; --pop:0 12px 40px rgba(9,44,76,.14);
+--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; --mint:#D8F3E6; --blush:#FDE1E4; --sun:#FFF3D6; --yellow:#F4900C; --green:#5C913B; --pink:#EA596E; --hover:#F1F6FB;
+}
+[data-theme="dark"]{
+--bg:#131517; --bar:rgba(19,21,23,.94); --rail:rgba(23,25,28,.94); --card:#1A1D20;
+--line:#282C30; --divider:#282C30; --ink:#EDEEEF; --ink2:#B3B8BC; --muted:#868C91;
+--faint:#4A5055; --primary:#93B172; --primary-soft:#262B20; --on-primary:#131517; --on-primary-dim:rgba(19,21,23,.72); --primary-strong:#4A6B33; --stamp:#4B5257; --logo:#93B172; --field:#171A1C;
+--scrim:rgba(8,9,10,.62); --shadow:none; --pop:0 12px 40px rgba(0,0,0,.5);
+--mint:#1D2B26; --blush:#2E2326; --sun:#302B1D; --yellow:#F4900C; --green:#77B255; --pink:#EA596E; --hover:#202427;
+}
+body{margin:0;background:var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--primary);text-decoration:none}
+a:hover{color:var(--ink);text-decoration:underline}
+*{box-sizing:border-box}
+::selection{background:var(--primary);color:var(--on-primary)}
+input,textarea{font-family:inherit}
+@keyframes crmFade{from{opacity:0}to{opacity:1}}
+@keyframes crmRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes crmToast{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div data-screen-label="App" data-theme="{{ theme }}" style="display:flex;min-height:100vh;min-width:1180px;background:var(--bg);color:var(--ink);transition:background .25s ease,color .25s ease">
+
+  <aside style="width:90px;flex:none;display:flex;flex-direction:column;align-items:center;background:var(--rail);border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+    <button type="button" onClick="{{ goVaults }}" title="All vaults" style="height:90px;width:90px;flex:none;display:flex;align-items:center;justify-content:center;border:none;border-bottom:1px solid var(--line);background:none;cursor:pointer;padding:0">
+      <span style="width:46px;height:46px;border-radius:2px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center">
+        <img src="./assets/monica-mark.svg" alt="Monica" style="width:26px;height:26px;display:block">
+      </span>
+    </button>
+    <nav style="display:flex;flex-direction:column;gap:10px;padding:16px 0;flex:none;min-height:0">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="9">
+        <button type="button" title="{{ item.label }}" onClick="{{ item.go }}" style="width:50px;height:50px;border-radius:2px;border:1px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;background:{{ item.bg }};color:{{ item.fg }};border-color:{{ item.bc }};box-shadow:{{ item.sh }};transition:all .18s ease" style-hover="color:var(--ink)">
+          <x-import component-from-global-scope="RepoIcon" name="{{ item.icon }}" size="20" hint-size="20px,20px"></x-import>
+        </button>
+      </sc-for>
+    </nav>
+    <div style="margin-top:auto;padding:12px 0 16px;display:flex;flex-direction:column;align-items:center;gap:10px;flex:none">
+      <button type="button" onClick="{{ toggleTheme }}" title="Toggle theme" style="width:50px;height:50px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0" style-hover="color:var(--primary)">
+        <x-import component-from-global-scope="RepoIcon" name="{{ themeIcon }}" size="20" hint-size="20px,20px"></x-import>
+      </button>
+      <button type="button" onClick="{{ goSettings }}" title="Settings" style="width:50px;height:50px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0" style-hover="color:var(--ink)">
+        <x-import component-from-global-scope="RepoIcon" name="setting" size="20" hint-size="20px,20px"></x-import>
+      </button>
+      <button type="button" title="Log out" style="width:50px;height:50px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0" style-hover="color:var(--pink)">
+        <x-import component-from-global-scope="RepoIcon" name="door" size="20" hint-size="20px,20px"></x-import>
+      </button>
+    </div>
+  </aside>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+
+    <header style="height:90px;flex:none;display:flex;align-items:center;gap:24px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--bar);position:sticky;top:0;z-index:20;backdrop-filter:blur(10px)">
+      <div style="{{ hdrLeft }}display:flex;align-items:center;gap:16px">
+        <h1 style="margin:0;font:700 20px/40px var(--mono);color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:10px"><span style="color:var(--primary)">&#9646;</span>{{ screenTitle }}</h1>
+        <div style="flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:2px;border:1px solid var(--line);background:var(--card);white-space:nowrap">
+          <span style="font:500 12px var(--mono);color:var(--primary)">michael.dubois</span>
+          <span style="font:400 12px var(--mono);color:var(--faint)">/</span>
+          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;font:400 12px var(--mono);color:var(--ink2)">Family &amp; friends</span>
+        </div>
+        <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{ goContacts }}" style="height:32px;padding:0 14px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap" style-hover="color:var(--ink)">
+            <x-import component-from-global-scope="RepoIcon" name="arrow-left" size="14" hint-size="14px,14px"></x-import>
+            All contacts
+          </button>
+        </sc-if>
+      </div>
+      <div style="{{ hdrSearch }}height:50px;border-radius:2px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;gap:10px;padding:0 18px">
+        <span style="color:var(--muted);display:flex;flex:none">
+          <x-import component-from-global-scope="RepoIcon" name="search" size="18" hint-size="18px,18px"></x-import>
+        </span>
+        <input type="text" placeholder="Search this vault" style="flex:1;min-width:0;border:none;background:none;outline:none;font:400 13px var(--mono);color:var(--ink)">
+        <span style="flex:none;padding:2px 7px;border:1px solid var(--line);background:var(--bg);font:500 11px var(--mono);color:var(--muted)">/</span>
+      </div>
+      <div style="{{ hdrRight }}display:flex;align-items:center;justify-content:flex-end;gap:16px">
+        <button type="button" onClick="{{ openAddNew }}" title="Add" style="width:50px;height:50px;flex:none;border-radius:2px;border:1px solid var(--stamp);background:var(--primary);color:var(--on-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:4px 4px 0 var(--stamp);transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="box-shadow:none;transform:translate(4px,4px)">
+          <x-import component-from-global-scope="RepoIcon" name="plus" size="22" hint-size="22px,22px"></x-import>
+        </button>
+        <img src="./assets/user-avatar.jpg" alt="Account" style="width:50px;height:50px;border-radius:2px;object-fit:cover;flex:none">
+      </div>
+    </header>
+
+    <main style="flex:1;display:flex;min-width:0">
+
+      <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+        <div data-screen-label="Dashboard" style="display:flex;flex:1;min-width:0;animation:crmFade .25s ease">
+          <div style="width:230px;flex:none;padding:24px 0 24px 24px;display:flex;flex-direction:column;gap:28px">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+                <span style="color:var(--pink);display:flex"><x-import component-from-global-scope="RepoIcon" name="heart" size="15" hint-size="15px,15px"></x-import></span>
+                <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">Favorites</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ favorites }}" as="c" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ goContact }}" style="display:flex;align-items:center;gap:8px;border:none;background:none;padding:0;cursor:pointer;text-align:left" style-hover="opacity:.7">
+                    <span style="width:24px;height:24px;border-radius:2px;flex:none;background:var(--faint) url({{ c.avatar }}) center/cover no-repeat"></span>
+                    <span style="font:500 13px var(--mono);color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+                <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="clock" size="15" hint-size="15px,15px"></x-import></span>
+                <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">Last updated</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ lastUpdated }}" as="c" hint-placeholder-count="5">
+                  <button type="button" onClick="{{ goContact }}" style="display:flex;align-items:center;gap:8px;border:none;background:none;padding:0;cursor:pointer;text-align:left" style-hover="opacity:.7">
+                    <span style="width:24px;height:24px;border-radius:2px;flex:none;background:var(--faint) url({{ c.avatar }}) center/cover no-repeat"></span>
+                    <span style="font:500 13px var(--mono);color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:0;padding:24px">
+            <div style="display:flex;gap:24px;margin-bottom:24px;align-items:stretch">
+              <section style="flex:1.15;min-width:300px;position:relative;overflow:hidden;border-radius:2px;background:var(--primary);padding:24px;display:flex;flex-direction:column;gap:28px">
+                <span style="position:absolute;left:56px;top:150px;width:300px;height:300px;border-radius:50%;opacity:.5;background:linear-gradient(180deg,rgba(255,255,255,.25) 0%,rgba(255,255,255,0) 65%);pointer-events:none"></span>
+                <div style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <span style="font:500 12px var(--mono);color:var(--on-primary);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap">Next reminder</span>
+                  <span style="width:10px;height:10px;border-radius:10px;background:#fff;flex:none"></span>
+                </div>
+                <div style="position:relative;display:flex;align-items:center;gap:14px">
+                  <span style="width:52px;height:52px;border-radius:2px;flex:none;background:rgba(255,255,255,.28) url(./assets/face-1.jpg) center/cover no-repeat"></span>
+                  <div style="min-width:0">
+                    <div style="font:700 18px/26px Inter,sans-serif;color:var(--on-primary)">Rui Mendes</div>
+                    <div style="font:400 13px/22px var(--mono);color:var(--on-primary-dim);white-space:nowrap">Father · Lisbon</div>
+                  </div>
+                </div>
+                <div style="position:relative;display:flex;gap:40px">
+                  <div>
+                    <div style="font:500 11px var(--mono);color:var(--on-primary-dim);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">Date</div>
+                    <div style="font:700 34px/42px var(--mono);color:var(--on-primary)">17 Aug</div>
+                  </div>
+                  <div>
+                    <div style="font:500 11px var(--mono);color:var(--on-primary-dim);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">He turns</div>
+                    <div style="font:700 34px/42px var(--mono);color:var(--on-primary)">68</div>
+                  </div>
+                </div>
+                <div style="position:relative;margin-top:auto;display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px">
+                  <span style="flex:1;min-width:0;font:400 12px var(--mono);color:var(--on-primary-dim)">Last spoke 2 weeks ago</span>
+                  <button type="button" onClick="{{ goContact }}" style="flex:none;height:46px;padding:0 16px;border-radius:2px;border:1px solid var(--primary-strong);background:#FFFFFF;color:var(--primary-strong);font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:4px 4px 0 var(--primary-strong);transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="box-shadow:none;transform:translate(4px,4px)">See contact</button>
+                </div>
+              </section>
+              <div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:24px">
+                <section style="flex:1;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+                  <div>
+                    <div style="font:500 11px var(--mono);color:var(--muted);letter-spacing:.14em;text-transform:uppercase">Contacts</div>
+                    <div style="font:700 52px/58px var(--mono);color:var(--ink);letter-spacing:-.03em">{{ contactTotal }}</div>
+                  </div>
+                  <span style="width:88px;height:88px;flex:none;border-radius:2px;background:var(--mint);color:var(--green);display:flex;align-items:center;justify-content:center">
+                    <x-import component-from-global-scope="RepoIcon" name="people" size="34" hint-size="34px,34px"></x-import>
+                  </span>
+                </section>
+                <section style="flex:1;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+                  <div>
+                    <div style="font:500 11px var(--mono);color:var(--muted);letter-spacing:.14em;text-transform:uppercase">Notes written</div>
+                    <div style="font:700 52px/58px var(--mono);color:var(--ink);letter-spacing:-.03em">312</div>
+                  </div>
+                  <span style="width:88px;height:88px;flex:none;border-radius:2px;background:var(--blush);color:var(--pink);display:flex;align-items:center;justify-content:center">
+                    <x-import component-from-global-scope="RepoIcon" name="note" size="34" hint-size="34px,34px"></x-import>
+                  </span>
+                </section>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:center;margin-bottom:24px">
+              <div style="display:flex;border:1px solid var(--line);border-radius:2px;background:var(--card);padding:4px;gap:4px">
+                <sc-for list="{{ feedTabs }}" as="t" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ t.go }}" style="height:48px;padding:0 22px;border-radius:2px;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;background:{{ t.bg }};color:{{ t.fg }};font:600 15px Inter,sans-serif;transition:all .18s ease">
+                    <x-import component-from-global-scope="RepoIcon" name="{{ t.icon }}" size="16" hint-size="16px,16px"></x-import>
+                    {{ t.label }}
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+
+            <sc-if value="{{ tabActivity }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <sc-for list="{{ feed }}" as="f" hint-placeholder-count="4">
+                  <section style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                    <div style="display:flex;align-items:center;gap:10px;padding:18px 20px;border-bottom:1px solid var(--divider)">
+                      <span style="width:28px;height:28px;border-radius:2px;flex:none;background:var(--faint) url({{ f.avatar }}) center/cover no-repeat"></span>
+                      <span style="font:700 16px Inter,sans-serif;color:var(--primary)">{{ f.name }}</span>
+                      <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font:400 16px Inter,sans-serif;color:var(--ink2);white-space:nowrap">{{ f.action }}</span>
+                      <span style="margin-left:auto;font:400 12px var(--mono);color:var(--muted);white-space:nowrap">{{ f.when }}</span>
+                    </div>
+                    <div style="padding:22px 24px;font:400 16px/28px Inter,sans-serif;color:var(--ink);text-wrap:pretty">{{ f.body }}</div>
+                  </section>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ tabLifeEvents }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:0">
+                <sc-for list="{{ lifeEvents }}" as="e" hint-placeholder-count="4">
+                  <div style="display:flex;gap:16px">
+                    <div style="width:20px;flex:none;display:flex;flex-direction:column;align-items:center">
+                      <span style="width:12px;height:12px;border-radius:2px;flex:none;background:var(--primary);margin-top:8px"></span>
+                      <span style="flex:1;width:1px;background:var(--line)"></span>
+                    </div>
+                    <div style="flex:1;padding-bottom:20px">
+                      <div style="font:400 12px var(--mono);color:var(--muted)">{{ e.date }}</div>
+                      <section style="margin-top:6px;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                          <span style="width:28px;height:28px;border-radius:2px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--sun);color:var(--yellow)">
+                            <x-import component-from-global-scope="RepoIcon" name="{{ e.icon }}" size="15" hint-size="15px,15px"></x-import>
+                          </span>
+                          <span style="font:700 18px Inter,sans-serif;color:var(--ink)">{{ e.title }}</span>
+                        </div>
+                        <div style="font:400 16px/28px Inter,sans-serif;color:var(--ink2);text-wrap:pretty">{{ e.body }}</div>
+                      </section>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ tabMetrics }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="3">
+                  <section style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px">
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+                      <span style="font:700 18px Inter,sans-serif;color:var(--ink)">{{ m.label }}</span>
+                      <span style="font:700 22px var(--mono);color:var(--ink)">{{ m.value }}</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;gap:4px;height:70px;border-bottom:1px solid var(--line);padding-bottom:1px">
+                      <sc-for list="{{ m.bars }}" as="b" hint-placeholder-count="12">
+                        <span style="flex:1;border-radius:0;background:var(--primary);opacity:.75;height:{{ b }}"></span>
+                      </sc-for>
+                    </div>
+                  </section>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="width:417px;flex:none;background:var(--rail);border-left:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:28px">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+                <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="face" size="16" hint-size="16px,16px"></x-import></span>
+                <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">How am I doing?</span>
+              </div>
+              <div style="display:flex;gap:6px">
+                <sc-for list="{{ moods }}" as="m" hint-placeholder-count="7">
+                  <div title="{{ m.title }}" style="flex:1;height:52px;border-radius:2px;background:{{ m.color }};display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px">
+                    <span style="font:500 10px var(--mono);color:{{ m.labelColor }}">{{ m.day }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+                <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="calendar" size="16" hint-size="16px,16px"></x-import></span>
+                <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">Reminders for the next 30 days</span>
+              </div>
+              <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                <sc-for list="{{ reminders }}" as="r" hint-placeholder-count="4">
+                  <div style="padding:16px 18px;border-bottom:1px solid var(--divider)" style-hover="background:var(--hover)">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+                      <span style="font:400 11px var(--mono);color:var(--muted);white-space:nowrap">{{ r.when }}</span>
+                      <span style="width:18px;height:18px;border-radius:2px;flex:none;background:var(--faint) url({{ r.avatar }}) center/cover no-repeat"></span>
+                      <span style="font:500 13px var(--mono);color:var(--primary)">{{ r.name }}</span>
+                    </div>
+                    <div style="font:400 15px Inter,sans-serif;color:var(--ink)">{{ r.label }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+                <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="task" size="16" hint-size="16px,16px"></x-import></span>
+                <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">Tasks due soon</span>
+              </div>
+              <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                <sc-for list="{{ dueTasks }}" as="t" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--divider)" style-hover="background:var(--hover)">
+                    <span style="width:18px;height:18px;flex:none;border-radius:2px;border:1.5px solid var(--faint);display:flex;align-items:center;justify-content:center;background:{{ t.box }};color:var(--on-primary)">
+                      <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}">
+                        <x-import component-from-global-scope="RepoIcon" name="check" size="12" hint-size="12px,12px"></x-import>
+                      </sc-if>
+                    </span>
+                    <span style="flex:1;min-width:0;font:400 15px Inter,sans-serif;color:var(--ink)">{{ t.text }}</span>
+                    <span style="font:400 11px var(--mono);color:{{ t.dueColor }};white-space:nowrap">{{ t.due }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isContacts }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Contacts" style="display:flex;flex:1;min-width:0;animation:crmFade .25s ease">
+          <div style="width:230px;flex:none;padding:24px 0 24px 24px">
+            <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+              <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="tag" size="15" hint-size="15px,15px"></x-import></span>
+              <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">Labels</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ labels }}" as="l" hint-placeholder-count="6">
+                <button type="button" onClick="{{ l.go }}" style="display:flex;align-items:center;gap:8px;border:none;background:{{ l.bg }};padding:2px 6px;margin:0 -6px;border-radius:2px;cursor:pointer;text-align:left" style-hover="opacity:.7">
+                  <span style="width:8px;height:8px;border-radius:2px;flex:none;background:{{ l.color }}"></span>
+                  <span style="font:400 13px var(--mono);color:{{ l.fg }}">{{ l.name }}</span>
+                  <span style="font:400 11px var(--mono);color:var(--muted)">{{ l.count }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:0;padding:24px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <div style="display:flex;align-items:center;gap:14px;min-width:0">
+                <span style="font:700 20px Inter,sans-serif;color:var(--ink);white-space:nowrap">Contacts in this vault <span style="font:400 20px var(--mono);color:var(--muted)">· {{ contactCount }}</span></span>
+                <sc-if value="{{ hasFilter }}" hint-placeholder-val="{{ false }}">
+                  <button type="button" onClick="{{ clearFilter }}" title="Clear filter" style="display:flex;align-items:center;gap:8px;height:30px;padding:0 10px;border-radius:2px;border:1px solid var(--primary);background:var(--primary-soft);color:var(--primary);font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap" style-hover="border-color:var(--ink);color:var(--ink)">
+                    <span style="color:var(--muted)">--label=</span>{{ filterLabel }}
+                    <x-import component-from-global-scope="RepoIcon" name="close" size="13" hint-size="13px,13px"></x-import>
+                  </button>
+                </sc-if>
+              </div>
+              <div style="display:flex;gap:12px">
+                <button type="button" style="height:44px;padding:0 20px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:12px;white-space:nowrap" style-hover="border-color:var(--primary)">
+                  <span style="color:var(--muted)">--sort=</span>last-updated
+                  <x-import component-from-global-scope="RepoIcon" name="arrow-down" size="18" hint-size="18px,18px"></x-import>
+                </button>
+                <button type="button" onClick="{{ openAddContact }}" style="height:44px;padding:0 20px;border-radius:2px;border:1px solid var(--stamp);background:var(--primary);color:var(--on-primary);font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:4px 4px 0 var(--stamp);transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="box-shadow:none;transform:translate(4px,4px)">
+                  <x-import component-from-global-scope="RepoIcon" name="plus" size="18" hint-size="18px,18px"></x-import>
+                  Add a contact
+                </button>
+              </div>
+            </div>
+
+            <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:24px;padding:0 24px;height:56px;border-bottom:1px solid var(--divider);background:var(--bg)">
+                <span style="width:36px;flex:none"></span>
+                <span style="flex:1.4;font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase">Name</span>
+                <span style="flex:1.2;font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase">Labels</span>
+                <span style="width:150px;flex:none;font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase">Last activity</span>
+                <span style="width:40px;flex:none"></span>
+              </div>
+              <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="8">
+                <div onClick="{{ goContact }}" style="display:flex;align-items:center;gap:24px;padding:0 24px;height:82px;border-bottom:1px solid var(--divider);cursor:pointer" style-hover="background:var(--hover)">
+                  <span style="width:46px;height:46px;border-radius:2px;flex:none;background:var(--faint) url({{ c.avatar }}) center/cover no-repeat"></span>
+                  <div style="flex:1.4;min-width:0">
+                    <div style="font:700 16px Inter,sans-serif;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div>
+                    <div style="font:400 12px var(--mono);color:var(--muted)">{{ c.role }}</div>
+                  </div>
+                  <div style="flex:1.2;min-width:0;display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ c.tags }}" as="t" hint-placeholder-count="2">
+                      <button type="button" onClick="{{ t.go }}" title="Filter by this label" style="height:28px;padding:0 12px;border-radius:2px;background:none;border:1px solid var(--primary);color:var(--primary);font:500 11px/26px var(--mono);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;cursor:pointer" style-hover="background:var(--primary);color:var(--on-primary)">{{ t.name }}</button>
+                    </sc-for>
+                  </div>
+                  <span style="width:150px;flex:none;font:400 13px Inter,sans-serif;color:var(--muted);white-space:nowrap">{{ c.updated }}</span>
+                  <span style="width:40px;flex:none;display:flex;justify-content:flex-end;color:var(--faint)">
+                    <x-import component-from-global-scope="RepoIcon" name="arrow-right" size="18" hint-size="18px,18px"></x-import>
+                  </span>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noContacts }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:12px">
+                  <span style="color:var(--faint);display:flex"><x-import component-from-global-scope="RepoIcon" name="tag" size="28" hint-size="28px,28px"></x-import></span>
+                  <span style="font:400 12px var(--mono);color:var(--muted)">No contacts carry this label.</span>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Contact detail" style="display:flex;flex:1;min-width:0;animation:crmFade .25s ease">
+          <div style="width:300px;flex:none;padding:24px;border-right:1px solid var(--line)">
+            <img src="./assets/avatar-3.jpg" alt="Clara Mendes" style="width:110px;height:110px;border-radius:2px;object-fit:cover;margin-bottom:16px">
+            <h2 style="margin:0;font:700 30px/38px Inter,sans-serif;color:var(--ink)">Clara Mendes</h2>
+            <p style="margin:2px 0 0;font:400 13px Inter,sans-serif;color:var(--muted)">she/her · 34 years old</p>
+
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0">
+              <sc-for list="{{ contactLabels }}" as="l" hint-placeholder-count="3">
+                <button type="button" onClick="{{ l.go }}" title="See contacts with this label" style="height:30px;padding:0 14px;border-radius:2px;background:none;border:1px solid var(--primary);color:var(--primary);font:500 11px/28px var(--mono);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;cursor:pointer" style-hover="background:var(--primary);color:var(--on-primary)">{{ l.name }}</button>
+              </sc-for>
+            </div>
+
+            <div style="margin-top:24px;display:flex;flex-direction:column;gap:20px">
+              <sc-for list="{{ sidePanels }}" as="p" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:10px">
+                    <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="{{ p.icon }}" size="14" hint-size="14px,14px"></x-import></span>
+                    <span style="font:500 11px var(--mono);color:var(--ink);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">{{ p.title }}</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:6px">
+                    <sc-for list="{{ p.rows }}" as="r" hint-placeholder-count="2">
+                      <div style="display:flex;flex-direction:column">
+                        <span style="font:400 11px var(--mono);color:var(--muted)">{{ r.a }}</span>
+                        <span style="font:400 14px var(--mono);color:var(--ink)">{{ r.b }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="margin-top:28px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ contactActions }}" as="a" hint-placeholder-count="5">
+                <button type="button" style="border:none;background:none;padding:0;text-align:left;font:400 12px var(--mono);color:{{ a.color }};cursor:pointer" style-hover="text-decoration:underline">{{ a.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:0;padding:24px;display:flex;flex-direction:column;gap:24px">
+            <section style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px">
+              <div style="font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Quick facts</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+                <sc-for list="{{ quickFacts }}" as="q" hint-placeholder-count="6">
+                  <div>
+                    <div style="font:400 12px var(--mono);color:var(--muted)">{{ q.label }}</div>
+                    <div style="font:700 16px Inter,sans-serif;color:var(--ink)">{{ q.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <div style="display:flex;gap:4px;border-bottom:1px solid var(--line)">
+              <sc-for list="{{ pageTabs }}" as="t" hint-placeholder-count="4">
+                <button type="button" onClick="{{ t.go }}" style="border:none;background:none;padding:0 14px 10px;cursor:pointer;font:500 14px Inter,sans-serif;color:{{ t.fg }};border-bottom:2px solid {{ t.bc }};white-space:nowrap" style-hover="color:var(--ink)">{{ t.label }}</button>
+              </sc-for>
+            </div>
+
+            <sc-for list="{{ modules }}" as="m" hint-placeholder-count="4">
+              <section>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:14px">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="{{ m.icon }}" size="16" hint-size="16px,16px"></x-import></span>
+                    <span style="font:700 18px Inter,sans-serif;color:var(--ink)">{{ m.title }}</span>
+                  </div>
+                  <button type="button" style="height:34px;padding:0 14px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap" style-hover="border-color:var(--primary);color:var(--primary)">
+                    <x-import component-from-global-scope="RepoIcon" name="plus" size="14" hint-size="14px,14px"></x-import>
+                    {{ m.cta }}
+                  </button>
+                </div>
+
+                <sc-if value="{{ m.isNotes }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <sc-for list="{{ m.notes }}" as="n" hint-placeholder-count="2">
+                      <article style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                        <div style="padding:10px 16px;border-bottom:1px solid var(--divider);font:500 11px var(--mono);color:var(--ink2);letter-spacing:.12em;text-transform:uppercase">{{ n.title }}</div>
+                        <p style="margin:0;padding:22px 24px;font:400 16px/28px Inter,sans-serif;color:var(--ink);text-wrap:pretty">{{ n.body }}</p>
+                        <div style="display:flex;align-items:center;gap:16px;padding:8px 16px;border-top:1px solid var(--divider)">
+                          <span style="height:22px;padding:0 10px;border-radius:2px;background:none;border:1px solid var(--yellow);color:var(--yellow);font:500 11px/20px var(--mono);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">{{ n.emotion }}</span>
+                          <span style="font:400 11px var(--mono);color:var(--muted)">{{ n.date }}</span>
+                          <span style="margin-left:auto;display:flex;align-items:center;gap:6px">
+                            <span style="width:16px;height:16px;border-radius:2px;flex:none;background:var(--faint) url({{ n.authorAvatar }}) center/cover no-repeat"></span>
+                            <span style="font:400 11px var(--mono);color:var(--muted)">{{ n.author }}</span>
+                          </span>
+                        </div>
+                      </article>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ m.isRows }}" hint-placeholder-val="{{ true }}">
+                  <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                    <sc-for list="{{ m.rows }}" as="r" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--divider)" style-hover="background:var(--hover)">
+                        <span style="width:44px;height:44px;flex:none;border-radius:2px;display:flex;align-items:center;justify-content:center;background:{{ r.tint }};color:{{ r.tintFg }}">
+                          <x-import component-from-global-scope="RepoIcon" name="{{ r.icon }}" size="15" hint-size="15px,15px"></x-import>
+                        </span>
+                        <div style="flex:1;min-width:0">
+                          <div style="font:700 16px Inter,sans-serif;color:var(--ink)">{{ r.a }}</div>
+                          <div style="font:400 12px var(--mono);color:var(--muted)">{{ r.b }}</div>
+                        </div>
+                        <span style="font:400 12px var(--mono);color:var(--muted);white-space:nowrap">{{ r.c }}</span>
+                        <span style="color:var(--faint);display:flex">
+                          <x-import component-from-global-scope="RepoIcon" name="more" size="16" hint-size="16px,16px"></x-import>
+                        </span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ m.isBlank }}" hint-placeholder-val="{{ false }}">
+                  <div style="border-radius:2px;background:var(--card);border:1px dashed var(--line);display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px">
+                    <span style="color:var(--faint);display:flex"><x-import component-from-global-scope="RepoIcon" name="{{ m.icon }}" size="30" hint-size="30px,30px"></x-import></span>
+                    <span style="font:400 13px Inter,sans-serif;color:var(--muted)">{{ m.blankText }}</span>
+                  </div>
+                </sc-if>
+              </section>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isTasks }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Tasks" style="flex:1;min-width:0;padding:24px;max-width:1000px;animation:crmFade .25s ease">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <span style="font:700 20px Inter,sans-serif;color:var(--ink);white-space:nowrap">Tasks across this vault <span style="font:400 20px Inter,sans-serif;color:var(--muted)">· 12 open</span></span>
+            <button type="button" onClick="{{ openAddTask }}" style="height:44px;padding:0 20px;border-radius:2px;border:1px solid var(--stamp);background:var(--primary);color:var(--on-primary);font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:4px 4px 0 var(--stamp);transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="box-shadow:none;transform:translate(4px,4px)">
+              <x-import component-from-global-scope="RepoIcon" name="plus" size="18" hint-size="18px,18px"></x-import>
+              Add a task
+            </button>
+          </div>
+          <sc-for list="{{ taskGroups }}" as="g" hint-placeholder-count="3">
+            <div style="margin-bottom:28px">
+              <div style="display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:12px">
+                <span style="font:600 13px Inter,sans-serif;color:{{ g.color }}">{{ g.title }}</span>
+                <span style="font:400 12px var(--mono);color:var(--muted)">{{ g.count }}</span>
+              </div>
+              <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                <sc-for list="{{ g.tasks }}" as="t" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--divider)" style-hover="background:var(--hover)">
+                    <span style="width:20px;height:20px;flex:none;border-radius:2px;border:1.5px solid {{ t.boxBorder }};background:{{ t.box }};display:flex;align-items:center;justify-content:center;color:var(--on-primary);cursor:pointer">
+                      <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}">
+                        <x-import component-from-global-scope="RepoIcon" name="check" size="13" hint-size="13px,13px"></x-import>
+                      </sc-if>
+                    </span>
+                    <span style="flex:1;min-width:0;font:400 14px Inter,sans-serif;color:{{ t.fg }};text-decoration:{{ t.strike }}">{{ t.text }}</span>
+                    <span style="display:flex;align-items:center;gap:6px">
+                      <span style="width:20px;height:20px;border-radius:2px;flex:none;background:var(--faint) url({{ t.avatar }}) center/cover no-repeat"></span>
+                      <span style="font:400 12px var(--mono);color:var(--primary);white-space:nowrap">{{ t.who }}</span>
+                    </span>
+                    <span style="width:110px;flex:none;text-align:right;font:400 12px var(--mono);color:{{ t.dueColor }};white-space:nowrap">{{ t.due }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCards }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Cards" style="flex:1;min-width:0;padding:24px;animation:crmFade .25s ease">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <span style="font:700 20px Inter,sans-serif;color:var(--ink);white-space:nowrap">{{ cardsSubtitle }}</span>
+            <button type="button" onClick="{{ openAddNew }}" style="height:44px;padding:0 20px;border-radius:2px;border:1px solid var(--stamp);background:var(--primary);color:var(--on-primary);font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:4px 4px 0 var(--stamp);transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="box-shadow:none;transform:translate(4px,4px)">
+              <x-import component-from-global-scope="RepoIcon" name="plus" size="18" hint-size="18px,18px"></x-import>
+              {{ cardsCta }}
+            </button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">
+            <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+              <section style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;display:flex;flex-direction:column;gap:12px;cursor:pointer" style-hover="border-color:var(--primary)">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <span style="width:56px;height:56px;flex:none;border-radius:2px;display:flex;align-items:center;justify-content:center;background:{{ c.tint }};color:{{ c.tintFg }}">
+                    <x-import component-from-global-scope="RepoIcon" name="{{ c.icon }}" size="20" hint-size="20px,20px"></x-import>
+                  </span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font:700 18px Inter,sans-serif;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</div>
+                    <div style="font:400 12px var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.meta }}</div>
+                  </div>
+                </div>
+                <p style="margin:0;font:400 15px/26px Inter,sans-serif;color:var(--ink2);text-wrap:pretty">{{ c.body }}</p>
+                <div style="display:flex;gap:6px;margin-top:auto">
+                  <sc-for list="{{ c.faces }}" as="f" hint-placeholder-count="3">
+                    <span style="width:24px;height:24px;border-radius:2px;flex:none;border:2px solid var(--card);margin-left:-8px;background:var(--faint) url({{ f }}) center/cover no-repeat"></span>
+                  </sc-for>
+                </div>
+              </section>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCalendar }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Calendar" style="flex:1;min-width:0;padding:24px;animation:crmFade .25s ease">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <span style="font:700 20px Inter,sans-serif;color:var(--ink)">August 2026</span>
+            <div style="display:flex;gap:12px">
+              <button type="button" style="width:44px;height:44px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0" style-hover="color:var(--primary)">
+                <x-import component-from-global-scope="RepoIcon" name="arrow-left" size="18" hint-size="18px,18px"></x-import>
+              </button>
+              <button type="button" style="width:44px;height:44px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0" style-hover="color:var(--primary)">
+                <x-import component-from-global-scope="RepoIcon" name="arrow-right" size="18" hint-size="18px,18px"></x-import>
+              </button>
+            </div>
+          </div>
+          <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--divider);background:var(--bg)">
+              <sc-for list="{{ weekdays }}" as="d" hint-placeholder-count="7">
+                <span style="padding:10px 12px;font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase">{{ d }}</span>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr)">
+              <sc-for list="{{ calendarDays }}" as="d" hint-placeholder-count="35">
+                <div style="min-height:104px;padding:8px 10px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);background:{{ d.bg }}">
+                  <span style="font:500 12px var(--mono);color:{{ d.fg }}">{{ d.n }}</span>
+                  <div style="display:flex;flex-direction:column;gap:4px;margin-top:6px">
+                    <sc-for list="{{ d.events }}" as="e" hint-placeholder-count="1">
+                      <span style="padding:3px 7px;border-radius:2px;background:{{ e.tint }};color:{{ e.fg }};font:500 10px/14px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.label }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Reports" style="flex:1;min-width:0;padding:24px;animation:crmFade .25s ease">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px">
+            <sc-for list="{{ reports }}" as="r" hint-placeholder-count="4">
+              <section style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                  <span style="color:var(--muted);display:flex"><x-import component-from-global-scope="RepoIcon" name="{{ r.icon }}" size="16" hint-size="16px,16px"></x-import></span>
+                  <span style="font:700 18px Inter,sans-serif;color:var(--ink);white-space:nowrap">{{ r.title }}</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <sc-for list="{{ r.rows }}" as="row" hint-placeholder-count="4">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                        <span style="font:400 13px Inter,sans-serif;color:var(--ink2)">{{ row.label }}</span>
+                        <span style="font:500 13px Inter,sans-serif;color:var(--ink)">{{ row.value }}</span>
+                      </div>
+                      <div style="height:6px;border-radius:2px;background:var(--bg);overflow:hidden">
+                        <span style="display:block;height:6px;border-radius:2px;background:var(--primary);width:{{ row.pct }}"></span>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </section>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Settings" style="flex:1;min-width:0;padding:24px;max-width:900px;animation:crmFade .25s ease">
+          <sc-for list="{{ settingsGroups }}" as="g" hint-placeholder-count="3">
+            <div style="margin-bottom:28px">
+              <div style="font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">{{ g.title }}</div>
+              <div style="border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden">
+                <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--divider)">
+                    <div style="flex:1;min-width:0">
+                      <div style="font:700 16px Inter,sans-serif;color:var(--ink)">{{ r.label }}</div>
+                      <div style="font:400 14px/22px Inter,sans-serif;color:var(--muted);text-wrap:pretty">{{ r.hint }}</div>
+                    </div>
+                    <span style="width:44px;height:24px;flex:none;border-radius:2px;background:{{ r.track }};position:relative;cursor:pointer;transition:background .18s ease">
+                      <span style="position:absolute;top:3px;left:{{ r.knob }};width:18px;height:18px;border-radius:2px;background:#fff;transition:left .18s ease;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span>
+                    </span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isVaults }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Vaults" style="flex:1;min-width:0;padding:24px;animation:crmFade .25s ease">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px">
+            <sc-for list="{{ vaults }}" as="v" hint-placeholder-count="3">
+              <button type="button" onClick="{{ goDashboard }}" style="text-align:left;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;cursor:pointer;display:flex;flex-direction:column;gap:14px" style-hover="border-color:var(--primary)">
+                <span style="width:52px;height:52px;border-radius:2px;display:flex;align-items:center;justify-content:center;background:{{ v.tint }};color:{{ v.tintFg }}">
+                  <x-import component-from-global-scope="RepoIcon" name="{{ v.icon }}" size="24" hint-size="24px,24px"></x-import>
+                </span>
+                <span style="font:700 22px Inter,sans-serif;color:var(--ink)">{{ v.name }}</span>
+                <span style="font:400 15px/26px Inter,sans-serif;color:var(--ink2);text-wrap:pretty">{{ v.desc }}</span>
+                <span style="font:400 12px var(--mono);color:var(--muted)">{{ v.meta }}</span>
+              </button>
+            </sc-for>
+            <button type="button" style="border-radius:2px;background:none;border:1px dashed var(--faint);padding:24px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);min-height:200px;transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="border-color:var(--primary);color:var(--primary);box-shadow:4px 4px 0 var(--stamp);transform:translate(-1px,-1px)">
+              <x-import component-from-global-scope="RepoIcon" name="plus" size="28" hint-size="28px,28px"></x-import>
+              <span style="font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase">Create a vault</span>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+
+    </main>
+  </div>
+
+  <sc-if value="{{ showAddMenu }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeOverlay }}" style="position:fixed;inset:0;background:var(--scrim);z-index:60;animation:crmFade .18s ease"></div>
+    <div style="position:fixed;top:100px;right:24px;width:320px;z-index:61;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--pop);padding:10px;animation:crmRise .2s ease">
+      <sc-for list="{{ addMenu }}" as="m" hint-placeholder-count="5">
+        <button type="button" onClick="{{ m.go }}" style="width:100%;display:flex;align-items:center;gap:14px;padding:11px 14px;border:none;background:none;border-radius:2px;cursor:pointer;color:var(--ink);font:500 14px Inter,sans-serif;text-align:left" style-hover="background:var(--hover)">
+          <span style="width:36px;height:36px;flex:none;border-radius:2px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center">
+            <x-import component-from-global-scope="RepoIcon" name="{{ m.icon }}" size="18" hint-size="18px,18px"></x-import>
+          </span>
+          <span style="flex:1">{{ m.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showForm }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeOverlay }}" style="position:fixed;inset:0;background:var(--scrim);z-index:60;animation:crmFade .18s ease"></div>
+    <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:640px;max-height:86vh;overflow:auto;z-index:61;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--pop);animation:crmRise .22s ease">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 24px 0">
+        <span style="font:700 20px Inter,sans-serif;color:var(--ink);white-space:nowrap">{{ formTitle }}</span>
+        <button type="button" onClick="{{ closeOverlay }}" style="border:none;background:none;color:var(--muted);cursor:pointer;padding:0;display:flex" style-hover="color:var(--ink)">
+          <x-import component-from-global-scope="RepoIcon" name="close" size="22" hint-size="22px,22px"></x-import>
+        </button>
+      </div>
+      <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <sc-for list="{{ formFields }}" as="f" hint-placeholder-count="4">
+          <div style="grid-column:{{ f.span }};display:flex;flex-direction:column;gap:8px">
+            <label style="font:500 11px var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase">{{ f.label }}</label>
+            <sc-if value="{{ f.area }}" hint-placeholder-val="{{ false }}">
+              <textarea rows="5" placeholder="{{ f.placeholder }}" style="border-radius:2px;border:1px solid var(--line);background:var(--field);padding:12px 16px;font:400 14px/24px Inter,sans-serif;color:var(--ink);outline:none;resize:vertical"></textarea>
+            </sc-if>
+            <sc-if value="{{ f.single }}" hint-placeholder-val="{{ true }}">
+              <div style="height:46px;border-radius:2px;border:1px solid var(--line);background:var(--field);display:flex;align-items:center;gap:10px;padding:0 16px">
+                <input type="text" placeholder="{{ f.placeholder }}" style="flex:1;min-width:0;border:none;background:none;outline:none;font:400 13px var(--mono);color:var(--ink)">
+                <span style="color:var(--muted);display:flex">
+                  <x-import component-from-global-scope="RepoIcon" name="{{ f.icon }}" size="18" hint-size="18px,18px"></x-import>
+                </span>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:12px;padding:0 24px 24px">
+        <button type="button" onClick="{{ closeOverlay }}" style="height:46px;padding:0 20px;border-radius:2px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap">Cancel</button>
+        <button type="button" onClick="{{ saveForm }}" style="height:46px;padding:0 28px;border-radius:2px;border:1px solid var(--stamp);background:var(--primary);color:var(--on-primary);font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:4px 4px 0 var(--stamp);transition:transform .15s cubic-bezier(.4,0,.2,1),box-shadow .15s cubic-bezier(.4,0,.2,1)" style-hover="box-shadow:none;transform:translate(4px,4px)">{{ formCta }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:2px;background:var(--card);border:1px solid var(--line);box-shadow:var(--pop);animation:crmToast .25s ease">
+      <span style="width:30px;height:30px;border-radius:2px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--mint);color:var(--green)">
+        <x-import component-from-global-scope="RepoIcon" name="check" size="17" hint-size="17px,17px"></x-import>
+      </span>
+      <span style="font:700 16px Inter,sans-serif;color:var(--ink);white-space:nowrap">{{ toastText }}</span>
+      <button type="button" onClick="{{ dismissToast }}" style="border:none;background:none;color:var(--muted);cursor:pointer;padding:0;display:flex;margin-left:6px" style-hover="color:var(--ink)">
+        <x-import component-from-global-scope="RepoIcon" name="close" size="18" hint-size="18px,18px"></x-import>
+      </button>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Appearance&quot;}}">
+const A = { m1: './assets/user-avatar.jpg', w1: './assets/avatar-3.jpg', m2: './assets/face-1.jpg' };
+
+const LABEL_COLORS = {
+  'View all': 'var(--faint)', Family: 'var(--primary)', 'Close friends': 'var(--green)',
+  Work: 'var(--yellow)', Neighbours: 'var(--pink)', Sport: 'var(--muted)', Lisbon: 'var(--ink2)',
+};
+
+const CONTACTS = [
+  { name: 'Clara Mendes', role: 'Sister', avatar: A.w1, tags: ['Family', 'Lisbon'], updated: '2 hours ago' },
+  { name: 'Tomás Ferreira', role: 'Brother-in-law', avatar: A.m2, tags: ['Family'], updated: 'Yesterday' },
+  { name: 'Aïcha Diallo', role: 'Friend from university', avatar: A.w1, tags: ['Close friends'], updated: '3 days ago' },
+  { name: 'Ben Okafor', role: 'Former colleague', avatar: A.m1, tags: ['Work', 'Berlin'], updated: '5 days ago' },
+  { name: 'Hana Suzuki', role: 'Neighbour', avatar: A.w1, tags: ['Neighbours'], updated: '1 week ago' },
+  { name: 'Rui Mendes', role: 'Father', avatar: A.m2, tags: ['Family'], updated: '2 weeks ago' },
+  { name: 'Lena Kowalski', role: 'Book club', avatar: A.w1, tags: ['Close friends'], updated: '3 weeks ago' },
+  { name: 'Samir Haddad', role: 'Football on Thursdays', avatar: A.m1, tags: ['Sport'], updated: '1 month ago' },
+];
+
+const FORMS = {
+  'add-contact': { title: 'Add a contact', cta: 'Create contact', saved: 'The contact has been created', fields: [
+    { label: 'First name', placeholder: 'Clara', span: 'auto', icon: 'people' },
+    { label: 'Last name', placeholder: 'Mendes', span: 'auto', icon: 'people' },
+    { label: 'Nickname', placeholder: 'Optional', span: 'auto', icon: 'tag' },
+    { label: 'Birthdate', placeholder: '12 March 1992', span: 'auto', icon: 'cake' },
+    { label: 'How you know them', placeholder: 'Sister', span: '1 / -1', icon: 'user-check' },
+  ] },
+  'add-note': { title: 'Add a note', cta: 'Save note', saved: 'The note has been created', fields: [
+    { label: 'Body', placeholder: 'What do you want to remember?', span: '1 / -1', area: true },
+    { label: 'Title', placeholder: 'Optional', span: 'auto', icon: 'note' },
+    { label: 'How did you feel?', placeholder: 'Happy', span: 'auto', icon: 'face' },
+  ] },
+  'add-call': { title: 'Log a call or meeting', cta: 'Save', saved: 'The call has been created', fields: [
+    { label: 'When did it happen?', placeholder: '14 August 2026', span: 'auto', icon: 'calendar' },
+    { label: 'Type', placeholder: 'Audio call', span: 'auto', icon: 'call' },
+    { label: 'Who initiated?', placeholder: 'I called', span: 'auto', icon: 'user-check' },
+    { label: 'Reason', placeholder: 'Just catching up', span: 'auto', icon: 'tag' },
+    { label: 'Description', placeholder: 'Optional notes about the conversation', span: '1 / -1', area: true },
+  ] },
+  'add-reminder': { title: 'Add a reminder', cta: 'Save reminder', saved: 'The reminder has been created', fields: [
+    { label: 'Label', placeholder: 'Send birthday message', span: '1 / -1', icon: 'bell' },
+    { label: 'Date', placeholder: '12 March', span: 'auto', icon: 'calendar' },
+    { label: 'Repeats', placeholder: 'Every year', span: 'auto', icon: 'arrow-down' },
+  ] },
+  'add-task': { title: 'Add a task', cta: 'Save task', saved: 'The task has been created', fields: [
+    { label: 'Task', placeholder: 'Return the book I borrowed', span: '1 / -1', icon: 'task' },
+    { label: 'For whom', placeholder: 'Clara Mendes', span: 'auto', icon: 'people' },
+    { label: 'Due date', placeholder: '20 August 2026', span: 'auto', icon: 'calendar' },
+  ] },
+  'add-journal': { title: 'Start a journal entry', cta: 'Save entry', saved: 'The entry has been created', fields: [
+    { label: 'Title', placeholder: 'A long walk by the river', span: '1 / -1', icon: 'note' },
+    { label: 'Entry', placeholder: 'Write freely — nobody else reads this.', span: '1 / -1', area: true },
+  ] },
+};
+
+class Component extends DCLogic {
+  state = { screen: 'dashboard', tab: 'activity', page: 'Contact information', theme: 'light', overlay: null, toast: null, filter: null };
+
+  componentDidMount() {
+    const saved = localStorage.getItem('crm-theme');
+    const t = saved || this.props.theme || 'light';
+    if (t !== this.state.theme) this.setState({ theme: t });
+  }
+
+  go = (screen) => () => this.setState({ screen, overlay: null });
+  filterBy = (label) => (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    this.setState({ screen: 'contacts', filter: label, overlay: null });
+  };
+  open = (overlay) => () => this.setState({ overlay });
+  setTheme = (t) => { localStorage.setItem('crm-theme', t); this.setState({ theme: t }); };
+  flash = (text) => {
+    clearTimeout(this._t);
+    this.setState({ toast: text, overlay: null });
+    this._t = setTimeout(() => this.setState({ toast: null }), 3200);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const dark = s.theme === 'dark';
+
+    const navDef = [
+      { id: 'dashboard', label: 'Dashboard', icon: 'grid' },
+      { id: 'contacts', label: 'Contacts', icon: 'people' },
+      { id: 'calendar', label: 'Calendar', icon: 'calendar' },
+      { id: 'journals', label: 'Journals', icon: 'note' },
+      { id: 'groups', label: 'Groups', icon: 'group' },
+      { id: 'companies', label: 'Companies', icon: 'buildings' },
+      { id: 'tasks', label: 'Tasks', icon: 'task' },
+      { id: 'reports', label: 'Reports', icon: 'chart' },
+      { id: 'files', label: 'Files', icon: 'folder' },
+    ];
+    const active = s.screen === 'contact' ? 'contacts' : s.screen;
+    const nav = navDef.map((n) => {
+      const on = n.id === active;
+      return { ...n, go: this.go(n.id), bg: on ? 'var(--card)' : 'transparent',
+        fg: on ? 'var(--ink)' : 'var(--muted)', bc: on ? 'var(--line)' : 'transparent',
+        sh: 'none' };
+    });
+
+    const titles = { dashboard: 'Dashboard', contacts: 'Contacts', contact: 'Clara Mendes', calendar: 'Calendar',
+      journals: 'Journals', groups: 'Groups', companies: 'Companies', tasks: 'Tasks', reports: 'Reports',
+      files: 'Files', settings: 'Vault settings', vaults: 'Your vaults' };
+
+    const tabDef = [
+      { id: 'activity', label: 'Activity in this vault', icon: 'clock' },
+      { id: 'life_events', label: 'Your life events', icon: 'flag' },
+      { id: 'metrics', label: 'Life metrics', icon: 'chart' },
+    ];
+    const feedTabs = tabDef.map((t) => ({ ...t, go: () => this.setState({ tab: t.id }),
+      bg: s.tab === t.id ? 'var(--primary-soft)' : 'transparent',
+      fg: s.tab === t.id ? 'var(--primary)' : 'var(--muted)' }));
+
+    const pageDef = ['Contact information', 'Social', 'Life events', 'Information'];
+    const pageTabs = pageDef.map((p) => ({ label: p, go: () => this.setState({ page: p }),
+      fg: s.page === p ? 'var(--ink)' : 'var(--muted)',
+      bc: s.page === p ? 'var(--primary)' : 'transparent' }));
+
+    const cardSets = {
+      journals: { subtitle: 'Journals in this vault · 3', cta: 'Start a journal', add: 'add-journal', cards: [
+        { icon: 'note', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', title: 'Everyday', meta: '146 entries · last written yesterday', body: 'The daily log. Small things, mostly — what I cooked, who I ran into, what the weather did.', faces: [] },
+        { icon: 'star', tint: 'var(--sun)', tintFg: 'var(--yellow)', title: 'Travel', meta: '28 entries · last written in June', body: 'Trips, trains and the food that came with them. One entry per day away from home.', faces: [] },
+        { icon: 'heart', tint: 'var(--blush)', tintFg: 'var(--pink)', title: 'Letters I never sent', meta: '9 entries · private', body: 'Drafts addressed to people who will never read them. Kept for my own sake.', faces: [] },
+      ] },
+      groups: { subtitle: 'Groups in this vault · 4', cta: 'Add a group', add: null, cards: [
+        { icon: 'group', tint: 'var(--mint)', tintFg: 'var(--green)', title: 'The Mendes family', meta: 'Family · 6 people', body: 'Clara, Tomás, Rui and the rest. Birthdays in March, June and November.', faces: [A.w1, A.m2, A.m1] },
+        { icon: 'group', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', title: 'Thursday football', meta: 'Club · 11 people', body: 'Same pitch, same time, since 2019. Samir organises the bookings.', faces: [A.m1, A.m2] },
+        { icon: 'group', tint: 'var(--sun)', tintFg: 'var(--yellow)', title: 'Book club', meta: 'Club · 7 people', body: 'One book a month, chosen in rotation. Lena is up next.', faces: [A.w1, A.m1] },
+        { icon: 'group', tint: 'var(--blush)', tintFg: 'var(--pink)', title: 'Flatmates, 2014–2017', meta: 'Household · 3 people', body: 'Rua da Palma. Still in the group chat, still arguing about the bills.', faces: [A.m2, A.w1] },
+      ] },
+      companies: { subtitle: 'Companies in this vault · 5', cta: 'Add a company', add: null, cards: [
+        { icon: 'buildings', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', title: 'Northwind Studio', meta: '3 contacts work here', body: 'Design studio in Berlin. Ben was there until last spring.', faces: [A.m1, A.m2] },
+        { icon: 'buildings', tint: 'var(--mint)', tintFg: 'var(--green)', title: 'Instituto Camões', meta: '1 contact works here', body: 'Where Clara teaches. Term ends mid-July.', faces: [A.w1] },
+        { icon: 'buildings', tint: 'var(--sun)', tintFg: 'var(--yellow)', title: 'Hana & Co.', meta: '1 contact works here', body: 'Hana runs the ceramics shop two doors down.', faces: [A.w1] },
+      ] },
+      files: { subtitle: 'Files in this vault · 18', cta: 'Upload a file', add: null, cards: [
+        { icon: 'clip', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', title: 'clara-passport-scan.pdf', meta: 'PDF · 1.2 MB · Clara Mendes', body: 'Uploaded 14 August 2026. Attached to the Documents module.', faces: [A.w1] },
+        { icon: 'photo', tint: 'var(--mint)', tintFg: 'var(--green)', title: 'lisbon-june-2026.zip', meta: 'Archive · 84 MB · Travel journal', body: 'Photos from the trip. Not yet sorted into the journal entries.', faces: [] },
+        { icon: 'document', tint: 'var(--sun)', tintFg: 'var(--yellow)', title: 'book-club-list.txt', meta: 'Text · 4 KB · Book club', body: 'Running list of everything we have read since 2021.', faces: [A.w1, A.m1] },
+      ] },
+    };
+    const set = cardSets[s.screen] || null;
+
+    const trackOn = 'var(--primary)';
+    const trackOff = dark ? '#2A3B4F' : '#D6E1E6';
+    const toggle = (on) => ({ track: on ? trackOn : trackOff, knob: on ? '23px' : '3px' });
+
+    const shown = s.filter ? CONTACTS.filter((c) => c.tags.indexOf(s.filter) !== -1) : CONTACTS;
+    const form = FORMS[s.overlay] || null;
+    const mkday = (n, opts) => ({ n, bg: opts && opts.today ? 'var(--primary-soft)' : 'transparent',
+      fg: opts && opts.today ? 'var(--primary)' : (opts && opts.dim ? 'var(--faint)' : 'var(--ink2)'),
+      events: (opts && opts.events) || [] });
+    const ev = (label, kind) => ({ label,
+      tint: kind === 'birthday' ? 'var(--sun)' : kind === 'call' ? 'var(--mint)' : 'var(--primary-soft)',
+      fg: kind === 'birthday' ? 'var(--yellow)' : kind === 'call' ? 'var(--green)' : 'var(--primary)' });
+
+    const days = [];
+    for (let i = 27; i <= 31; i++) days.push(mkday(i, { dim: true }));
+    for (let i = 1; i <= 31; i++) {
+      const o = {};
+      if (i === 14) { o.today = true; o.events = [ev('Call Clara', 'call')]; }
+      if (i === 3) o.events = [ev('Rui — birthday', 'birthday')];
+      if (i === 9) o.events = [ev('Book club', 'other')];
+      if (i === 20) o.events = [ev('Return book', 'other')];
+      if (i === 26) o.events = [ev('Hana — birthday', 'birthday')];
+      days.push(mkday(i, o));
+    }
+    for (let i = 1; i <= 6; i++) days.push(mkday(i, { dim: true }));
+
+    return {
+      theme: s.theme, themeIcon: dark ? 'sun' : 'moon',
+      toggleTheme: () => this.setTheme(dark ? 'light' : 'dark'),
+      nav, screenTitle: titles[s.screen] || 'Dashboard',
+      showBack: s.screen === 'contact',
+      vaultMeta: CONTACTS.length + ' contacts · updated 2 hours ago',
+      hdrLeft: 'flex:1;min-width:0;',
+      hdrSearch: s.screen === 'contact'
+        ? 'flex:0 1 380px;max-width:380px;min-width:200px;'
+        : 'flex:0 1 440px;max-width:440px;min-width:220px;',
+      hdrRight: s.screen === 'contact' ? 'flex:none;' : 'flex:1;min-width:0;',
+      goContacts: this.go('contacts'), goContact: this.go('contact'), goDashboard: this.go('dashboard'),
+      goVaults: this.go('vaults'), goSettings: this.go('settings'),
+
+      isDashboard: s.screen === 'dashboard',
+      isContacts: s.screen === 'contacts',
+      isContact: s.screen === 'contact',
+      isTasks: s.screen === 'tasks',
+      isCalendar: s.screen === 'calendar',
+      isReports: s.screen === 'reports',
+      isSettings: s.screen === 'settings',
+      isVaults: s.screen === 'vaults',
+      isCards: !!set,
+      cardsSubtitle: set ? set.subtitle : '',
+      cardsCta: set ? set.cta : '',
+      cards: set ? set.cards : [],
+
+      favorites: [
+        { name: 'Clara Mendes', avatar: A.w1 }, { name: 'Rui Mendes', avatar: A.m2 }, { name: 'Aïcha Diallo', avatar: A.w1 },
+      ],
+      lastUpdated: CONTACTS.slice(0, 5).map((c) => ({ name: c.name, avatar: c.avatar })),
+
+      feedTabs, tabActivity: s.tab === 'activity', tabLifeEvents: s.tab === 'life_events', tabMetrics: s.tab === 'metrics',
+      feed: [
+        { avatar: A.w1, name: 'Clara Mendes', action: 'a note was added', when: '2 hours ago', body: 'She has started teaching an evening class on Wednesdays, so Wednesday calls are out until December.' },
+        { avatar: A.m2, name: 'Tomás Ferreira', action: 'a call was logged', when: 'Yesterday', body: 'Twenty minutes, mostly about the move. They found a flat in Alvalade and sign the lease next week.' },
+        { avatar: A.w1, name: 'Aïcha Diallo', action: 'a reminder was created', when: '3 days ago', body: 'Ask about the thesis defence — she said mid-September but the date was not fixed yet.' },
+        { avatar: A.m1, name: 'Ben Okafor', action: 'job information was updated', when: '5 days ago', body: 'Left Northwind Studio. Freelancing for now, based in Berlin still.' },
+      ],
+      lifeEvents: [
+        { date: '12 June 2026', icon: 'home', title: 'Moved flat', body: 'Third floor, no lift, but the light in the mornings makes up for it.' },
+        { date: '3 April 2026', icon: 'star', title: 'Finished the course', body: 'Two years of evening classes. Certificate arrived in the post three weeks later.' },
+        { date: '18 January 2026', icon: 'flag', title: 'Started running again', body: 'Four kilometres, three times a week. Slower than 2019 but it counts.' },
+        { date: '2 November 2025', icon: 'heart', title: 'Met Hana', body: 'She was carrying a box of unfired mugs and needed a hand with the door.' },
+      ],
+      metrics: [
+        { label: 'Calls logged per month', value: '14', bars: ['30%','45%','38%','62%','55%','70%','48%','80%','66%','52%','74%','90%'] },
+        { label: 'Notes written per month', value: '31', bars: ['55%','40%','62%','48%','75%','58%','82%','66%','44%','70%','88%','60%'] },
+        { label: 'Contacts touched per month', value: '22', bars: ['42%','58%','36%','70%','50%','64%','78%','54%','68%','46%','60%','84%'] },
+      ],
+      moods: [
+        { day: 'M', title: 'Monday — fine', color: 'var(--mint)', labelColor: 'var(--green)' },
+        { day: 'T', title: 'Tuesday — good', color: 'var(--mint)', labelColor: 'var(--green)' },
+        { day: 'W', title: 'Wednesday — flat', color: 'var(--sun)', labelColor: 'var(--yellow)' },
+        { day: 'T', title: 'Thursday — good', color: 'var(--mint)', labelColor: 'var(--green)' },
+        { day: 'F', title: 'Friday — rough', color: 'var(--blush)', labelColor: 'var(--pink)' },
+        { day: 'S', title: 'Saturday — good', color: 'var(--mint)', labelColor: 'var(--green)' },
+        { day: 'S', title: 'Sunday — not recorded', color: 'var(--bg)', labelColor: 'var(--muted)' },
+      ],
+      reminders: [
+        { when: '17 Aug', avatar: A.m2, name: 'Rui Mendes', label: 'Birthday — he turns 68' },
+        { when: '20 Aug', avatar: A.w1, name: 'Clara Mendes', label: 'Ask how the evening class went' },
+        { when: '26 Aug', avatar: A.w1, name: 'Hana Suzuki', label: 'Birthday' },
+        { when: '2 Sep', avatar: A.m1, name: 'Ben Okafor', label: 'Check in — he was between jobs' },
+      ],
+      dueTasks: [
+        { text: 'Return the book I borrowed from Lena', due: 'Tomorrow', done: false, box: 'transparent', dueColor: 'var(--pink)' },
+        { text: 'Send Aïcha the photos from June', due: 'In 3 days', done: false, box: 'transparent', dueColor: 'var(--muted)' },
+        { text: 'Book train tickets for the wedding', due: 'In 6 days', done: false, box: 'transparent', dueColor: 'var(--muted)' },
+        { text: 'Reply to Tomás about the flat', due: 'Done', done: true, box: 'var(--primary)', dueColor: 'var(--muted)' },
+      ],
+
+      labels: ['View all', 'Family', 'Close friends', 'Work', 'Neighbours', 'Sport', 'Lisbon'].map((name) => {
+        const all = name === 'View all';
+        return {
+          name,
+          count: String(all ? CONTACTS.length : CONTACTS.filter((c) => c.tags.indexOf(name) !== -1).length),
+          color: LABEL_COLORS[name] || 'var(--muted)',
+          fg: all ? 'var(--ink)' : 'var(--primary)',
+          go: all ? () => this.setState({ filter: null }) : this.filterBy(name),
+          bg: s.filter === name || (all && !s.filter) ? 'var(--primary-soft)' : 'transparent',
+        };
+      }),
+      contacts: shown.map((c) => ({ ...c, tags: c.tags.map((t) => ({ name: t, go: this.filterBy(t) })) })),
+      contactCount: shown.length,
+      contactTotal: CONTACTS.length,
+      noContacts: shown.length === 0,
+      hasFilter: !!s.filter,
+      filterLabel: (s.filter || '').toLowerCase().replace(/ /g, '-'),
+      clearFilter: () => this.setState({ filter: null }),
+
+      contactLabels: ['Family', 'Lisbon', 'Close friends'].map((t) => ({ name: t, go: this.filterBy(t) })),
+      sidePanels: [
+        { icon: 'cake', title: 'Important dates', rows: [
+          { a: 'Birthdate', b: '12 March 1992' }, { a: 'Met on', b: 'Always known' },
+        ] },
+        { icon: 'buildings', title: 'Work', rows: [
+          { a: 'Instituto Camões', b: 'Teacher' },
+        ] },
+        { icon: 'people', title: 'Family', rows: [
+          { a: 'Partner', b: 'Tomás Ferreira' }, { a: 'Father', b: 'Rui Mendes' },
+        ] },
+      ],
+      contactActions: [
+        { label: 'Upload photo as avatar', color: 'var(--primary)' },
+        { label: 'Change template', color: 'var(--primary)' },
+        { label: 'Move contact to another vault', color: 'var(--primary)' },
+        { label: 'Download as vCard', color: 'var(--primary)' },
+        { label: 'Archive contact', color: 'var(--primary)' },
+        { label: 'Delete contact', color: 'var(--pink)' },
+      ],
+      pageTabs,
+      quickFacts: [
+        { label: 'How we met', value: 'She is my sister' },
+        { label: 'Lives in', value: 'Lisbon, Portugal' },
+        { label: 'Speaks', value: 'Portuguese, English' },
+        { label: 'Food she avoids', value: 'Shellfish' },
+        { label: 'Last spoke', value: '2 hours ago' },
+        { label: 'Kids', value: 'None' },
+      ],
+      modules: [
+        { icon: 'note', title: 'Notes', cta: 'Add a note', isNotes: true, isRows: false, isBlank: false, notes: [
+          { title: 'Evening class', body: 'She has started teaching an evening class on Wednesdays, so Wednesday calls are out until December. Suggested Sunday mornings instead.', emotion: 'Happy', date: '14 August 2026', author: 'Michael', authorAvatar: A.m1 },
+          { title: 'On the move', body: 'They are looking at flats in Alvalade. She is anxious about the deposit but does not want help — worth offering once, not twice.', emotion: 'Concerned', date: '2 August 2026', author: 'Michael', authorAvatar: A.m1 },
+        ] },
+        { icon: 'call', title: 'Calls & meetings', cta: 'Log a call or meeting', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'call', tint: 'var(--mint)', tintFg: 'var(--green)', a: 'I called', b: 'Audio call · just catching up', c: '14 August 2026' },
+          { icon: 'call', tint: 'var(--mint)', tintFg: 'var(--green)', a: 'Clara called', b: 'Video call · about the flat', c: '2 August 2026' },
+          { icon: 'call', tint: 'var(--blush)', tintFg: 'var(--pink)', a: 'I called, no answer', b: 'Audio call', c: '28 July 2026' },
+          { icon: 'location', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', a: 'We met in person', b: 'Lunch at her place', c: '19 July 2026' },
+        ] },
+        { icon: 'bell', title: 'Reminders', cta: 'Add a reminder', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'cake', tint: 'var(--sun)', tintFg: 'var(--yellow)', a: 'Birthday', b: 'Repeats every year', c: '12 March' },
+          { icon: 'bell', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', a: 'Ask how the evening class went', b: 'One time only', c: '20 August 2026' },
+        ] },
+        { icon: 'task', title: 'Tasks', cta: 'Add a task', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'task', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', a: 'Send the photos from June', b: 'Not done', c: 'Due in 3 days' },
+          { icon: 'check', tint: 'var(--mint)', tintFg: 'var(--green)', a: 'Ask about the deposit', b: 'Completed 3 August', c: 'Done' },
+        ] },
+        { icon: 'user-check', title: 'Relationships', cta: 'Add a relationship', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'heart', tint: 'var(--blush)', tintFg: 'var(--pink)', a: 'Tomás Ferreira', b: 'Partner', c: '' },
+          { icon: 'people', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', a: 'Rui Mendes', b: 'Father', c: '' },
+        ] },
+        { icon: 'flag', title: 'Goals', cta: 'Add a goal', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'flag', tint: 'var(--sun)', tintFg: 'var(--yellow)', a: 'Call her every Sunday', b: '6 weeks in a row', c: 'Streak: 6' },
+        ] },
+        { icon: 'gift', title: 'Gifts', cta: 'Add a gift', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'gift', tint: 'var(--mint)', tintFg: 'var(--green)', a: 'Ceramic bowl from Hana’s shop', b: 'Given · birthday 2026', c: '12 March 2026' },
+          { icon: 'gift', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', a: 'The Anna Karenina translation she wanted', b: 'Idea', c: '' },
+        ] },
+        { icon: 'photo', title: 'Photos', cta: 'Add a photo', isNotes: false, isRows: false, isBlank: true, blankText: 'No photos of Clara yet.' },
+        { icon: 'clip', title: 'Documents', cta: 'Upload a document', isNotes: false, isRows: true, isBlank: false, rows: [
+          { icon: 'document', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', a: 'clara-passport-scan.pdf', b: 'PDF · 1.2 MB', c: '14 August 2026' },
+        ] },
+      ],
+
+      taskGroups: [
+        { title: 'Overdue', count: '2', color: 'var(--pink)', tasks: [
+          { text: 'Return the book I borrowed from Lena', who: 'Lena Kowalski', avatar: A.w1, due: '4 days late', dueColor: 'var(--pink)', done: false, box: 'transparent', boxBorder: 'var(--pink)', fg: 'var(--ink)', strike: 'none' },
+          { text: 'Reply to the wedding invitation', who: 'Aïcha Diallo', avatar: A.w1, due: '1 day late', dueColor: 'var(--pink)', done: false, box: 'transparent', boxBorder: 'var(--pink)', fg: 'var(--ink)', strike: 'none' },
+        ] },
+        { title: 'This week', count: '4', color: 'var(--ink)', tasks: [
+          { text: 'Send Aïcha the photos from June', who: 'Aïcha Diallo', avatar: A.w1, due: 'In 3 days', dueColor: 'var(--muted)', done: false, box: 'transparent', boxBorder: 'var(--faint)', fg: 'var(--ink)', strike: 'none' },
+          { text: 'Book train tickets for the wedding', who: 'Aïcha Diallo', avatar: A.w1, due: 'In 6 days', dueColor: 'var(--muted)', done: false, box: 'transparent', boxBorder: 'var(--faint)', fg: 'var(--ink)', strike: 'none' },
+          { text: 'Ask Rui what he wants for his birthday', who: 'Rui Mendes', avatar: A.m2, due: 'In 3 days', dueColor: 'var(--muted)', done: false, box: 'transparent', boxBorder: 'var(--faint)', fg: 'var(--ink)', strike: 'none' },
+          { text: 'Confirm the pitch booking', who: 'Samir Haddad', avatar: A.m1, due: 'In 2 days', dueColor: 'var(--muted)', done: false, box: 'transparent', boxBorder: 'var(--faint)', fg: 'var(--ink)', strike: 'none' },
+        ] },
+        { title: 'Completed', count: '3', color: 'var(--muted)', tasks: [
+          { text: 'Reply to Tomás about the flat', who: 'Tomás Ferreira', avatar: A.m2, due: '12 Aug', dueColor: 'var(--muted)', done: true, box: 'var(--primary)', boxBorder: 'var(--primary)', fg: 'var(--muted)', strike: 'line-through' },
+          { text: 'Ask Clara about the deposit', who: 'Clara Mendes', avatar: A.w1, due: '3 Aug', dueColor: 'var(--muted)', done: true, box: 'var(--primary)', boxBorder: 'var(--primary)', fg: 'var(--muted)', strike: 'line-through' },
+          { text: 'Order the ceramic bowl', who: 'Hana Suzuki', avatar: A.w1, due: '28 Jul', dueColor: 'var(--muted)', done: true, box: 'var(--primary)', boxBorder: 'var(--primary)', fg: 'var(--muted)', strike: 'line-through' },
+        ] },
+      ],
+
+      weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      calendarDays: days,
+
+      reports: [
+        { icon: 'location', title: 'Where your contacts live', rows: [
+          { label: 'Portugal', value: '19', pct: '86%' }, { label: 'Germany', value: '9', pct: '41%' },
+          { label: 'France', value: '7', pct: '32%' }, { label: 'Japan', value: '4', pct: '18%' },
+        ] },
+        { icon: 'cake', title: 'Birthdays by month', rows: [
+          { label: 'March', value: '6', pct: '75%' }, { label: 'June', value: '5', pct: '62%' },
+          { label: 'August', value: '4', pct: '50%' }, { label: 'November', value: '3', pct: '38%' },
+        ] },
+        { icon: 'face', title: 'Mood over the last year', rows: [
+          { label: 'Good days', value: '198', pct: '68%' }, { label: 'Flat days', value: '81', pct: '28%' },
+          { label: 'Rough days', value: '42', pct: '14%' }, { label: 'Not recorded', value: '44', pct: '15%' },
+        ] },
+        { icon: 'call', title: 'Who you speak to most', rows: [
+          { label: 'Clara Mendes', value: '48 calls', pct: '92%' }, { label: 'Tomás Ferreira', value: '31 calls', pct: '60%' },
+          { label: 'Aïcha Diallo', value: '22 calls', pct: '42%' }, { label: 'Rui Mendes', value: '18 calls', pct: '35%' },
+        ] },
+      ],
+
+      settingsGroups: [
+        { title: 'Tabs shown in this vault', rows: [
+          { label: 'Calendar', hint: 'Show upcoming birthdays and reminders as a month view.', ...toggle(true) },
+          { label: 'Journals', hint: 'Keep long-form entries alongside your contacts.', ...toggle(true) },
+          { label: 'Groups', hint: 'Families, clubs and households that contacts belong to.', ...toggle(true) },
+          { label: 'Companies', hint: 'Track where your contacts work.', ...toggle(false) },
+          { label: 'Reports', hint: 'Aggregate views across the whole vault.', ...toggle(true) },
+        ] },
+        { title: 'Modules on the contact page', rows: [
+          { label: 'Calls & meetings', hint: 'Log every conversation, answered or not.', ...toggle(true) },
+          { label: 'Goals', hint: 'Habits you want to keep up with a person.', ...toggle(true) },
+          { label: 'Gifts', hint: 'Given, received and ideas for later.', ...toggle(true) },
+          { label: 'Loans', hint: 'Money and objects lent in either direction.', ...toggle(false) },
+          { label: 'Pets', hint: 'Names and species, so you never get it wrong.', ...toggle(false) },
+        ] },
+        { title: 'Appearance', rows: [
+          { label: 'Dark mode', hint: 'Follows this vault only. The setting is remembered per browser.', ...toggle(dark) },
+          { label: 'Chunky density', hint: 'More padding and larger hit areas throughout.', ...toggle(false) },
+        ] },
+      ],
+
+      vaults: [
+        { icon: 'heart', tint: 'var(--blush)', tintFg: 'var(--pink)', name: 'Family & friends', desc: 'The people I actually see. Birthdays, calls, the long history.', meta: CONTACTS.length + ' contacts · updated 2 hours ago' },
+        { icon: 'buildings', tint: 'var(--primary-soft)', tintFg: 'var(--primary)', name: 'Work', desc: 'Former colleagues and the odd client. Kept separate on purpose.', meta: '61 contacts · updated last week' },
+        { icon: 'note', tint: 'var(--sun)', tintFg: 'var(--yellow)', name: 'Journal only', desc: 'No contacts. Just the daily log, going back to 2019.', meta: '0 contacts · 183 entries' },
+      ],
+
+      openAddNew: this.open('add-menu'),
+      openAddContact: this.open('add-contact'),
+      openAddTask: this.open('add-task'),
+      closeOverlay: () => this.setState({ overlay: null }),
+      showAddMenu: s.overlay === 'add-menu',
+      addMenu: [
+        { label: 'Add a contact', icon: 'people', go: this.open('add-contact') },
+        { label: 'Add a note', icon: 'note', go: this.open('add-note') },
+        { label: 'Log a call or meeting', icon: 'call', go: this.open('add-call') },
+        { label: 'Add a reminder', icon: 'bell', go: this.open('add-reminder') },
+        { label: 'Add a task', icon: 'task', go: this.open('add-task') },
+        { label: 'Start a journal entry', icon: 'note', go: this.open('add-journal') },
+      ],
+
+      showForm: !!form,
+      formTitle: form ? form.title : '',
+      formCta: form ? form.cta : '',
+      formFields: form ? form.fields.map((f) => ({ ...f, area: !!f.area, single: !f.area })) : [],
+      saveForm: () => this.flash(form ? form.saved : 'Changes saved'),
+
+      toast: !!s.toast, toastText: s.toast || '',
+      dismissToast: () => this.setState({ toast: null }),
+    };
+  }
+}
+</script>
+</body>
+</html>

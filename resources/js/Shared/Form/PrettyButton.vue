@@ -44,20 +44,17 @@ defineProps({
   top: -1px;
 }
 
-.save {
-  background-color: var(--color-accent);
-  color: var(--color-bg);
-}
-
+.save,
 .dark .save {
-  background-color: var(--color-accent) !important;
-  color: var(--color-bg) !important;
+  background-color: var(--primary) !important;
+  color: var(--on-primary) !important;
 }
 
 button {
-  --tw-shadow: 4px 4px 0 #000000 !important;
-  border-radius: 0 !important;
+  --tw-shadow: 4px 4px 0 var(--stamp) !important;
+  border-radius: 2px !important;
   border-width: 1px !important;
+  border-color: var(--stamp) !important;
   box-shadow:
     var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
   display: inline-block !important;
@@ -77,10 +74,12 @@ button {
     backdrop-filter,
     -webkit-backdrop-filter !important;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  padding-left: 9px;
-  padding-right: 9px;
+  font: 500 12px var(--mono) !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 44px !important;
+  padding-left: 18px;
+  padding-right: 18px;
 
   &:hover {
     box-shadow: none !important;

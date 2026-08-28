@@ -58,11 +58,11 @@ const destroy = () => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -128,28 +128,28 @@ const destroy = () => {
             @success="onSuccess"
             @error="onError">
             <div
-              class="mb-6 flex cursor-pointer flex-col items-center rounded-lg border border-gray-200 bg-white p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+              class="mb-6 flex cursor-pointer flex-col items-center rounded-lg border border-border bg-surface p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="mb-2 h-8 w-8 text-gray-500">
+                class="mb-2 h-8 w-8 text-text-muted">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
 
-              <p class="text-sm text-gray-500">{{ $t('Add a header image') }}</p>
+              <p class="text-sm text-text-muted">{{ $t('Add a header image') }}</p>
             </div>
           </uploadcare>
 
           <!-- uploadcare api key not set -->
           <div
             v-if="!data.uploadcare.publicKey"
-            class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <p class="p-5 text-center">
               {{ $t('The keys to manage uploads have not been set in this Monica instance.') }}
             </p>
@@ -158,8 +158,8 @@ const destroy = () => {
           <!-- not enough storage -->
           <div
             v-if="!data.canUploadFile"
-            class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-            <p class="bg-gray-100 p-3 text-center">
+            class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+            <p class="bg-bg p-3 text-center">
               <span class="me-1">⚠️</span> {{ $t('You don’t have enough space left in your account.') }}
             </p>
           </div>
@@ -249,13 +249,13 @@ const destroy = () => {
             <!-- list of posts -->
             <ul
               v-if="data.posts.length > 0"
-              class="post-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              class="post-list mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <li
                 v-for="post in data.posts"
                 :key="post.id"
-                class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                class="flex items-center border-b border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                 <!-- written at -->
-                <div class="me-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
+                <div class="me-4 rounded-lg border border-border p-2 text-center leading-tight">
                   <span class="block text-xs uppercase">{{ post.written_at_day }}</span>
                   <span class="text-xl">{{ post.written_at_day_number }}</span>
                 </div>
@@ -271,7 +271,7 @@ const destroy = () => {
             </ul>
 
             <!-- blank state -->
-            <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            <div v-else class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <p class="p-5 text-center">
                 {{
                   $t(

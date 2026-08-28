@@ -1,6 +1,7 @@
 <script setup>
 import emitter from 'tiny-emitter/instance';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import CrmIcon from '@/Shared/Icons/CrmIcon.vue';
 
 const props = defineProps({
   level: String,
@@ -8,9 +9,28 @@ const props = defineProps({
 });
 
 const isOpen = ref(false);
-const closeAfter = ref(5000); // 10 seconds, you can change that
-const levelClass = ref(null);
+const closeAfter = 3200;
+const currentLevel = ref('success');
 const messageText = ref(null);
+let timer = null;
+
+const tint = computed(() => {
+  if (currentLevel.value === 'error') return { background: 'var(--blush)', color: 'var(--pink)' };
+  if (currentLevel.value === 'warning') return { background: 'var(--sun)', color: 'var(--yellow)' };
+  return { background: 'var(--mint)', color: 'var(--green)' };
+});
+
+const glyph = computed(() => (currentLevel.value === 'success' ? 'check' : 'bell'));
+
+const show = (data) => {
+  if (!data) return;
+  messageText.value = data.message;
+  currentLevel.value = data.level ?? 'success';
+  isOpen.value = true;
+
+  clearTimeout(timer);
+  timer = setTimeout(() => (isOpen.value = false), closeAfter);
+};
 
 onMounted(() => {
   if (props.message) {
@@ -19,36 +39,32 @@ onMounted(() => {
 
   emitter.on('flash', (data) => show(data));
 });
-
-const show = (data) => {
-  if (data) {
-    messageText.value = data.message;
-    levelClass.value = 'is-' + data.level;
-  }
-
-  act(true, 100);
-  hide();
-};
-
-const hide = () => {
-  act(false, closeAfter.value);
-};
-
-const act = (action, timeout) => {
-  setTimeout(() => {
-    isOpen.value = action;
-  }, timeout);
-};
 </script>
 
 <template>
   <div
-    class="fixed bottom-8 z-9999 rounded-md border-zinc-200 bg-white px-5 py-2.5 shadow-xs shadow-gray-400 transition duration-700 ease-in-out dark:border-zinc-600 dark:bg-gray-900 dark:shadow-gray-600"
-    :class="[
-      levelClass,
-      isOpen ? ['opacity-100', 'translate-x-0', 'end-7'] : ['opacity-0', 'translate-x-full', 'end-0'],
-    ]">
-    <span class="me-1"> 👋 </span>
-    {{ messageText }}
+    v-if="isOpen"
+    class="crm-toast-in fixed left-1/2 top-6 z-[80] flex -translate-x-1/2 items-center gap-[14px] rounded-[2px] px-[18px] py-[14px]"
+    style="background: var(--card); border: 1px solid var(--line); box-shadow: var(--pop)">
+    <span class="crm-tint h-[30px] w-[30px]" :style="tint">
+      <CrmIcon :name="glyph" :size="17" />
+    </span>
+    <span
+      class="whitespace-nowrap"
+      style="
+        font:
+          700 16px Inter,
+          sans-serif;
+        color: var(--ink);
+      ">
+      {{ messageText }}
+    </span>
+    <button
+      type="button"
+      class="ms-1.5 flex cursor-pointer border-none bg-transparent p-0"
+      style="color: var(--muted)"
+      @click="isOpen = false">
+      <CrmIcon name="close" :size="18" />
+    </button>
   </div>
 </template>

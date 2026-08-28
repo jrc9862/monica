@@ -5,7 +5,7 @@
 
       <span
         v-if="!editTagModalShown"
-        class="relative cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        class="relative cursor-pointer text-xs text-text dark:text-text"
         @click="showEditModal">
         {{ $t('Edit') }}
       </span>
@@ -13,7 +13,7 @@
       <!-- close button -->
       <span
         v-if="editTagModalShown"
-        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        class="cursor-pointer text-xs text-text dark:text-text"
         @click="editTagModalShown = false">
         {{ $t('Close') }}
       </span>
@@ -22,9 +22,9 @@
     <!-- edit labels -->
     <div
       v-if="editTagModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <!-- filter list of tags -->
-      <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+      <div class="border-b border-border p-2 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -40,11 +40,11 @@
       </div>
 
       <!-- tags in vault -->
-      <ul class="tag-list overflow-auto bg-white dark:bg-gray-900" :class="filteredTags.length > 0 ? 'h-40' : ''">
+      <ul class="tag-list overflow-auto bg-surface dark:bg-surface" :class="filteredTags.length > 0 ? 'h-40' : ''">
         <li
           v-for="tag in filteredTags"
           :key="tag.id"
-          class="flex cursor-pointer items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+          class="flex cursor-pointer items-center justify-between border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @click="set(tag)">
           <div>
             <span class="me-2 inline-block h-4 w-4 rounded-full" :class="tag.bg_color" />
@@ -65,7 +65,7 @@
         <!-- case if the tag does not exist and needs to be created -->
         <li
           v-if="filteredTags.length === 0 && form.search.length !== ''"
-          class="cursor-pointer border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+          class="cursor-pointer border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @click="store()">
           {{ $t('Create new tag') }} <span class="italic">"{{ form.search }}"</span>
         </li>
@@ -73,7 +73,7 @@
         <!-- blank state when there is no tag at all -->
         <li
           v-if="filteredTags.length === 0 && form.search.length === ''"
-          class="border-b border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800">
+          class="border-b border-border px-3 py-2 text-sm text-text hover:bg-hover dark:border-border dark:bg-surface dark:text-text dark:hover:bg-hover">
           {{ $t('Please type a few characters to create a new tag.') }}
         </li>
       </ul>
@@ -84,13 +84,13 @@
       <span
         v-for="tag in localTags"
         :key="tag.id"
-        class="me-2 inline-block rounded-xs bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:me-0">
+        class="me-2 inline-block rounded-xs bg-bg px-2 py-1 text-xs font-semibold text-text-muted last:me-0">
         <InertiaLink :href="tag.url.show">{{ tag.name }}</InertiaLink>
       </span>
     </div>
 
     <!-- blank state -->
-    <p v-if="localTags.length === 0" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('Not set') }}</p>
+    <p v-if="localTags.length === 0" class="text-sm text-text dark:text-text">{{ $t('Not set') }}</p>
   </div>
 </template>
 

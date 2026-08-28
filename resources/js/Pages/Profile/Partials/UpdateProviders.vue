@@ -48,14 +48,14 @@ defineProps({
     </template>
 
     <template #content>
-      <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
+      <div class="max-w-xl text-sm text-text dark:text-text">
         {{ $t('You can add more account to log in to our service with one click.') }}
       </div>
 
       <div class="mt-5 space-y-6">
         <div v-for="(provider, id) in providers" :key="id" class="flex items-center">
           <img :src="provider.logo" :alt="provider.name" class="relative top-0.5 me-2 h-[15px] w-[15px]" />
-          <span class="me-3 text-sm text-gray-600 dark:text-gray-400">
+          <span class="me-3 text-sm text-text dark:text-text">
             {{ provider.name }}
           </span>
 

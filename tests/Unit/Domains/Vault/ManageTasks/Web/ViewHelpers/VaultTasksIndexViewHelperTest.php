@@ -34,13 +34,20 @@ class VaultTasksIndexViewHelperTest extends TestCase
             'due_at' => '2021-01-01',
         ]);
 
-        $collection = VaultTasksIndexViewHelper::data($vault, $user);
+        $array = VaultTasksIndexViewHelper::data($vault, $user);
+
+        $this->assertCount(3, $array['groups']);
+
+        $overdue = $array['groups'][0];
+        $this->assertEquals('Overdue', $overdue['title']);
+        $this->assertEquals(1, $overdue['count']);
 
         $this->assertEquals(
             [
                 0 => [
                     'id' => $task->id,
                     'label' => $task->label,
+                    'completed' => false,
                     'due_at' => [
                         'formatted' => 'Jan 01, 2021',
                         'value' => '2021-01-01',
@@ -49,9 +56,20 @@ class VaultTasksIndexViewHelperTest extends TestCase
                     'url' => [
                         'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id.'/toggle',
                     ],
+                    'contact' => [
+                        'id' => $contact->id,
+                        'name' => $contact->name,
+                        'avatar' => $contact->avatar,
+                        'url' => [
+                            'show' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id,
+                        ],
+                    ],
                 ],
             ],
-            $collection->toArray()[0]['tasks']->toArray()
+            $overdue['tasks']->toArray()
         );
+
+        $this->assertEquals('This week', $array['groups'][1]['title']);
+        $this->assertEquals('Completed', $array['groups'][2]['title']);
     }
 }

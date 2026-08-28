@@ -75,22 +75,22 @@ const useWebauthn = () => {
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 dark:bg-gray-900 sm:justify-center sm:pt-0">
+  <div class="flex min-h-screen flex-col items-center bg-bg pt-6 dark:bg-surface sm:justify-center sm:pt-0">
     <div class="mb-2">
       <AuthenticationCardLogo />
     </div>
 
     <Beta :beta="beta" />
 
-    <h1 class="mt-4 text-center text-xl text-gray-800 dark:text-gray-200">
+    <h1 class="mt-4 text-center text-xl text-text dark:text-text">
       <span class="me-2"> 👋 </span>
       {{ $t('Sign in to your account') }}
     </h1>
 
     <div
       :class="[
-        'mt-6 mb-4 flex w-full flex-col overflow-hidden bg-white shadow-md/20 dark:shadow-md/80 dark:bg-gray-800 sm:max-w-4xl',
-        'rounded-lg md:flex-row border border-gray-100 dark:border-gray-600',
+        'mt-6 mb-4 flex w-full flex-col overflow-hidden bg-surface shadow-md/20 dark:shadow-md/80 dark:bg-surface sm:max-w-4xl',
+        'rounded-lg md:flex-row border border-border dark:border-border',
       ]">
       <img :src="wallpaperUrl" class="w-full hidden sm:w-10/12 md:block object-cover" :alt="$t('Wallpaper')" />
       <div class="w-full">
@@ -101,7 +101,7 @@ const useWebauthn = () => {
             {{ status }}
           </div>
 
-          <form @submit.prevent="submit" class="dark:text-gray-800">
+          <form @submit.prevent="submit" class="dark:text-text">
             <div class="mb-3">
               <TextInput
                 v-model="form.email"
@@ -115,7 +115,7 @@ const useWebauthn = () => {
             </div>
 
             <div class="mb-3 relative">
-              <label class="mb-2 text-sm dark:text-gray-100" :for="'password'">
+              <label class="mb-2 text-sm dark:text-text" :for="'password'">
                 {{ $t('Password') }}
               </label>
 
@@ -139,7 +139,7 @@ const useWebauthn = () => {
             <div class="mb-3 flex justify-between">
               <div>
                 <JetCheckbox id="remember" v-model:checked="form.remember" name="remember" />
-                <label for="remember" class="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                <label for="remember" class="ms-2 text-sm text-text dark:text-text">
                   {{ $t('Remember me') }}
                 </label>
               </div>
@@ -150,7 +150,7 @@ const useWebauthn = () => {
         </div>
 
         <div class="px-6 block" v-if="userless || publicKeyRef">
-          <div class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div class="mb-3 block text-sm font-medium text-text dark:text-text">
             <JetButton v-if="!useSecurityKey" class="block" @click.prevent="useWebauthn">
               {{ $t('Sign in with a passkey') }}
             </JetButton>
@@ -159,7 +159,7 @@ const useWebauthn = () => {
           <WebauthnLogin v-if="useSecurityKey" :public-key="publicKeyRef" :remember="true" :autofill="true" />
         </div>
 
-        <div v-if="isSignupEnabled" class="px-6 py-6 text-l dark:text-gray-50">
+        <div v-if="isSignupEnabled" class="px-6 py-6 text-l dark:text-text">
           {{ $t('New to Monica?') }}
           <Link :href="route('register')" class="text-accent text-l hover:underline">
             {{ $t('Create an account') }}

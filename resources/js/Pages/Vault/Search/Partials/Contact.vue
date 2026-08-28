@@ -12,7 +12,7 @@ defineProps({
       <span class="relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-400"
+          class="icon-sidebar relative inline h-4 w-4 text-text-muted hover:text-text dark:text-text"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor">
@@ -28,11 +28,11 @@ defineProps({
     </div>
     <ul
       v-if="data.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <li
         v-for="contact in data"
         :key="contact.id"
-        class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+        class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
         <Link :href="contact.url" class="text-accent hover:underline">
           {{ contact.name }}
         </Link>
@@ -41,7 +41,7 @@ defineProps({
     <!-- blank state -->
     <div
       v-else
-      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface p-5 text-center text-text-muted dark:border-border dark:bg-surface">
       {{ $t('No contacts found.') }}
     </div>
   </div>

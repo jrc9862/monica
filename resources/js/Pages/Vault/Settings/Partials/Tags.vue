@@ -12,9 +12,9 @@
     <!-- modal to create a new label -->
     <form
       v-if="createTagModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -40,16 +40,16 @@
     <!-- list of tags -->
     <ul
       v-if="localTags.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <li
         v-for="tag in localTags"
         :key="tag.id"
-        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:hover:bg-slate-900">
+        class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover dark:hover:bg-hover">
         <!-- detail of the tag -->
         <div v-if="editTagModalShownId !== tag.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
             <span class="me-2">{{ tag.name }}</span>
-            <span v-if="tag.count > 0" class="text-xs text-gray-500"
+            <span v-if="tag.count > 0" class="text-xs text-text-muted"
               >({{ $tChoice(':count post|:count posts', tag.count, { count: tag.count }) }})</span
             >
           </span>
@@ -70,9 +70,9 @@
         <!-- edit a tag modal -->
         <form
           v-if="editTagModalShownId === tag.id"
-          class="item-list border-b border-gray-200 bg-gray-50 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 dark:hover:bg-slate-800 dark:hover:bg-slate-900"
+          class="item-list border-b border-border bg-bg hover:bg-hover dark:border-border dark:bg-surface dark:bg-surface dark:hover:bg-hover dark:hover:bg-hover"
           @submit.prevent="update(tag)">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-input
@@ -100,7 +100,7 @@
     <!-- blank state -->
     <div
       v-if="localTags.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="p-5 text-center">
         {{ $t('Tags let you classify journal posts using a system that matters to you.') }}
       </p>

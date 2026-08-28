@@ -25,7 +25,7 @@ defineEmits(['retry']);
     <template v-else>
       <div
         v-if="form.processing"
-        class="mb-4 flex rounded-lg border px-4 py-8 shadow-md bg-gray-500/30 border-gray-300 dark:border-gray-700"
+        class="mb-4 flex rounded-lg border px-4 py-8 shadow-md bg-surface/30 border-border dark:border-border"
         role="alert">
         <div class="me-2">
           <LoaderCircle class="h-5 w-5 animate-spin text-teal-800 dark:text-teal-200" :size="25" />
@@ -36,7 +36,7 @@ defineEmits(['retry']);
       </div>
       <div
         v-else-if="!form.hasErrors"
-        class="mb-4 flex rounded-lg border px-4 py-8 shadow-md bg-gray-500/30 border-gray-300 dark:border-gray-700">
+        class="mb-4 flex rounded-lg border px-4 py-8 shadow-md bg-surface/30 border-border dark:border-border">
         <div class="me-2">
           <LoaderCircle class="h-5 w-5 animate-spin text-teal-800 dark:text-teal-200" :size="25" />
         </div>

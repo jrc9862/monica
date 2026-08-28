@@ -74,11 +74,11 @@ const destroy = (journalMetric, postMetric) => {
       <div class="mb-1 font-semibold">{{ journalMetric.label }}</div>
       <ul
         v-if="journalMetric.post_metrics.length > 0"
-        class="mb-2 rounded-xs border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-2 rounded-xs border border-border bg-surface dark:border-border dark:bg-surface">
         <li
           v-for="postMetric in journalMetric.post_metrics"
           :key="postMetric.id"
-          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-1 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list flex items-center justify-between border-b border-border px-3 py-1 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <span class="italic">{{ postMetric.label }}</span>
 
           <div class="flex items-center">
@@ -124,9 +124,9 @@ const destroy = (journalMetric, postMetric) => {
       <!-- modal to add a new post metric -->
       <div
         v-if="addModalShown && journalMetric.id === journalMetricModal"
-        class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface">
         <form @submit.prevent="store(journalMetric)">
-          <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+          <div class="border-b border-border p-2 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-input
@@ -165,7 +165,7 @@ const destroy = (journalMetric, postMetric) => {
     </div>
 
     <!-- blank state -->
-    <p v-if="localJournalMetrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">
+    <p v-if="localJournalMetrics.length <= 0" class="text-sm text-text dark:text-text">
       {{ $t('There are no journal metrics.') }}
     </p>
   </div>

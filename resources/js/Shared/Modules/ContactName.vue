@@ -1,9 +1,9 @@
 <template>
   <div class="mb-4">
-    <div class="pb-1 mb-2 items-center justify-between border-b border-gray-200 dark:border-gray-700 flex">
+    <div class="pb-1 mb-2 items-center justify-between border-b border-border dark:border-border flex">
       <div class="text-xs">{{ $t('Name') }}</div>
       <InertiaLink :href="data.url.edit" class="relative">
-        <Pencil class="h-3 w-3 text-gray-400" />
+        <Pencil class="h-3 w-3 text-text-muted" />
       </InertiaLink>
     </div>
 

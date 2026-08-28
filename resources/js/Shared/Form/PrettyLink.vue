@@ -50,9 +50,10 @@ export default {
 }
 
 a {
-  --tw-shadow: 4px 4px 0 #000000 !important;
-  border-radius: 0 !important;
+  --tw-shadow: 4px 4px 0 var(--stamp) !important;
+  border-radius: 2px !important;
   border-width: 1px !important;
+  border-color: var(--stamp) !important;
   box-shadow:
     var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
   text-decoration: none !important;
@@ -70,10 +71,12 @@ a {
     backdrop-filter,
     -webkit-backdrop-filter !important;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  padding-left: 9px;
-  padding-right: 9px;
+  font: 500 12px var(--mono) !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 44px !important;
+  padding-left: 18px;
+  padding-right: 18px;
 
   &:hover {
     box-shadow: none !important;

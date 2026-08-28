@@ -15,9 +15,11 @@ class CreateReminder extends Tool
 
     public function description(): string
     {
-        return 'Create a reminder for a contact, such as a birthday, anniversary, or follow-up. '.
-            "Reminders can be one-time ('one_time') or recurring every day, month, or year ".
-            "('recurring_day', 'recurring_month', 'recurring_year').";
+        return 'Create a reminder for a contact, such as a birthday, anniversary, or follow-up. '
+            ."Reminders can be one-time ('one_time') or recurring every day, month, or year "
+            ."('recurring_day', 'recurring_month', 'recurring_year'). day and month are required for "
+            .'every type, including recurring ones, because Monica builds the next occurrence from them; '
+            .'one_time reminders need year as well.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema
@@ -33,11 +35,11 @@ class CreateReminder extends Tool
             ->description("The reminder type: 'one_time', 'recurring_day', 'recurring_month', or 'recurring_year'.")
             ->required()
             ->integer('day')
-            ->description('Day of the month the reminder occurs on.')
-            ->optional()
+            ->description('Day of the month the reminder occurs on (1-31). Required for every reminder type.')
+            ->required()
             ->integer('month')
-            ->description('Month the reminder occurs in.')
-            ->optional()
+            ->description('Month the reminder occurs in (1-12). Required for every reminder type.')
+            ->required()
             ->integer('year')
             ->description('Year of the reminder, required for one-time reminders.')
             ->optional()

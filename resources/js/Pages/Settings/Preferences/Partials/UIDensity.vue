@@ -9,20 +9,20 @@
       </h3>
     </div>
 
-    <div class="mb-6 rounded-lg border border-gray-200 bg-white px-5 pb-4 pt-3 dark:border-gray-700 dark:bg-gray-900">
-      <p class="mb-3 text-sm text-gray-500 dark:text-gray-400">
+    <div class="mb-6 rounded-lg border border-border bg-surface px-5 pb-4 pt-3 dark:border-border dark:bg-surface">
+      <p class="mb-3 text-sm text-text-muted dark:text-text">
         {{ $t('Choose how compact the interface looks.') }}
       </p>
 
       <div class="flex gap-4">
         <label class="flex cursor-pointer items-center gap-2">
           <input v-model="form.ui_density" type="radio" value="minimal" class="text-accent" @change="submit" />
-          <span class="dark:text-gray-300">{{ $t('Minimal') }}</span>
+          <span class="dark:text-text">{{ $t('Minimal') }}</span>
         </label>
 
         <label class="flex cursor-pointer items-center gap-2">
           <input v-model="form.ui_density" type="radio" value="chunky" class="text-accent" @change="submit" />
-          <span class="dark:text-gray-300">{{ $t('Chunky') }}</span>
+          <span class="dark:text-text">{{ $t('Chunky') }}</span>
         </label>
       </div>
     </div>

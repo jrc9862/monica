@@ -8,7 +8,7 @@
     <!-- contact information page | can't be removed -->
     <div
       :class="isSelectedId === data.template_page_contact_information.id ? 'border-2	bg-sky-100' : ''"
-      class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2 hover:cursor-pointer hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800"
+      class="mb-2 flex items-center rounded-lg border border-border bg-surface px-5 py-2 hover:cursor-pointer hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
       @click="selectPage(data.template_page_contact_information)">
       <!-- detail of a page -->
       <div>
@@ -16,7 +16,7 @@
           {{ data.template_page_contact_information.name }}
         </div>
 
-        <ul class="text-xs text-gray-400">
+        <ul class="text-xs text-text-muted">
           <li class="inline">
             {{ $t('Can’t be moved or deleted') }}
           </li>
@@ -42,7 +42,7 @@
         <div
           v-if="renamePageModalShownId !== element.id"
           :class="isSelectedId === element.id ? 'border-2	bg-sky-100' : ''"
-          class="mb-2 flex items-center rounded-lg hover:cursor-pointer border border-gray-200 bg-white py-2 pe-5 ps-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800"
+          class="mb-2 flex items-center rounded-lg hover:cursor-pointer border border-border bg-surface py-2 pe-5 ps-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @click="selectPage(element)">
           <!-- icon to move position -->
           <div class="me-2">
@@ -85,9 +85,9 @@
         <!-- modal to edit the page -->
         <form
           v-else
-          class="item-list mb-2 rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800"
+          class="item-list mb-2 rounded-lg border border-border bg-surface hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @submit.prevent="update(element)">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-input
@@ -114,9 +114,9 @@
     <!-- modal to create a new page -->
     <form
       v-if="createPageModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -140,7 +140,7 @@
 
     <!-- blank state -->
     <div v-if="localPages.length === 0">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
+      <p class="rounded-lg border border-border bg-surface p-5 text-center dark:border-border dark:bg-surface">
         {{ $t('Create at least one page to display contact’s data.') }}
       </p>
     </div>

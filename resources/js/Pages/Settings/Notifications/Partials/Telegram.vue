@@ -122,7 +122,7 @@ const destroy = () => {
 <template>
   <div>
     <div class="mb-3 flex items-center justify-between">
-      <span class="dark:text-gray-200">
+      <span class="dark:text-text">
         {{ $t('Via Telegram') }}
       </span>
 
@@ -136,16 +136,16 @@ const destroy = () => {
     <!-- add modal -->
     <form
       v-if="setupTelegramModalShown"
-      class="item-list mb-6 rounded-lg border border-b border-gray-200 bg-gray-50 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 dark:hover:bg-slate-800"
+      class="item-list mb-6 rounded-lg border border-b border-border bg-bg hover:bg-hover dark:border-border dark:bg-surface dark:bg-surface dark:hover:bg-hover"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <!-- preferred time -->
         <p class="mb-2 block text-sm">
           {{ $t('At which time should we send the notification, when the reminder occurs?') }}
         </p>
-        <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+        <div class="flex items-center text-sm font-medium text-text dark:text-text">
           <span class="me-2">
             {{ $t('At') }}
           </span>
@@ -158,7 +158,7 @@ const destroy = () => {
         </div>
       </div>
 
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <p class="mb-4 font-semibold"><span class="me-1">👋</span> {{ $t('What happens now?') }}</p>
         <ol class="ms-4 list-decimal">
           <li class="mb-2">
@@ -190,7 +190,7 @@ const destroy = () => {
     <!-- case if env variables are not set -->
     <div
       v-if="!envVariableSet"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="p-5 text-center">
         {{ $t('You have not setup Telegram in your environment variables yet.') }}
       </p>
@@ -199,7 +199,7 @@ const destroy = () => {
     <div v-if="envVariableSet">
       <div v-if="localTelegram">
         <div
-          class="flex items-center justify-between rounded-lg border border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="flex items-center justify-between rounded-lg border border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <div class="flex items-center">
             <a-tooltip v-if="localTelegram.active" placement="topLeft" title="Verified" arrow-point-at-center>
               <svg
@@ -283,7 +283,7 @@ const destroy = () => {
       </div>
 
       <!-- blank state -->
-      <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <div v-else class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <p class="p-5 text-center">
           {{ $t('You haven’t setup Telegram yet.') }}
         </p>

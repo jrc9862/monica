@@ -1,7 +1,7 @@
 <template>
   <div class="mb-8">
     <div class="mb-3 flex items-center justify-between">
-      <span class="dark:text-gray-200">
+      <span class="dark:text-text">
         {{ $t('You haven’t received a notification in this channel yet.') }}
       </span>
 
@@ -15,9 +15,9 @@
     <!-- add modal -->
     <form
       v-if="addEmailModalShown"
-      class="item-list mb-6 rounded-lg border border-b border-gray-200 bg-gray-50 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 dark:hover:bg-slate-800"
+      class="item-list mb-6 rounded-lg border border-b border-border bg-bg hover:bg-hover dark:border-border dark:bg-surface dark:bg-surface dark:hover:bg-hover"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <!-- content -->
@@ -51,7 +51,7 @@
         <p class="mb-2 block text-sm">
           {{ $t('At which time should we send the notification, when the reminder occurs?') }}
         </p>
-        <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+        <div class="flex items-center text-sm font-medium text-text dark:text-text">
           <span class="me-2">
             {{ $t('At') }}
           </span>
@@ -64,7 +64,7 @@
         </div>
       </div>
 
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <p class="flex">
           <span class="me-2">⚠️</span>
           {{
@@ -84,11 +84,11 @@
     <!-- list of emails -->
     <ul
       v-if="localEmails.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <li
         v-for="email in localEmails"
         :key="email.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+        class="item-list flex items-center justify-between border-b border-border px-5 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
         <div class="flex items-center">
           <a-tooltip v-if="email.verified_at" placement="topLeft" :title="$t('Verified')" arrow-point-at-center>
             <svg
@@ -108,7 +108,7 @@
           <!-- email address + label -->
           <div>
             <span class="mb-0 block">{{ email.content }}</span>
-            <ul class="bulleted-list me-2 text-sm text-gray-500">
+            <ul class="bulleted-list me-2 text-sm text-text-muted">
               <li v-if="email.label" class="me-1 inline">
                 {{ email.label }}
               </li>
@@ -173,7 +173,7 @@
     </ul>
 
     <!-- blank state -->
-    <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+    <div v-else class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="p-5 text-center">
         {{ $t('Add an email to be notified when a reminder occurs.') }}
       </p>

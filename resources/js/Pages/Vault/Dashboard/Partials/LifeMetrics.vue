@@ -111,7 +111,7 @@ const destroy = (lifeMetric) => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-border pb-2 dark:border-border sm:flex">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
         <ChartSpline class="h-4 w-4" />
 
@@ -128,9 +128,9 @@ const destroy = (lifeMetric) => {
     <!-- modal to create a quick fact -->
     <form
       v-if="createLifeMetricModalShown"
-      class="mb-2 mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-2 mt-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -157,36 +157,36 @@ const destroy = (lifeMetric) => {
       <!-- list of life metrics -->
       <ul
         v-if="localLifeMetrics.length > 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <li
           v-for="lifeMetric in localLifeMetrics"
           :key="lifeMetric.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <div v-if="editedLifeMetricId !== lifeMetric.id" class="flex items-center justify-between p-3">
             <div class="me-8 flex w-full items-center justify-between">
               <div>
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
                 <ul @click="toggleGraph(lifeMetric)">
-                  <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
+                  <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-text">
                     {{ $t('Total:') }}
 
                     <a-tooltip placement="bottomLeft" :title="$t('Events this week')" arrow-point-at-center>
                       <span
-                        class="cursor-pointer whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0.5 text-sm text-slate-400"
+                        class="cursor-pointer whitespace-nowrap rounded-lg bg-bg px-2 py-0.5 text-sm text-text-muted"
                         >{{ lifeMetric.stats.weekly_events }}</span
                       >
                     </a-tooltip>
-                    <span class="mx-1 text-gray-400">/</span>
+                    <span class="mx-1 text-text-muted">/</span>
                     <a-tooltip placement="bottomLeft" :title="$t('Events this month')" arrow-point-at-center>
                       <span
-                        class="cursor-pointer whitespace-nowrap rounded-lg bg-yellow-100 px-2 py-0.5 text-sm text-slate-400"
+                        class="cursor-pointer whitespace-nowrap rounded-lg bg-yellow-100 px-2 py-0.5 text-sm text-text-muted"
                         >{{ lifeMetric.stats.monthly_events }}</span
                       >
                     </a-tooltip>
-                    <span class="mx-1 text-gray-400">/</span>
+                    <span class="mx-1 text-text-muted">/</span>
                     <a-tooltip placement="bottomLeft" :title="$t('Events this year')" arrow-point-at-center>
                       <span
-                        class="cursor-pointer whitespace-nowrap rounded-lg bg-green-100 px-2 py-0.5 text-sm text-slate-400"
+                        class="cursor-pointer whitespace-nowrap rounded-lg bg-green-100 px-2 py-0.5 text-sm text-text-muted"
                         >{{ lifeMetric.stats.yearly_events }}</span
                       >
                     </a-tooltip>
@@ -213,7 +213,7 @@ const destroy = (lifeMetric) => {
           <!-- graph -->
           <div
             v-if="editedLifeMetricId !== lifeMetric.id && lifeMetric.show_graph"
-            class="m-3 mb-2 rounded-lg border border-gray-200">
+            class="m-3 mb-2 rounded-lg border border-border">
             <table class="charts-css column show-labels show-primary-axis h-72">
               <tbody>
                 <tr v-for="month in lifeMetric.months" :key="month.id">
@@ -230,9 +230,9 @@ const destroy = (lifeMetric) => {
           <!-- edit modal -->
           <form
             v-if="editedLifeMetricId === lifeMetric.id"
-            class="bg-white dark:border-gray-700 dark:bg-gray-900"
+            class="bg-surface dark:border-border dark:bg-surface"
             @submit.prevent="update(lifeMetric)">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <errors :errors="form.errors" />
 
               <text-input
@@ -259,7 +259,7 @@ const destroy = (lifeMetric) => {
       <!-- blank state -->
       <div
         v-if="localLifeMetrics.length === 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <img src="/img/vault_life_metrics_blank.svg" :alt="$t('Life events')" class="mx-auto mt-4 h-20 w-20" />
         <p class="px-5 pb-5 pt-2 text-center">
           {{ $t('Life metrics let you track metrics that are important to you.') }}

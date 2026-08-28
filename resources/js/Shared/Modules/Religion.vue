@@ -42,29 +42,24 @@ const showEditModal = () => {
 
 <template>
   <div class="mb-4">
-    <div class="pb-1 mb-2 items-center justify-between border-b border-gray-200 dark:border-gray-700 flex">
+    <div class="pb-1 mb-2 items-center justify-between border-b border-border dark:border-border flex">
       <!-- title -->
       <div class="text-xs">{{ $t('Religion') }}</div>
 
       <span v-if="!editReligion" class="relative cursor-pointer" @click="showEditModal()">
-        <Pencil class="h-3 w-3 text-gray-400" />
+        <Pencil class="h-3 w-3 text-text-muted" />
       </span>
 
       <!-- close button -->
-      <span
-        v-if="editReligion"
-        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
-        @click="editReligion = false">
+      <span v-if="editReligion" class="cursor-pointer text-xs text-text dark:text-text" @click="editReligion = false">
         {{ $t('Close') }}
       </span>
     </div>
 
     <!-- edit religion -->
-    <div
-      v-if="editReligion"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
+    <div v-if="editReligion" class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface">
       <form @submit.prevent="update()">
-        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+        <div class="border-b border-border p-2 dark:border-border">
           <errors :errors="form.errors" />
 
           <!-- religions -->
@@ -90,7 +85,7 @@ const showEditModal = () => {
     </div>
 
     <!-- blank state -->
-    <p v-if="!religion" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('Not set') }}</p>
+    <p v-if="!religion" class="text-sm text-text dark:text-text">{{ $t('Not set') }}</p>
 
     <p v-else>
       {{ religion }}

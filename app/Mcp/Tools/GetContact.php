@@ -17,7 +17,9 @@ class GetContact extends Tool
 
     public function description(): string
     {
-        return 'Get the full details of a single contact, including recent notes and counts of calls, reminders and tasks. Use search-contacts first to find the contact_id.';
+        return 'Get the full details of a single contact, including its 10 most recent notes and counts of '
+            .'calls, reminders and tasks. Use search-contacts first to find the contact_id. The note excerpts '
+            .'are truncated to 200 characters — use list-notes for full note bodies.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema

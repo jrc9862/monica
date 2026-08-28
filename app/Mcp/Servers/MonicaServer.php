@@ -15,8 +15,9 @@ class MonicaServer extends Server
         each vault contains contacts, and contacts hold notes, calls, reminders
         and tasks. Most tools take a vault_id — call list-vaults first if you
         do not know it (when the account has a single vault, tools default to
-        it). Contact, vault and other ids are UUIDs. Logging an answered call
-        automatically creates a 90-day follow-up reminder.
+        it). Vault and contact ids are UUIDs; note, task and reminder ids are
+        integers. Logging an answered call automatically creates a 90-day
+        follow-up reminder.
         EOT;
 
     /**

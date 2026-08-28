@@ -104,13 +104,13 @@ const webauthnRegisterCallback = (data) => {
     </template>
 
     <template #content>
-      <h3 v-if="keyBeingUpdated > 0" class="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 v-if="keyBeingUpdated > 0" class="text-lg font-medium text-text dark:text-text">
         {{ $t('Update a key.') }}
       </h3>
-      <h3 v-else-if="!register" class="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 v-else-if="!register" class="text-lg font-medium text-text dark:text-text">
         {{ $t('Use a security key (Webauthn, or FIDO) to increase your account security.') }}
       </h3>
-      <h3 v-else class="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 v-else class="text-lg font-medium text-text dark:text-text">
         {{ $t('Register a new key.') }}
       </h3>
 
@@ -134,20 +134,20 @@ const webauthnRegisterCallback = (data) => {
       </div>
 
       <div v-else class="mt-5 space-y-6">
-        <div v-if="webauthnKeys.length === 0" class="dark:text-gray-400">
+        <div v-if="webauthnKeys.length === 0" class="dark:text-text">
           {{ $t('No keys registered yet') }}
         </div>
         <div v-else v-for="key in webauthnKeys" :key="key.id" class="mb-2 flex items-center">
-          <div class="text-gray-500">
+          <div class="text-text-muted">
             <KeyRound />
           </div>
 
           <div class="ms-3 w-48">
-            <div class="text-sm text-gray-600 dark:text-gray-400">
+            <div class="text-sm text-text dark:text-text">
               {{ key.name }}
             </div>
 
-            <div class="text-xs text-gray-500">
+            <div class="text-xs text-text-muted">
               <span v-if="key.last_used !== null">
                 {{ $t('Last used :date', { date: key.last_used }) }}
               </span>

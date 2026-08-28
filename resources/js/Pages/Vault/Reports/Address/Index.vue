@@ -11,11 +11,11 @@ defineProps({
 <template>
   <Layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -56,7 +56,7 @@ defineProps({
             <!-- blank state -->
             <div
               v-if="data.countries.length === 0"
-              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <p class="p-5 text-center">{{ $t('No countries have been added yet in any contact’s addresses.') }}</p>
             </div>
           </div>
@@ -77,7 +77,7 @@ defineProps({
             <!-- blank state -->
             <div
               v-if="data.cities.length === 0"
-              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
               <p class="p-5 text-center">{{ $t('No cities have been added yet in any contact’s addresses.') }}</p>
             </div>
           </div>

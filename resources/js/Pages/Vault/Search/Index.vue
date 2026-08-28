@@ -46,13 +46,13 @@ const search = debounce(() => {
 
 <template>
   <Layout :layout-data="layoutData" :inside-vault="true">
-    <main class="relative sm:mt-24">
+    <main class="relative">
       <div class="mx-auto max-w-4xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <form
-          class="mb-8 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+          class="mb-8 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
           @submit.prevent="search">
           <div
-            class="section-head border-b border-gray-200 bg-surface-raised p-5 dark:border-gray-700 dark:bg-surface-raised">
+            class="section-head border-b border-border bg-surface-raised p-5 dark:border-border dark:bg-surface-raised">
             <h1 class="text-center text-2xl font-medium">{{ $t('Search something in the vault') }}</h1>
           </div>
           <div class="p-5">
@@ -82,14 +82,14 @@ const search = debounce(() => {
         <!-- searching results -->
         <div
           v-if="processingSearch"
-          class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+          class="mb-6 rounded-lg border border-border bg-surface p-6 text-center text-text-muted dark:border-border dark:bg-surface">
           <Loading />
         </div>
 
         <!-- not enough characters -->
         <div
           v-if="form.searchTerm.length < 3"
-          class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+          class="mb-6 rounded-lg border border-border bg-surface p-6 text-center text-text-muted dark:border-border dark:bg-surface">
           <p>{{ $t('Please enter at least 3 characters to initiate a search.') }}</p>
         </div>
       </div>

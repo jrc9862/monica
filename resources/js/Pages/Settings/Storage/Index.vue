@@ -4,11 +4,11 @@
     :layout-data="layoutData"
   >
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:border-b border-gray-200 dark:border-gray-700">
+    <nav class="bg-surface dark:bg-surface sm:border-b border-border dark:border-border">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -45,7 +45,7 @@
       </div>
     </nav>
 
-    <main class="relative sm:mt-24">
+    <main class="relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
@@ -58,9 +58,9 @@
         </div>
 
         <!-- stats -->
-        <div class="border border-gray-200 dark:border-gray-700 rounded-lg grid grid-cols-2 mb-8">
+        <div class="border border-border dark:border-border rounded-lg grid grid-cols-2 mb-8">
           <!-- account limit -->
-          <div class="flex justify-between p-3 border-e border-gray-200 dark:border-gray-700">
+          <div class="flex justify-between p-3 border-e border-border dark:border-border">
             <p>{{ $t('Your account limits') }}</p>
             <p class="font-bold">
               {{ data.account_limit }}
@@ -71,7 +71,7 @@
           <div class="flex justify-between p-3">
             <p>{{ $t('Your account current usage') }}</p>
             <p class="font-bold">
-              {{ data.statistics.total }} <span class="text-gray-500 font-normal text-sm">({{ data.statistics.total_percent }}%)</span>
+              {{ data.statistics.total }} <span class="text-text-muted font-normal text-sm">({{ data.statistics.total_percent }}%)</span>
             </p>
           </div>
         </div>
@@ -80,18 +80,18 @@
         <p class="mb-2">
           <span class="me-1">🔽</span> {{ $t('Breakdown of the current usage') }}
         </p>
-        <ul class="user-list mb-6 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-          <li class="border-b border-gray-200 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-900 flex justify-between p-3">
+        <ul class="user-list mb-6 rounded-lg border border-border dark:border-border bg-surface dark:bg-surface">
+          <li class="border-b border-border dark:border-border hover:bg-hover dark:hover:bg-hover dark:bg-surface flex justify-between p-3">
             <p>{{ $t('Photos') }}</p>
-            <p>{{ data.statistics.photo.total }} <span class="text-gray-500 font-normal text-sm">({{ data.statistics.photo.size }} - {{ data.statistics.photo.total_percent }}%)</span></p>
+            <p>{{ data.statistics.photo.total }} <span class="text-text-muted font-normal text-sm">({{ data.statistics.photo.size }} - {{ data.statistics.photo.total_percent }}%)</span></p>
           </li>
-          <li class="border-b border-gray-200 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-900 flex justify-between p-3">
+          <li class="border-b border-border dark:border-border hover:bg-hover dark:hover:bg-hover dark:bg-surface flex justify-between p-3">
             <p>{{ $t('Documents') }}</p>
-            <p>{{ data.statistics.document.total }} <span class="text-gray-500 font-normal text-sm">({{ data.statistics.document.size }} - {{ data.statistics.document.total_percent }}%)</span></p>
+            <p>{{ data.statistics.document.total }} <span class="text-text-muted font-normal text-sm">({{ data.statistics.document.size }} - {{ data.statistics.document.total_percent }}%)</span></p>
           </li>
-          <li class="border-b border-gray-200 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-900 flex justify-between p-3">
+          <li class="border-b border-border dark:border-border hover:bg-hover dark:hover:bg-hover dark:bg-surface flex justify-between p-3">
             <p>{{ $t('Avatars') }}</p>
-            <p>{{ data.statistics.avatar.total }} <span class="text-gray-500 font-normal text-sm">({{ data.statistics.avatar.size }} - {{ data.statistics.avatar.total_percent }}%)</span></p>
+            <p>{{ data.statistics.avatar.total }} <span class="text-text-muted font-normal text-sm">({{ data.statistics.avatar.size }} - {{ data.statistics.avatar.total_percent }}%)</span></p>
           </li>
         </ul>
       </div>

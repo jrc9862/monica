@@ -11,22 +11,22 @@ defineProps({
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <PenTool class="h-4 w-4 text-gray-600" />
+        <PenTool class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Posts') }} </span>
+        <span class="crm-title"> {{ $t('Posts') }} </span>
       </div>
     </div>
 
     <!-- posts -->
     <div v-if="data.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <ul class="mb-4 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <!-- body of the post -->
         <li
           v-for="post in data"
           :key="post.id"
-          class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <Link :href="post.url.show" class="mb-2 block text-accent hover:underline">{{ post.title }}</Link>
           <div class="flex items-center text-sm">
             <!-- journal -->
@@ -48,7 +48,7 @@ defineProps({
     <!-- blank state -->
     <div
       v-if="data.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_posts.svg" :alt="$t('Notes')" class="mx-auto mt-4 h-20 w-20" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no posts yet.') }}</p>
     </div>

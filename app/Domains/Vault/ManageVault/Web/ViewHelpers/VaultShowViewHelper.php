@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\ContactTask;
 use App\Models\MoodTrackingEvent;
 use App\Models\MoodTrackingParameter;
+use App\Models\Note;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
@@ -14,6 +15,18 @@ use Illuminate\Support\Collection;
 
 class VaultShowViewHelper
 {
+    /**
+     * Figures for the dashboard stat tiles. The contacts figure is read from
+     * the same query as the contacts list so the two can never disagree.
+     */
+    public static function statistics(Vault $vault): array
+    {
+        return [
+            'contacts' => $vault->contacts()->where('listed', true)->count(),
+            'notes' => Note::whereIn('contact_id', $vault->contacts()->select('id'))->count(),
+        ];
+    }
+
     public static function lastUpdatedContacts(Vault $vault): Collection
     {
         return $vault->contacts()

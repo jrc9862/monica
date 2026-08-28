@@ -33,14 +33,14 @@ const submit = () => {
 const terms = () => {
   return `<a target="_blank" href="${route(
     'terms.show',
-  )}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">${trans(
+  )}" class="underline text-sm text-text dark:text-text hover:text-text dark:hover:text-text">${trans(
     'Terms of Service',
   )}</a>`;
 };
 const policy = () => {
   return `<a target="_blank" href="${route(
     'policy.show',
-  )}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">${trans(
+  )}" class="underline text-sm text-text dark:text-text hover:text-text dark:hover:text-text">${trans(
     'Privacy Policy',
   )}</a>`;
 };
@@ -51,7 +51,7 @@ const policy = () => {
     <JetValidationErrors class="mb-4" />
 
     <p class="mb-2 text-lg font-bold">{{ $t('Sign up for an account') }}</p>
-    <p class="mb-8 text-sm text-gray-500">{{ $t('Your name here will be used to add yourself as a contact.') }}</p>
+    <p class="mb-8 text-sm text-text-muted">{{ $t('Your name here will be used to add yourself as a contact.') }}</p>
 
     <form @submit.prevent="submit">
       <div>
@@ -97,7 +97,7 @@ const policy = () => {
           class="mt-1 mb-1 block w-full"
           required
           autocomplete="new-password" />
-        <p class="text-xs text-gray-600">{{ $t('The password should be at least 8 characters long.') }}</p>
+        <p class="text-xs text-text">{{ $t('The password should be at least 8 characters long.') }}</p>
       </div>
 
       <div class="mb-8 mt-4">

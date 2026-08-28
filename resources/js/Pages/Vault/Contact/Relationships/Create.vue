@@ -1,11 +1,11 @@
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -44,18 +44,18 @@
       </div>
     </nav>
 
-    <main class="relative sm:mt-16">
+    <main class="relative">
       <div class="mx-auto max-w-lg px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <form
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+          class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
           @submit.prevent="submit()">
           <!-- header -->
           <div
-            class="section-head border-b border-gray-200 bg-surface-raised p-5 dark:border-gray-700 dark:bg-surface-raised">
+            class="section-head border-b border-border bg-surface-raised p-5 dark:border-border dark:bg-surface-raised">
             <h1 class="text-center text-2xl font-medium">{{ $t('Add a relationship') }}</h1>
           </div>
 
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <!-- relationship type -->
@@ -64,18 +64,18 @@
               id="types"
               v-model="form.relationship_type_id"
               name="types"
-              class="w-full rounded-md border-gray-300 bg-white px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-gray-900 sm:text-sm"
+              class="w-full rounded-md border-border bg-surface px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-surface sm:text-sm"
               @update:model-value="load"
               :data="fromRelationshipOptions" />
           </div>
 
           <!-- data once the relatonship type has been selected -->
           <div v-if="showRelationshipTypeDetails">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <!-- relationship -->
               <div class="mb-6">
                 <p
-                  class="mb-2 inline-block flex-none rounded-md bg-gray-200 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">
+                  class="mb-2 inline-block flex-none rounded-md bg-bg px-2 py-1 text-xs font-semibold uppercase tracking-wide text-text dark:text-text">
                   {{ fromRelationship }}
                 </p>
                 <div class="flex items-center">
@@ -87,7 +87,7 @@
 
               <!-- switch -->
               <div
-                class="w-100 mb-4 block cursor-pointer text-center text-gray-400 hover:text-gray-900"
+                class="w-100 mb-4 block cursor-pointer text-center text-text-muted hover:text-text"
                 @click="toggle()">
                 <div class="flex">
                   <svg
@@ -109,7 +109,7 @@
               <!-- reverse relationship -->
               <div>
                 <p
-                  class="mb-2 inline-block flex-none rounded-md bg-gray-200 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">
+                  class="mb-2 inline-block flex-none rounded-md bg-bg px-2 py-1 text-xs font-semibold uppercase tracking-wide text-text dark:text-text">
                   {{ toRelationship }}
                 </p>
                 <div>
@@ -121,11 +121,9 @@
                       value="unknown"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border"
                       @click="hideContactNameField" />
-                    <label
-                      for="unknown"
-                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label for="unknown" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('I don’t know the name') }}
                     </label>
                   </div>
@@ -138,11 +136,9 @@
                       value="name"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border"
                       @click="displayContactNameField" />
-                    <label
-                      for="name"
-                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label for="name" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('I know the name') }}
                     </label>
                   </div>
@@ -171,25 +167,25 @@
                     <div class="mb-4 flex flex-wrap text-xs">
                       <span
                         v-if="!showLastNameField"
-                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 hover:bg-hover dark:bg-surface dark:text-text"
                         @click="displayLastNameField">
                         {{ $t('+ last name') }}
                       </span>
                       <span
                         v-if="!showMiddleNameField"
-                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 hover:bg-hover dark:bg-surface dark:text-text"
                         @click="displayMiddleNameField">
                         {{ $t('+ middle name') }}
                       </span>
                       <span
                         v-if="!showNicknameField"
-                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 hover:bg-hover dark:bg-surface dark:text-text"
                         @click="displayNicknameField">
                         {{ $t('+ nickname') }}
                       </span>
                       <span
                         v-if="!showMaidenNameField"
-                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 hover:bg-hover dark:bg-surface dark:text-text"
                         @click="displayMaidenNameField">
                         {{ $t('+ maiden name') }}
                       </span>
@@ -204,11 +200,9 @@
                       value="contact"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border"
                       @input="displayContactSelector" />
-                    <label
-                      for="contact"
-                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label for="contact" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('Choose an existing contact') }}
                     </label>
                   </div>
@@ -221,13 +215,13 @@
                       :display-most-consulted-contacts="false"
                       :add-multiple-contacts="false"
                       :required="true"
-                      :class="'flex-1 border-gray-200 dark:border-gray-700'" />
+                      :class="'flex-1 border-border dark:border-border'" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div v-if="showMoreContactOptions" class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div v-if="showMoreContactOptions" class="border-b border-border p-5 dark:border-border">
               <!-- middle name -->
               <text-input
                 v-if="showMiddleNameField"
@@ -287,13 +281,13 @@
               <div class="flex flex-wrap text-xs">
                 <span
                   v-if="data.genders.length > 0 && !showGenderField"
-                  class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
+                  class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 hover:bg-hover dark:bg-surface dark:text-text"
                   @click="displayGenderField">
                   {{ $t('+ gender') }}
                 </span>
                 <span
                   v-if="data.pronouns.length > 0 && !showPronounField"
-                  class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
+                  class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 hover:bg-hover dark:bg-surface dark:text-text"
                   @click="displayPronounField">
                   {{ $t('+ pronoun') }}
                 </span>
@@ -301,15 +295,15 @@
             </div>
 
             <!-- create a contact entry -->
-            <div v-if="form.choice !== 'contact'" class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div v-if="form.choice !== 'contact'" class="border-b border-border p-5 dark:border-border">
               <div class="relative flex items-start">
                 <input
                   id="create-contact"
                   v-model="form.create_contact_entry"
                   name="create-contact"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
-                <label for="create-contact" class="ms-2 block cursor-pointer text-sm text-gray-900 dark:text-white">
+                  class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
+                <label for="create-contact" class="ms-2 block cursor-pointer text-sm text-text dark:text-white">
                   {{ $t('Create a contact entry for this person') }}
                 </label>
               </div>

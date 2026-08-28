@@ -17,14 +17,18 @@ class SearchContacts extends Tool
 
     public function description(): string
     {
-        return 'Search for contacts by name (first, last, middle, nickname, maiden name) within a vault. Use this to find a contact before reading or editing their details.';
+        return 'Search for contacts by name (first, last, middle, nickname, maiden name) within a vault. '
+            .'Use this to find a contact before reading or editing their details. '
+            .'Matching is whole-word, not partial: search "James", not "Jam". Terms shorter than '
+            .'3 characters are ignored and return no results. An empty result means no name matched '
+            .'the term, not necessarily that the vault has no contacts — try the full first or last name.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema
     {
         return $schema
             ->string('query')
-            ->description('The search term to match against contact names.')
+            ->description('The search term to match against contact names. Must be at least 3 characters and is matched as a whole word, so use a complete name rather than a prefix.')
             ->required()
             ->string('vault_id')
             ->description('The vault to search in. Required if the user has access to more than one vault.')

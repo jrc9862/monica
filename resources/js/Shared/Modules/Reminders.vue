@@ -122,10 +122,10 @@ const destroy = (reminder) => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <Bell class="h-4 w-4 text-gray-600" />
-        <span class="font-semibold"> {{ $t('Reminders') }} </span>
+        <Bell class="h-4 w-4 text-text" />
+        <span class="crm-title"> {{ $t('Reminders') }} </span>
       </div>
       <pretty-button
         :text="$t('Add a reminder')"
@@ -137,15 +137,15 @@ const destroy = (reminder) => {
     <!-- add a reminder modal -->
     <form
       v-if="addReminderModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 dark:border-gray-700">
+      <div class="border-b border-border dark:border-border">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
         <!-- name -->
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div class="border-b border-border p-5 dark:border-border">
           <text-input
             ref="label"
             v-model="form.label"
@@ -159,7 +159,7 @@ const destroy = (reminder) => {
             @esc-key-pressed="addReminderModalShown = false" />
         </div>
 
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div class="border-b border-border p-5 dark:border-border">
           <!-- case: I know the exact date -->
           <div class="mb-2 flex items-center">
             <input
@@ -168,10 +168,8 @@ const destroy = (reminder) => {
               value="full_date"
               name="date"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label
-              for="full_date"
-              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="full_date" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('I know the exact date, including the year') }}
             </label>
           </div>
@@ -184,7 +182,7 @@ const destroy = (reminder) => {
               :is-dark="isDark()">
               <template #default="{ inputValue, inputEvents }">
                 <input
-                  class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                  class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                   :value="inputValue"
                   v-on="inputEvents" />
               </template>
@@ -199,10 +197,8 @@ const destroy = (reminder) => {
               value="month_day"
               name="date"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label
-              for="month_day"
-              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="month_day" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('I only know the day and month, not the year') }}
             </label>
           </div>
@@ -230,7 +226,7 @@ const destroy = (reminder) => {
         <!-- reminder options -->
         <div class="p-5">
           <p class="mb-1">{{ $t('How often should we remind you about this date?') }}</p>
-          <p class="mb-1 text-sm text-gray-600 dark:text-gray-400">
+          <p class="mb-1 text-sm text-text dark:text-text">
             {{ $t('If the date is in the past, the next occurence of the date will be next year.') }}
           </p>
 
@@ -242,10 +238,8 @@ const destroy = (reminder) => {
                 value="one_time"
                 name="reminder-frequency"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="one_time"
-                class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+              <label for="one_time" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                 {{ $t('Only once, when the next occurence of the date occurs.') }}
               </label>
             </div>
@@ -257,10 +251,10 @@ const destroy = (reminder) => {
                 value="recurring"
                 name="reminder-frequency"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                class="h-4 w-4 border-border text-sky-500 dark:border-border" />
               <label
                 for="recurring"
-                class="ms-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                class="ms-3 block flex cursor-pointer items-center text-sm font-medium text-text dark:text-text">
                 <span class="me-2">{{ $t('Every') }}</span>
 
                 <Dropdown
@@ -296,15 +290,15 @@ const destroy = (reminder) => {
 
     <!-- reminders -->
     <div v-if="localReminders.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <ul class="mb-4 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <li
           v-for="reminder in localReminders"
           :key="reminder.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <!-- reminder -->
           <div class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
-              <span class="me-2 text-sm text-gray-500">{{ reminder.date }}</span>
+              <span class="me-2 text-sm text-text-muted">{{ reminder.date }}</span>
               <span class="me-2">{{ reminder.label }}</span>
 
               <!-- recurring icon -->
@@ -333,15 +327,15 @@ const destroy = (reminder) => {
           <!-- edit reminder modal -->
           <form
             v-if="editedReminderId === reminder.id"
-            class="bg-gray-50 dark:bg-gray-900"
+            class="bg-bg dark:bg-surface"
             @submit.prevent="update(reminder)">
-            <div class="border-b border-gray-200 dark:border-gray-700">
+            <div class="border-b border-border dark:border-border">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
               <!-- name -->
-              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="border-b border-border p-5 dark:border-border">
                 <text-input
                   ref="labels"
                   v-model="form.label"
@@ -355,7 +349,7 @@ const destroy = (reminder) => {
                   @esc-key-pressed="addReminderModalShown = false" />
               </div>
 
-              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+              <div class="border-b border-border p-5 dark:border-border">
                 <!-- case: I know the exact date -->
                 <div class="mb-2 flex items-center">
                   <input
@@ -364,10 +358,8 @@ const destroy = (reminder) => {
                     value="full_date"
                     name="date"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                  <label
-                    for="full_date"
-                    class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                  <label for="full_date" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ $t('I know the exact date, including the year') }}
                   </label>
                 </div>
@@ -380,7 +372,7 @@ const destroy = (reminder) => {
                     :is-dark="isDark()">
                     <template #default="{ inputValue, inputEvents }">
                       <input
-                        class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                        class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                         :value="inputValue"
                         v-on="inputEvents" />
                     </template>
@@ -395,10 +387,8 @@ const destroy = (reminder) => {
                     value="month_day"
                     name="date"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                  <label
-                    for="month_day"
-                    class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                  <label for="month_day" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ $t('I only know the day and month, not the year') }}
                   </label>
                 </div>
@@ -425,7 +415,7 @@ const destroy = (reminder) => {
               <!-- reminder options -->
               <div class="p-5">
                 <p class="mb-1">{{ $t('How often should we remind you about this date?') }}</p>
-                <p class="mb-1 text-sm text-gray-600 dark:text-gray-400">
+                <p class="mb-1 text-sm text-text dark:text-text">
                   {{ $t('If the date is in the past, the next occurence of the date will be next year.') }}
                 </p>
 
@@ -437,10 +427,10 @@ const destroy = (reminder) => {
                       value="one_time"
                       name="reminder-frequency"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                     <label
                       for="one_time"
-                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('Only once, when the next occurence of the date occurs.') }}
                     </label>
                   </div>
@@ -452,10 +442,10 @@ const destroy = (reminder) => {
                       value="recurring"
                       name="reminder-frequency"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                     <label
                       for="recurring"
-                      class="ms-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="ms-3 block flex cursor-pointer items-center text-sm font-medium text-text dark:text-text">
                       <span class="me-2">{{ $t('Every') }}</span>
 
                       <Dropdown
@@ -495,7 +485,7 @@ const destroy = (reminder) => {
     <!-- blank state -->
     <div
       v-if="localReminders.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/dashboard_blank_reminders.svg" :alt="$t('Reminders')" class="mx-auto mt-4 h-14 w-14" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no reminders yet.') }}</p>
     </div>

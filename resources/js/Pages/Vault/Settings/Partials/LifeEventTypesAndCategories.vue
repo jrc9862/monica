@@ -217,9 +217,9 @@ const destroyLifeEventType = (lifeEventType) => {
     <!-- modal to create a life event category -->
     <form
       v-if="createLifeEventCategoryModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-input
@@ -252,7 +252,7 @@ const destroyLifeEventType = (lifeEventType) => {
         <template #item="{ element }">
           <div v-if="editLifeEventCategoryId !== element.id">
             <div
-              class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+              class="item-list mb-2 rounded-lg border border-border bg-surface py-2 pe-5 ps-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <div class="mb-3 flex items-center justify-between">
                 <!-- icon to move position -->
                 <div class="me-2 flex">
@@ -290,7 +290,7 @@ const destroyLifeEventType = (lifeEventType) => {
 
               <!-- available life event types -->
               <div class="ms-8">
-                <p class="mb-1 text-sm text-gray-500">{{ $t('Life event types:') }}</p>
+                <p class="mb-1 text-sm text-text-muted">{{ $t('Life event types:') }}</p>
 
                 <draggable
                   v-model="element.life_event_types"
@@ -301,7 +301,7 @@ const destroyLifeEventType = (lifeEventType) => {
                   <template #item="{ element: element2 }">
                     <div v-if="editLifeEventTypeId !== element2.id">
                       <div
-                        class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+                        class="item-list mb-2 rounded-lg border border-border bg-surface py-2 pe-5 ps-4 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                         <div class="flex items-center justify-between">
                           <!-- icon to move position -->
                           <div class="me-2 flex">
@@ -344,9 +344,9 @@ const destroyLifeEventType = (lifeEventType) => {
                     <!-- edit a life event type form -->
                     <form
                       v-else
-                      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+                      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
                       @submit.prevent="updateLifeEventType(element2)">
-                      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+                      <div class="border-b border-border p-5 dark:border-border">
                         <errors :errors="form.errors" />
 
                         <text-input
@@ -385,9 +385,9 @@ const destroyLifeEventType = (lifeEventType) => {
                 <!-- form: create new life event type -->
                 <form
                   v-if="createLifeEventTypeModalShown && lifeEventCategoryId === element.id"
-                  class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+                  class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
                   @submit.prevent="submitLifeEventType(element)">
-                  <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+                  <div class="border-b border-border p-5 dark:border-border">
                     <errors :errors="form.errors" />
 
                     <text-input
@@ -425,7 +425,7 @@ const destroyLifeEventType = (lifeEventType) => {
                     !createLifeEventTypeModalShown &&
                     lifeEventCategoryId !== element.id
                   "
-                  class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                  class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
                   <p class="p-5 text-center">
                     {{ $t('No life event types yet.') }}
 
@@ -442,9 +442,9 @@ const destroyLifeEventType = (lifeEventType) => {
 
           <form
             v-else
-            class="item-list mb-2 rounded-lg border border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+            class="item-list mb-2 rounded-lg border border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
             @submit.prevent="update(element)">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <errors :errors="form.errors" />
 
               <text-input

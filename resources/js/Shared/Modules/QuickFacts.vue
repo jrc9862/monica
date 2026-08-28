@@ -97,10 +97,10 @@ const destroy = (quickFact) => {
 </script>
 
 <template>
-  <div class="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-3 shadow-xs dark:border-gray-700 dark:bg-gray-900">
+  <div class="mb-8 rounded-lg border border-border bg-bg p-3 shadow-xs dark:border-border dark:bg-surface">
     <div @click="toggle()" class="flex cursor-pointer items-center justify-between" :class="openState ? ' mb-4' : ''">
       <div class="flex items-center gap-2">
-        <Lightbulb class="h-4 w-4 text-gray-600" />
+        <Lightbulb class="h-4 w-4 text-text" />
         <p class="text-sm font-bold">{{ $t('Quick facts') }}</p>
       </div>
 
@@ -121,7 +121,7 @@ const destroy = (quickFact) => {
               @click="get(template)"
               :class="
                 localTemplate.id === template.id
-                  ? 'rounded-xs border border-gray-200 bg-white font-semibold dark:bg-gray-800'
+                  ? 'rounded-xs border border-border bg-surface font-semibold dark:bg-surface'
                   : ''
               "
               class="cursor-pointer px-2 py-1 text-sm">
@@ -136,7 +136,7 @@ const destroy = (quickFact) => {
         <li
           v-for="quickFact in localQuickFacts"
           :key="quickFact.id"
-          class="border-b border-dotted border-gray-300 px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+          class="border-b border-dotted border-border px-2 py-2 hover:bg-hover dark:hover:bg-hover">
           <!-- normal mode -->
           <div v-if="editedQuickFactId !== quickFact.id" class="flex items-center justify-between">
             <div class="flex items-center">
@@ -155,9 +155,9 @@ const destroy = (quickFact) => {
           <!-- edit mode -->
           <form
             v-if="editedQuickFactId === quickFact.id"
-            class="mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+            class="mt-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
             @submit.prevent="update(quickFact)">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <errors :errors="form.errors" />
 
               <text-input
@@ -206,9 +206,9 @@ const destroy = (quickFact) => {
       <!-- modal to create a quick fact -->
       <form
         v-if="createQuickFactModalShown"
-        class="mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+        class="mt-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
         @submit.prevent="store()">
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div class="border-b border-border p-5 dark:border-border">
           <errors :errors="form.errors" />
 
           <text-input

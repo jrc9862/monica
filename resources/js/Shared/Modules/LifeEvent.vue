@@ -108,11 +108,11 @@ const toggleLifeEventVisibility = (lifeEvent) => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
         <Flame class="h-4 w-4" />
 
-        <span class="font-semibold"> {{ $t('Life events') }} </span>
+        <span class="crm-title"> {{ $t('Life events') }} </span>
       </div>
       <pretty-button
         :text="$t('Add a life event')"
@@ -136,14 +136,13 @@ const toggleLifeEventVisibility = (lifeEvent) => {
         <div v-for="timelineEvent in localTimelines" :key="timelineEvent.id" class="mb-4">
           <!-- timeline event name -->
           <div
-            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-900"
+            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
             @click="toggleTimelineEventVisibility(timelineEvent)">
             <!-- timeline date / label / number of events -->
             <div>
-              <span class="me-2 text-gray-500">{{ timelineEvent.happened_at }}</span>
+              <span class="me-2 text-text-muted">{{ timelineEvent.happened_at }}</span>
 
-              <span
-                class="ms-3 whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0.5 text-sm text-slate-400 dark:bg-slate-900">
+              <span class="ms-3 whitespace-nowrap rounded-lg bg-bg px-2 py-0.5 text-sm text-text-muted dark:bg-surface">
                 {{ timelineEvent.life_events.length }}
               </span>
             </div>
@@ -166,7 +165,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               v-for="lifeEvent in timelineEvent.life_events"
               :key="lifeEvent.id"
               :class="!lifeEvent.collapsed ? 'border' : ''"
-              class="mb-2 ms-6 rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+              class="mb-2 ms-6 rounded-lg border-border dark:border-border dark:bg-surface">
               <template v-if="lifeEvent.edit">
                 <create-life-event
                   :data="data"
@@ -180,18 +179,18 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 <!-- name of life event -->
                 <div
                   :class="lifeEvent.collapsed ? 'rounded-lg border' : ''"
-                  class="flex cursor-pointer items-center justify-between rounded-t-lg border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:hover:bg-slate-900">
+                  class="flex cursor-pointer items-center justify-between rounded-t-lg border-b border-border px-3 py-2 hover:bg-hover dark:border-border dark:hover:bg-hover">
                   <!-- title -->
                   <div @click="toggleLifeEventVisibility(lifeEvent)" class="flex items-center">
                     <p v-if="lifeEvent.summary" class="me-4 text-sm font-bold">{{ lifeEvent.summary }}</p>
                     <div>
                       <span
-                        class="rounded-xs border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800">
+                        class="rounded-xs border bg-surface px-2 py-1 font-mono text-sm dark:border-border dark:bg-surface">
                         {{ lifeEvent.life_event_type.category.label }}
                       </span>
                       >
                       <span
-                        class="rounded-xs border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800">
+                        class="rounded-xs border bg-surface px-2 py-1 font-mono text-sm dark:border-border dark:bg-surface">
                         {{ lifeEvent.life_event_type.label }}
                       </span>
                     </div>
@@ -222,14 +221,14 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 <!-- description -->
                 <div
                   v-if="!lifeEvent.collapsed && lifeEvent.description"
-                  class="flex items-center border-b border-gray-200 px-3 py-2 dark:border-gray-700">
+                  class="flex items-center border-b border-border px-3 py-2 dark:border-border">
                   {{ lifeEvent.description }}
                 </div>
 
                 <!-- date of life event | distance -->
                 <div
                   v-if="!lifeEvent.collapsed"
-                  class="flex items-center border-b border-gray-200 px-3 py-2 text-sm dark:border-gray-700">
+                  class="flex items-center border-b border-border px-3 py-2 text-sm dark:border-border">
                   <!-- date -->
                   <div class="me-4 flex items-center">
                     <ClockIcon />
@@ -282,21 +281,21 @@ const toggleLifeEventVisibility = (lifeEvent) => {
         <div class="text-center" v-if="paginator.hasMorePages">
           <span
             @click="loadMore()"
-            class="cursor-pointer rounded-xs border border-gray-200 px-3 py-1 text-sm text-accent hover:border-gray-500 dark:border-gray-700">
+            class="cursor-pointer rounded-xs border border-border px-3 py-1 text-sm text-accent hover:border-accent dark:border-border">
             {{ $t('Load previous entries') }}
           </span>
         </div>
       </div>
 
       <!-- loading mode -->
-      <div v-if="loadingData" class="mb-5 rounded-lg border border-gray-200 p-20 text-center dark:border-gray-700">
+      <div v-if="loadingData" class="mb-5 rounded-lg border border-border p-20 text-center dark:border-border">
         <loading />
       </div>
 
       <!-- blank state -->
       <div
         v-if="localTimelines.length === 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <img src="/img/contact_blank_life_event.svg" :alt="$t('Life events')" class="mx-auto mt-4 h-20 w-20" />
         <p class="px-5 pb-5 pt-2 text-center">{{ $t('Life events let you document what happened in your life.') }}</p>
       </div>

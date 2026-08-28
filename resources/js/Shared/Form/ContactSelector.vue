@@ -173,7 +173,7 @@ const search = _.debounce(() => {
     <!-- mode to add a contact -->
     <div v-if="addContactMode">
       <div class="relative mb-3">
-        <ScanSearch class="absolute start-2 top-2 h-4 w-4 text-gray-400" />
+        <ScanSearch class="absolute start-2 top-2 h-4 w-4 text-text-muted" />
 
         <input
           ref="searchInput"
@@ -199,7 +199,7 @@ const search = _.debounce(() => {
           form.searchTerm.length === 0
         "
         class="mb-6">
-        <p class="mb-2 mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <p class="mb-2 mt-2 text-center text-sm text-text dark:text-text">
           {{ $t('Maybe one of these contacts?') }}
         </p>
         <ul class="border border-border bg-surface">

@@ -11,11 +11,11 @@ defineProps({
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -52,8 +52,8 @@ defineProps({
           <div class="mb-8 inline-flex rounded-md shadow-xs">
             <Link
               :href="data.url.show"
-              :class="{ 'bg-gray-100 text-accent dark:bg-gray-400 dark:font-bold': defaultTab === 'activity' }"
-              class="inline-flex items-center rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-accent-hover dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
+              :class="{ 'bg-bg text-accent dark:bg-surface dark:font-bold': defaultTab === 'activity' }"
+              class="inline-flex items-center rounded-s-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-text hover:bg-hover hover:text-accent-hover dark:border-border dark:bg-surface dark:text-white dark:hover:bg-hover dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -71,7 +71,7 @@ defineProps({
             </Link>
 
             <Link
-              class="inline-flex items-center rounded-e-md border-y border-e border-gray-200 bg-gray-100 bg-white px-4 py-2 text-sm font-medium text-accent text-gray-900 hover:bg-gray-100 hover:text-accent-hover dark:border-gray-600 dark:bg-gray-400 dark:bg-gray-700 dark:font-bold dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
+              class="inline-flex items-center rounded-e-md border-y border-e border-border bg-bg bg-surface px-4 py-2 text-sm font-medium text-accent text-text hover:bg-hover hover:text-accent-hover dark:border-border dark:bg-surface dark:bg-surface dark:font-bold dark:text-white dark:hover:bg-hover dark:hover:text-white dark:focus:text-white dark:focus:ring-accent/40">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -94,14 +94,14 @@ defineProps({
           <div
             v-for="photo in data.photos"
             :key="photo.id"
-            class="mr-2 cursor-pointer rounded-md border border-gray-200 p-2 shadow-xs hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+            class="mr-2 cursor-pointer rounded-md border border-border p-2 shadow-xs hover:bg-hover hover:shadow-lg dark:border-border dark:bg-surface dark:hover:bg-hover">
             <Link :href="photo.url.post">
               <img :src="photo.url.display" :alt="photo.name" />
             </Link>
           </div>
         </div>
 
-        <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <div v-else class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
           <img src="/img/journal_photo_index_blank.svg" alt="blank state" class="mx-auto block h-32 w-32 py-6" />
           <p class="p-5 text-center">{{ $t('Add a photo to a journal entry to see it here.') }}</p>
         </div>

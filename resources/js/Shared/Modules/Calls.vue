@@ -153,11 +153,11 @@ const destroy = (call) => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <PhoneCall class="h-4 w-4 text-gray-600" />
+        <PhoneCall class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Calls & Meetings') }} </span>
+        <span class="crm-title"> {{ $t('Calls & Meetings') }} </span>
       </div>
       <pretty-button
         :text="$t('Log a call or meeting')"
@@ -169,7 +169,7 @@ const destroy = (call) => {
     <!-- add a call modal -->
     <form
       v-if="createCallModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
       <div>
         <div v-if="form.errors.length > 0" class="p-5">
@@ -177,7 +177,7 @@ const destroy = (call) => {
         </div>
 
         <!-- date -->
-        <div class="flex border-b border-gray-200 dark:border-gray-700">
+        <div class="flex border-b border-border dark:border-border">
           <div class="p-5">
             <p class="mb-2 block text-sm">{{ $t('When did the call happened?') }}</p>
             <DatePicker
@@ -189,7 +189,7 @@ const destroy = (call) => {
               :max-date="new Date()">
               <template #default="{ inputValue, inputEvents }">
                 <input
-                  class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                  class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                   :value="inputValue"
                   v-on="inputEvents" />
               </template>
@@ -197,7 +197,7 @@ const destroy = (call) => {
           </div>
 
           <!-- type -->
-          <div class="border-e border-gray-200 p-5 dark:border-gray-700">
+          <div class="border-e border-border p-5 dark:border-border">
             <p class="mb-2 block text-sm">{{ $t('Type') }}</p>
 
             <div class="flex gap-6">
@@ -208,10 +208,8 @@ const destroy = (call) => {
                   value="audio"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                <label
-                  for="audio"
-                  class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                <label for="audio" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                   {{ $t('Audio call') }}
                 </label>
               </div>
@@ -223,10 +221,8 @@ const destroy = (call) => {
                   value="video"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                <label
-                  for="video"
-                  class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                <label for="video" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                   {{ $t('Video call') }}
                 </label>
               </div>
@@ -238,10 +234,8 @@ const destroy = (call) => {
                   value="in_person"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                <label
-                  for="in_person"
-                  class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                <label for="in_person" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                   {{ $t('In-person meeting') }}
                 </label>
               </div>
@@ -250,7 +244,7 @@ const destroy = (call) => {
         </div>
 
         <!-- who initiated -->
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div class="border-b border-border p-5 dark:border-border">
           <p class="mb-2 block text-sm">{{ isInPerson ? $t('Who initiated the meeting?') : $t('Who called?') }}</p>
 
           <div class="mb-4 flex">
@@ -261,8 +255,8 @@ const destroy = (call) => {
                 value="me"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label for="me" class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+              <label for="me" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                 {{ isInPerson ? $t('I arranged it') : $t('I called') }}
               </label>
             </div>
@@ -274,10 +268,10 @@ const destroy = (call) => {
                 value="me_not_answered"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                class="h-4 w-4 border-border text-sky-500 dark:border-border" />
               <label
                 for="me_not_answered"
-                class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                 {{ $t("I called, but :name didn't answer", { name: data.contact_name }) }}
               </label>
             </div>
@@ -291,10 +285,8 @@ const destroy = (call) => {
                 value="contact"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="contact"
-                class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+              <label for="contact" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                 {{
                   isInPerson
                     ? $t(':Name arranged it', { name: data.contact_name })
@@ -310,10 +302,10 @@ const destroy = (call) => {
                 value="contact_not_answered"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                class="h-4 w-4 border-border text-sky-500 dark:border-border" />
               <label
                 for="contact_not_answered"
-                class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                 {{ $t(":Name called, but I didn't answer", { name: data.contact_name }) }}
               </label>
             </div>
@@ -321,7 +313,7 @@ const destroy = (call) => {
         </div>
 
         <!-- description field -->
-        <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="descriptionFieldShown" class="border-b border-border p-5 dark:border-border">
           <text-area
             v-model="form.description"
             :label="$t('Description')"
@@ -332,13 +324,13 @@ const destroy = (call) => {
         </div>
 
         <!-- reason field -->
-        <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="reasonFieldShown" class="border-b border-border p-5 dark:border-border">
           <p class="mb-2 block text-sm">{{ $t('Was there a reason for the call?') }}</p>
           <select
             id="types"
             v-model="form.call_reason_id"
             name="types"
-            class="w-full rounded-md border-gray-300 bg-white px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-gray-900 sm:text-sm">
+            class="w-full rounded-md border-border bg-surface px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-surface sm:text-sm">
             <optgroup
               v-for="callReasonType in data.call_reason_types"
               :key="callReasonType.id"
@@ -351,7 +343,7 @@ const destroy = (call) => {
         </div>
 
         <!-- emotion -->
-        <div v-if="emotionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="emotionFieldShown" class="border-b border-border p-5 dark:border-border">
           <p class="mb-2">{{ $t('How did you feel?') }}</p>
           <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
             <input
@@ -360,19 +352,19 @@ const destroy = (call) => {
               :value="emotion.id"
               name="emotion"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-accent focus:ring-accent" />
-            <label :for="emotion.type" class="ms-2 block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-accent focus:ring-accent" />
+            <label :for="emotion.type" class="ms-2 block cursor-pointer font-medium text-text dark:text-text">
               {{ emotion.name }}
             </label>
           </div>
         </div>
 
         <!-- options -->
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <div class="border-b border-border p-5 dark:border-border">
           <!-- cta to add a description -->
           <span
             v-if="!descriptionFieldShown"
-            class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+            class="me-2 inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover"
             @click="showDescriptionField">
             {{ $t('+ add description') }}
           </span>
@@ -380,7 +372,7 @@ const destroy = (call) => {
           <!-- cta to add a reason -->
           <span
             v-if="!reasonFieldShown"
-            class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+            class="me-2 inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover"
             @click="showReasonField">
             {{ $t('+ add reason') }}
           </span>
@@ -388,7 +380,7 @@ const destroy = (call) => {
           <!-- cta to add emotion -->
           <span
             v-if="!emotionFieldShown"
-            class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+            class="inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover"
             @click="showEmotionField">
             {{ $t('+ add emotion') }}
           </span>
@@ -404,28 +396,26 @@ const destroy = (call) => {
     <!-- calls -->
     <ul
       v-if="localCalls.length > 0"
-      class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <li
         v-for="call in localCalls"
         :key="call.id"
-        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+        class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
         <div v-if="editedCallId !== call.id" class="flex items-center justify-between p-3">
           <div class="flex items-center">
             <div>
               <CallIcon :answered="call.answered" />
             </div>
 
-            <span class="me-2 text-sm text-gray-500">{{ call.called_at }}</span>
+            <span class="me-2 text-sm text-text-muted">{{ call.called_at }}</span>
 
             <!-- who called -->
             <span
               v-if="call.who_initiated === 'me'"
-              class="me-2 rounded-xs border border-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800">
+              class="me-2 rounded-xs border border-border px-2 py-1 text-xs font-semibold text-text">
               {{ $t('I called') }}
             </span>
-            <span
-              v-else
-              class="me-2 rounded-xs border border-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800">
+            <span v-else class="me-2 rounded-xs border border-border px-2 py-1 text-xs font-semibold text-text">
               {{ $t(':Name called', { name: data.contact_name }) }}
             </span>
 
@@ -433,7 +423,7 @@ const destroy = (call) => {
             <span v-if="call.reason">{{ call.reason.label }}</span>
 
             <!-- emotion -->
-            <div v-if="call.emotion" class="text-xs text-gray-600 dark:text-gray-400">
+            <div v-if="call.emotion" class="text-xs text-text dark:text-text">
               {{ call.emotion.name }}
             </div>
           </div>
@@ -442,12 +432,12 @@ const destroy = (call) => {
         </div>
 
         <!-- edit call -->
-        <form v-if="editedCallId === call.id" class="bg-gray-50 dark:bg-gray-900" @submit.prevent="update(call)">
+        <form v-if="editedCallId === call.id" class="bg-bg dark:bg-surface" @submit.prevent="update(call)">
           <errors :errors="form.errors" />
 
-          <div class="border-b border-gray-200 dark:border-gray-700">
+          <div class="border-b border-border dark:border-border">
             <!-- date -->
-            <div class="flex border-b border-gray-200 dark:border-gray-700">
+            <div class="flex border-b border-border dark:border-border">
               <div class="p-5">
                 <p class="mb-2 block text-sm">When did the call happened?</p>
                 <DatePicker
@@ -458,7 +448,7 @@ const destroy = (call) => {
                   :max-date="new Date()">
                   <template #default="{ inputValue, inputEvents }">
                     <input
-                      class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                      class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                       :value="inputValue"
                       v-on="inputEvents" />
                   </template>
@@ -466,7 +456,7 @@ const destroy = (call) => {
               </div>
 
               <!-- type -->
-              <div class="border-e border-gray-200 p-5 dark:border-gray-700">
+              <div class="border-e border-border p-5 dark:border-border">
                 <p class="mb-2 block text-sm">{{ $t('Type') }}</p>
 
                 <div class="flex gap-6">
@@ -477,10 +467,8 @@ const destroy = (call) => {
                       value="audio"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                    <label
-                      for="audio"
-                      class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                    <label for="audio" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('Audio call') }}
                     </label>
                   </div>
@@ -492,10 +480,8 @@ const destroy = (call) => {
                       value="video"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                    <label
-                      for="video"
-                      class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                    <label for="video" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('Video call') }}
                     </label>
                   </div>
@@ -507,10 +493,10 @@ const destroy = (call) => {
                       value="in_person"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                      class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                     <label
                       for="in_person"
-                      class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                       {{ $t('In-person meeting') }}
                     </label>
                   </div>
@@ -519,7 +505,7 @@ const destroy = (call) => {
             </div>
 
             <!-- who initiated -->
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <p class="mb-2 block text-sm">{{ isInPerson ? $t('Who initiated the meeting?') : $t('Who called?') }}</p>
 
               <div class="mb-4 flex">
@@ -530,10 +516,8 @@ const destroy = (call) => {
                     value="me"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                  <label
-                    for="me"
-                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                  <label for="me" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ isInPerson ? $t('I arranged it') : $t('I called') }}
                   </label>
                 </div>
@@ -545,10 +529,10 @@ const destroy = (call) => {
                     value="me_not_answered"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                   <label
                     for="me_not_answered"
-                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ $t("I called, but :name didn't answer", { name: data.contact_name }) }}
                   </label>
                 </div>
@@ -562,10 +546,8 @@ const destroy = (call) => {
                     value="contact"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                  <label
-                    for="contact"
-                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                  <label for="contact" class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{
                       isInPerson
                         ? $t(':Name arranged it', { name: data.contact_name })
@@ -581,10 +563,10 @@ const destroy = (call) => {
                     value="contact_not_answered"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                   <label
                     for="contact_not_answered"
-                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="ms-2 block cursor-pointer text-sm font-medium text-text dark:text-text">
                     {{ $t(":Name called, but I didn't answer", { name: data.contact_name }) }}
                   </label>
                 </div>
@@ -592,7 +574,7 @@ const destroy = (call) => {
             </div>
 
             <!-- description field -->
-            <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div v-if="descriptionFieldShown" class="border-b border-border p-5 dark:border-border">
               <text-area
                 v-model="form.description"
                 :label="$t('Description')"
@@ -603,13 +585,13 @@ const destroy = (call) => {
             </div>
 
             <!-- reason field -->
-            <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div v-if="reasonFieldShown" class="border-b border-border p-5 dark:border-border">
               <p class="mb-2 block text-sm">{{ $t('Was there a reason for the call?') }}</p>
               <select
                 id="types"
                 v-model="form.call_reason_id"
                 name="types"
-                class="w-full rounded-md border-gray-300 bg-white px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-gray-900 sm:text-sm">
+                class="w-full rounded-md border-border bg-surface px-3 py-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 dark:bg-surface sm:text-sm">
                 <optgroup
                   v-for="callReasonType in data.call_reason_types"
                   :key="callReasonType.id"
@@ -622,7 +604,7 @@ const destroy = (call) => {
             </div>
 
             <!-- emotion -->
-            <div v-if="emotionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div v-if="emotionFieldShown" class="border-b border-border p-5 dark:border-border">
               <p class="mb-2">{{ $t('How did you feel?') }}</p>
               <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
                 <input
@@ -631,21 +613,19 @@ const destroy = (call) => {
                   :value="emotion.id"
                   name="emotion"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-accent focus:ring-accent" />
-                <label
-                  :for="emotion.type"
-                  class="ms-2 block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-accent focus:ring-accent" />
+                <label :for="emotion.type" class="ms-2 block cursor-pointer font-medium text-text dark:text-text">
                   {{ emotion.name }}
                 </label>
               </div>
             </div>
 
             <!-- options -->
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <div class="border-b border-border p-5 dark:border-border">
               <!-- cta to add a description -->
               <span
                 v-if="!descriptionFieldShown"
-                class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+                class="me-2 inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover"
                 @click="showDescriptionField">
                 {{ $t('+ add description') }}
               </span>
@@ -653,7 +633,7 @@ const destroy = (call) => {
               <!-- cta to add a reason -->
               <span
                 v-if="!reasonFieldShown"
-                class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+                class="me-2 inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover"
                 @click="showReasonField">
                 {{ $t('+ add reason') }}
               </span>
@@ -661,7 +641,7 @@ const destroy = (call) => {
               <!-- cta to add emotion -->
               <span
                 v-if="!emotionFieldShown"
-                class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+                class="inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover"
                 @click="showEmotionField">
                 {{ $t('+ add emotion') }}
               </span>
@@ -679,7 +659,7 @@ const destroy = (call) => {
     <!-- blank state -->
     <div
       v-if="localCalls.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_call.svg" :alt="$t('Calls')" class="mx-auto mt-4 h-20 w-20" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no calls logged yet.') }}</p>
     </div>

@@ -17,7 +17,9 @@ class UpdateReminder extends Tool
 
     public function description(): string
     {
-        return 'Update an existing reminder for a contact. All fields are replaced with the given values.';
+        return 'Update an existing reminder for a contact. All fields are replaced with the given values, so '
+            .'send back every field you want to keep, not only the ones you are changing. day and month are '
+            .'required for every reminder type; one_time reminders need year as well.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema
@@ -36,11 +38,11 @@ class UpdateReminder extends Tool
             ->description("The reminder type: 'one_time', 'recurring_day', 'recurring_month', or 'recurring_year'.")
             ->required()
             ->integer('day')
-            ->description('Day of the month the reminder occurs on.')
-            ->optional()
+            ->description('Day of the month the reminder occurs on (1-31). Required for every reminder type.')
+            ->required()
             ->integer('month')
-            ->description('Month the reminder occurs in.')
-            ->optional()
+            ->description('Month the reminder occurs in (1-12). Required for every reminder type.')
+            ->required()
             ->integer('year')
             ->description('Year of the reminder, required for one-time reminders.')
             ->optional()

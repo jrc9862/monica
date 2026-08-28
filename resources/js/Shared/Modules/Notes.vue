@@ -1,11 +1,11 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <NotebookPen class="h-4 w-4 text-gray-600" />
+        <NotebookPen class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Notes') }} </span>
+        <span class="crm-title"> {{ $t('Notes') }} </span>
       </div>
       <pretty-button :text="$t('Add a note')" :icon="'plus'" :class="'w-full sm:w-fit'" @click="showCreateNoteModal" />
     </div>
@@ -13,9 +13,9 @@
     <!-- add a note modal -->
     <form
       v-if="createNoteModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <text-area
@@ -50,8 +50,8 @@
               :value="emotion.id"
               name="emotion"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-accent focus:ring-accent dark:border-gray-700 dark:bg-slate-900 dark:text-accent" />
-            <label :for="emotion.type" class="ms-2 block font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-accent focus:ring-accent dark:border-border dark:bg-surface dark:text-accent" />
+            <label :for="emotion.type" class="ms-2 block font-medium text-text dark:text-text">
               {{ emotion.name }}
             </label>
           </div>
@@ -60,7 +60,7 @@
         <!-- cta to add a title -->
         <span
           v-if="!titleFieldShown"
-          class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+          class="me-2 inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @click="showTitleField">
           {{ $t('+ add title') }}
         </span>
@@ -68,7 +68,7 @@
         <!-- cta to add emotion -->
         <span
           v-if="!emotionFieldShown"
-          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+          class="inline-block cursor-pointer rounded-lg border bg-bg px-1 py-1 text-xs hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
           @click="showEmotionField">
           {{ $t('+ add emotion') }}
         </span>
@@ -85,12 +85,12 @@
       <div
         v-for="note in localNotes"
         :key="note.id"
-        class="mb-4 rounded-xs border border-gray-200 last:mb-0 dark:border-gray-700 dark:bg-gray-900">
+        class="mb-4 rounded-xs border border-border last:mb-0 dark:border-border dark:bg-surface">
         <!-- body of the note, if not being edited -->
         <div v-if="editedNoteId !== note.id">
           <div
             v-if="note.title"
-            class="border-b border-gray-200 p-3 text-xs font-semibold text-gray-600 dark:border-gray-700 dark:text-gray-400">
+            class="border-b border-border p-3 text-xs font-semibold text-text dark:border-border dark:text-text">
             {{ note.title }}
           </div>
 
@@ -108,7 +108,7 @@
 
           <!-- details -->
           <div
-            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-900">
+            class="flex justify-between border-t border-border px-3 py-1 text-xs text-text hover:rounded-b hover:bg-hover dark:border-border dark:text-text dark:hover:bg-hover">
             <div class="flex items-center gap-4">
               <!-- emotion -->
               <div v-if="note.emotion" class="relative me-3 inline">
@@ -140,8 +140,8 @@
         </div>
 
         <!-- edit modal form -->
-        <form v-if="editedNoteId === note.id" class="bg-gray-50 dark:bg-gray-900" @submit.prevent="update(note)">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <form v-if="editedNoteId === note.id" class="bg-bg dark:bg-surface" @submit.prevent="update(note)">
+          <div class="border-b border-border p-5 dark:border-border">
             <errors :errors="form.errors" />
 
             <text-area
@@ -175,8 +175,8 @@
                   :value="emotion.id"
                   name="emotion"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-accent focus:ring-accent dark:text-accent" />
-                <label :for="emotion.type" class="ms-2 block font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-accent focus:ring-accent dark:text-accent" />
+                <label :for="emotion.type" class="ms-2 block font-medium text-text dark:text-text">
                   {{ emotion.name }}
                 </label>
               </div>
@@ -194,7 +194,7 @@
       <div v-if="moduleMode" class="text-center">
         <InertiaLink
           :href="data.url.index"
-          class="rounded-xs border border-gray-200 px-3 py-1 text-sm text-accent hover:border-gray-500 dark:border-gray-700">
+          class="rounded-xs border border-border px-3 py-1 text-sm text-accent hover:border-accent dark:border-border">
           {{ $t('View all') }}
         </InertiaLink>
       </div>
@@ -206,7 +206,7 @@
     <!-- blank state -->
     <div
       v-if="localNotes.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_note.svg" :alt="$t('Notes')" class="mx-auto mt-4 h-14 w-14" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no notes yet.') }}</p>
     </div>

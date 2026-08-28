@@ -12,11 +12,11 @@ defineProps({
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -72,14 +72,14 @@ defineProps({
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="me-1 h-4 w-4 text-gray-400">
+                  class="me-1 h-4 w-4 text-text-muted">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                 </svg>
 
                 <Link
                   v-if="data.previousPost"
                   :href="data.previousPost.url.show"
-                  class="text-sm text-gray-400 hover:underline">
+                  class="text-sm text-text-muted hover:underline">
                   {{ data.previousPost.title }}
                 </Link>
               </div>
@@ -87,7 +87,10 @@ defineProps({
 
               <!-- next post -->
               <div v-if="data.nextPost" class="flex items-center">
-                <Link v-if="data.nextPost" :href="data.nextPost.url.show" class="text-sm text-gray-400 hover:underline">
+                <Link
+                  v-if="data.nextPost"
+                  :href="data.nextPost.url.show"
+                  class="text-sm text-text-muted hover:underline">
                   {{ data.nextPost.title }}
                 </Link>
 
@@ -97,23 +100,23 @@ defineProps({
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="ms-1 h-4 w-4 text-gray-400">
+                  class="ms-1 h-4 w-4 text-text-muted">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                 </svg>
               </div>
               <div v-else>&nbsp;</div>
             </div>
 
-            <div class="post relative rounded-xs bg-white dark:bg-gray-900">
+            <div class="post relative rounded-xs bg-surface dark:bg-surface">
               <!-- date of the post -->
-              <p class="mb-2 text-sm text-gray-400">{{ data.written_at }}</p>
+              <p class="mb-2 text-sm text-text-muted">{{ data.written_at }}</p>
 
               <!-- tags -->
               <ul v-if="data.tags" class="p0 list mb-3">
                 <li
                   v-for="tag in data.tags"
                   :key="tag.id"
-                  class="me-2 inline-block rounded-xs bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:me-0 dark:bg-neutral-800">
+                  class="me-2 inline-block rounded-xs bg-bg px-2 py-1 text-xs font-semibold text-text-muted last:me-0 dark:bg-surface">
                   {{ tag.name }}
                 </li>
               </ul>
@@ -126,7 +129,7 @@ defineProps({
                 <div
                   v-for="photo in data.photos"
                   :key="photo.id"
-                  class="me-2 rounded-md border border-gray-200 p-2 shadow-xs hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  class="me-2 rounded-md border border-border p-2 shadow-xs hover:bg-hover hover:shadow-lg dark:border-border dark:bg-surface dark:hover:bg-hover">
                   <img :src="photo.url.display" :alt="photo.name" />
                 </div>
               </div>
@@ -134,7 +137,7 @@ defineProps({
               <!-- sections -->
               <div v-if="data.sections.length > 0" class="prose">
                 <div v-for="section in data.sections" :key="section.id" class="mb-4">
-                  <div v-if="data.sections.length > 1" class="mb-1 italic text-gray-400">
+                  <div v-if="data.sections.length > 1" class="mb-1 italic text-text-muted">
                     {{ section.label }}
                   </div>
 
@@ -143,7 +146,7 @@ defineProps({
               </div>
 
               <!-- no section yet -->
-              <div v-else class="text-gray-400">{{ $t('This post has no content yet.') }}</div>
+              <div v-else class="text-text-muted">{{ $t('This post has no content yet.') }}</div>
             </div>
           </div>
 
@@ -163,10 +166,10 @@ defineProps({
               <p class="mb-2 text-sm font-semibold">{{ $t('Slice of life') }}</p>
               <div class="mb-6 last:mb-0">
                 <div
-                  class="rounded-xs border-b border-s border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+                  class="rounded-xs border-b border-s border-t border-border px-3 py-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover"
                   :class="data.sliceOfLife.cover_image ? '' : 'border-t'">
                   <Link :href="data.sliceOfLife.url.show" class="font-semibold">{{ data.sliceOfLife.name }}</Link>
-                  <p class="text-xs text-gray-600">{{ data.sliceOfLife.date_range }}</p>
+                  <p class="text-xs text-text">{{ data.sliceOfLife.date_range }}</p>
                 </div>
               </div>
             </div>
@@ -182,11 +185,11 @@ defineProps({
                 </div>
                 <ul
                   v-if="journalMetric.post_metrics.length > 0"
-                  class="mb-2 rounded-xs border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                  class="mb-2 rounded-xs border border-border bg-surface dark:border-border dark:bg-surface">
                   <li
                     v-for="postMetric in journalMetric.post_metrics"
                     :key="postMetric.id"
-                    class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-1 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                    class="item-list flex items-center justify-between border-b border-border px-3 py-1 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                     <span class="italic">{{ postMetric.label }}</span>
 
                     <div class="flex items-center">
@@ -201,11 +204,11 @@ defineProps({
             <div v-if="data.moodTrackingEvents.length > 0">
               <p class="mb-2 text-sm font-semibold">{{ $t('Your mood that you logged at this date') }}</p>
 
-              <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <ul class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
                 <li
                   v-for="mood in data.moodTrackingEvents"
                   :key="mood.id"
-                  class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  class="item-list border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                   <span>{{ mood.mood_tracking_parameter.label }}</span>
                   <span class="block text-sm" v-if="mood.number_of_hours_slept">
                     {{

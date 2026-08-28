@@ -9,9 +9,8 @@
     </div>
 
     <!-- help text -->
-    <div class="mb-6 rounded-xs border border-gray-200 text-sm dark:border-gray-700">
-      <div
-        class="mb-2 flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
+    <div class="mb-6 rounded-xs border border-border text-sm dark:border-border">
+      <div class="mb-2 flex rounded-t border-b border-border bg-bg px-3 py-2 dark:border-border dark:bg-surface">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 grow pe-2"

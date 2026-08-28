@@ -71,36 +71,34 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="mb-10">
-    <h3 class="mb-3 flex items-center gap-2 border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
-      <CloudSun class="h-4 w-4" />
-
-      {{ $t('Record your mood') }}
-    </h3>
-
+  <div>
     <!-- cta -->
-    <div
-      v-if="!createMoodEventModalShown && !successShown"
-      class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
-      <img src="/img/dashboard_blank_how_are_you.svg" :alt="$t('Reminders')" class="me-2 h-14 w-14" />
-      <div class="mb-2 flex flex-col px-5">
-        <p class="mb-2">{{ $t('How are you?') }}</p>
-        <pretty-button :text="$t('Record your mood')" @click="showMoodEventModal" />
-      </div>
+    <div v-if="!createMoodEventModalShown && !successShown" class="crm-card flex items-center gap-3 p-[18px]">
+      <span class="crm-tint h-[38px] w-[38px]" style="background: var(--sun); color: var(--yellow)">
+        <CloudSun class="h-[18px] w-[18px]" />
+      </span>
+      <p
+        class="flex-1"
+        style="
+          font:
+            400 15px Inter,
+            sans-serif;
+          color: var(--ink);
+        ">
+        {{ $t('How are you?') }}
+      </p>
+      <pretty-button :text="$t('Record your mood')" @click="showMoodEventModal" />
     </div>
 
     <!-- add an event modal -->
-    <form
-      v-if="createMoodEventModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
-      @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+    <form v-if="createMoodEventModalShown" class="crm-card mb-6" @submit.prevent="submit()">
+      <div class="border-b border-border p-5 dark:border-border">
         <div v-if="form.errors.length > 0" class="p-5">
           <Errors :errors="form.errors" />
         </div>
 
         <!-- mood tracking parameters -->
-        <p class="mb-2 block text-sm dark:text-gray-100">{{ $t('How do you feel right now?') }}</p>
+        <p class="mb-2 block text-sm dark:text-text">{{ $t('How do you feel right now?') }}</p>
         <ul class="mb-4">
           <li v-for="parameter in props.data.mood_tracking_parameters" :key="parameter.id" class="flex">
             <input
@@ -109,11 +107,9 @@ const submit = () => {
               :value="parameter.id"
               name="date-format"
               type="radio"
-              class="relative me-3 h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              class="relative me-3 h-4 w-4 border-border text-sky-500 dark:border-border" />
 
-            <label
-              :for="'input' + parameter.id"
-              class="block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
+            <label :for="'input' + parameter.id" class="block cursor-pointer font-medium text-text dark:text-text">
               <div class="me-2 inline-block h-4 w-4 rounded-full" :class="parameter.hex_color" />
               {{ parameter.label }}
             </label>
@@ -123,21 +119,21 @@ const submit = () => {
         <div class="flex">
           <span
             v-if="!datePickerFieldShown"
-            class="me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:bg-slate-500 dark:text-white"
+            class="me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 text-sm hover:bg-hover dark:bg-surface dark:text-white"
             @click="showDatePickerField">
             {{ $t('+ change date') }}
           </span>
 
           <span
             v-if="!noteFieldShown"
-            class="me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:bg-slate-500 dark:text-white"
+            class="me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 text-sm hover:bg-hover dark:bg-surface dark:text-white"
             @click="showNoteField">
             {{ $t('+ note') }}
           </span>
 
           <span
             v-if="!hoursSleptFieldShown"
-            class="me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:bg-slate-500 dark:text-white"
+            class="me-2 flex cursor-pointer flex-wrap rounded-lg border bg-bg px-1 py-1 text-sm hover:bg-hover dark:bg-surface dark:text-white"
             @click="showHoursSleptField">
             {{ $t('+ number of hours slept') }}
           </span>
@@ -145,7 +141,7 @@ const submit = () => {
 
         <!-- date picker -->
         <div v-if="datePickerFieldShown">
-          <p class="mb-2 mt-2 block text-sm dark:text-gray-100">{{ $t('Change date') }}</p>
+          <p class="mb-2 mt-2 block text-sm dark:text-text">{{ $t('Change date') }}</p>
           <DatePicker
             v-model.string="form.date"
             :timezone="'UTC'"
@@ -155,7 +151,7 @@ const submit = () => {
             :is-dark="isDark()">
             <template #default="{ inputValue, inputEvents }">
               <input
-                class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+                class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
                 :value="inputValue"
                 v-on="inputEvents" />
             </template>
@@ -193,11 +189,11 @@ const submit = () => {
     </form>
 
     <!-- successShown -->
-    <div
-      v-if="successShown"
-      class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
-      <img src="/img/dashboard_blank_how_are_you.svg" :alt="$t('Reminders')" class="me-2 h-14 w-14" />
-      <div class="flex flex-col px-5">
+    <div v-if="successShown" class="crm-card flex items-center gap-3 p-[18px]">
+      <span class="crm-tint h-[38px] w-[38px]" style="background: var(--mint); color: var(--green)">
+        <CloudSun class="h-[18px] w-[18px]" />
+      </span>
+      <div class="flex flex-col">
         <p class="mb-2"><span class="me-1">🎉</span> {{ $t('Your mood has been recorded!') }}</p>
         <Link :href="data.url.history" class="text-center text-accent hover:underline">{{ $t('View history') }}</Link>
       </div>

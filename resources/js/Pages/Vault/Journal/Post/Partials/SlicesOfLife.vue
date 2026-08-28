@@ -54,7 +54,7 @@ const reset = () => {
 
       <span
         v-if="!editSlicesModalShown && localSlices.length > 0"
-        class="relative cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        class="relative cursor-pointer text-xs text-text dark:text-text"
         @click="showSliceModal">
         {{ $t('Edit') }}
       </span>
@@ -62,7 +62,7 @@ const reset = () => {
       <!-- close button -->
       <span
         v-if="editSlicesModalShown"
-        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        class="cursor-pointer text-xs text-text dark:text-text"
         @click="editSlicesModalShown = false">
         {{ $t('Close') }}
       </span>
@@ -71,9 +71,9 @@ const reset = () => {
     <!-- edit slice of life -->
     <div
       v-if="editSlicesModalShown && localSlices.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface">
       <form @submit.prevent="update()">
-        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+        <div class="border-b border-border p-2 dark:border-border">
           <errors :errors="form.errors" />
 
           <!-- slices of life -->
@@ -96,7 +96,7 @@ const reset = () => {
             :class="'save'" />
         </div>
 
-        <div v-if="slice" class="border-t border-gray-200 p-2 dark:border-gray-700">
+        <div v-if="slice" class="border-t border-border p-2 dark:border-border">
           <p class="cursor-pointer text-sm text-accent hover:underline" @click="reset()">
             {{ $t('Or remove the slice') }}
           </p>
@@ -105,7 +105,7 @@ const reset = () => {
     </div>
 
     <!-- blank state -->
-    <p v-if="!slice" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('Not set') }}</p>
+    <p v-if="!slice" class="text-sm text-text dark:text-text">{{ $t('Not set') }}</p>
 
     <div v-else>
       <Link :href="slice.url.show" class="text-accent hover:underline">

@@ -84,7 +84,7 @@ const submit = () => {
     </div>
 
     <!-- help text -->
-    <div class="mb-6 flex rounded-xs border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
+    <div class="mb-6 flex rounded-xs border bg-bg px-3 py-2 text-sm dark:border-border dark:bg-surface">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 grow pe-2"
@@ -110,10 +110,10 @@ const submit = () => {
     </div>
 
     <!-- normal mode -->
-    <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <p class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
+    <div v-if="!editMode" class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+      <p class="border-b border-border px-5 py-2 dark:border-border">
         <span class="mb-2 block">{{ $t('Current way of displaying contact names:') }}</span>
-        <span class="mb-2 block rounded-xs bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ localNameOrder }}</span>
+        <span class="mb-2 block rounded-xs bg-bg px-5 py-2 text-sm dark:bg-surface">{{ localNameOrder }}</span>
       </p>
       <p class="example bg-orange-50 px-5 py-2 text-sm font-medium dark:bg-orange-900">
         <span class="font-light">{{ $t('Contacts will be shown as follow:') }}</span> {{ localNameExample }}
@@ -123,9 +123,9 @@ const submit = () => {
     <!-- edit mode -->
     <form
       v-if="editMode"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
+      <div class="border-b border-border px-5 py-2 dark:border-border">
         <errors :errors="form.errors" />
 
         <div class="mb-2 flex items-center">
@@ -135,12 +135,12 @@ const submit = () => {
             value="%first_name% %last_name%"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            class="h-4 w-4 border-border text-sky-500 dark:border-border" />
           <label
             for="first_name_last_name"
-            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ $t('First name Last name') }}
-            <span class="ms-4 font-normal text-gray-500"> James Bond </span>
+            <span class="ms-4 font-normal text-text-muted"> James Bond </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -150,13 +150,13 @@ const submit = () => {
             value="%last_name% %first_name%"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            class="h-4 w-4 border-border text-sky-500 dark:border-border" />
           <label
             for="last_name_first_name"
-            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ $t('Last name First name') }}
 
-            <span class="ms-4 font-normal text-gray-500"> Bond James </span>
+            <span class="ms-4 font-normal text-text-muted"> Bond James </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -166,12 +166,12 @@ const submit = () => {
             value="%first_name% %last_name% (%nickname%)"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            class="h-4 w-4 border-border text-sky-500 dark:border-border" />
           <label
             for="first_name_last_name_nickname"
-            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ $t('First name Last name (nickname)') }}
-            <span class="ms-4 font-normal text-gray-500"> James Bond (007) </span>
+            <span class="ms-4 font-normal text-text-muted"> James Bond (007) </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -181,10 +181,10 @@ const submit = () => {
             value="%nickname%"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label for="nickname" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+          <label for="nickname" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ $t('nickname') }}
-            <span class="ms-4 font-normal text-gray-500"> 007 </span>
+            <span class="ms-4 font-normal text-text-muted"> 007 </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -192,9 +192,9 @@ const submit = () => {
             id="custom"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
+            class="h-4 w-4 border-border text-sky-500 dark:border-border"
             @click="focusNameOrder" />
-          <label for="custom" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label for="custom" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ $t('Custom name order') }}
           </label>
         </div>

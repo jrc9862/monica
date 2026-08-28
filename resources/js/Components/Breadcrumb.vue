@@ -9,7 +9,7 @@ defineProps({
 <template>
   <div class="flex items-baseline justify-between space-x-6">
     <ul class="text-sm">
-      <li class="me-2 inline text-gray-600 dark:text-gray-400">
+      <li class="me-2 inline text-text dark:text-text">
         {{ $t('You are here:') }}
       </li>
       <template v-for="(item, index) in items" :key="index">

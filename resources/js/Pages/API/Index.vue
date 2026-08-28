@@ -14,11 +14,11 @@ defineProps({
 <template>
   <Layout title="API Tokens" :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:border-b border-gray-200 dark:border-gray-700">
+    <nav class="bg-surface dark:bg-surface sm:border-b border-border dark:border-border">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -44,7 +44,7 @@ defineProps({
       </div>
     </nav>
 
-    <div class="relative sm:mt-20">
+    <div class="relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <ApiTokenManager
           :tokens="tokens"

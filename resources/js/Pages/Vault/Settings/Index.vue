@@ -1,7 +1,7 @@
 <template>
-  <layout :layout-data="layoutData" :inside-vault="true">
-    <main class="relative sm:mt-28">
-      <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
+  <layout :title="$t('Vault settings')" :layout-data="layoutData" :inside-vault="true">
+    <div class="min-w-0 flex-1 p-6">
+      <div class="max-w-[900px]">
         <users :layout-data="layoutData" :data="data" />
 
         <tab-visibility :layout-data="layoutData" :data="data" />
@@ -22,7 +22,7 @@
 
         <delete :data="data" />
       </div>
-    </main>
+    </div>
   </layout>
 </template>
 

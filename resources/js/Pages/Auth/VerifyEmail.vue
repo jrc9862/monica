@@ -19,7 +19,7 @@ const submit = () => {
 
 <template>
   <JetGuestLayout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <div class="mb-4 text-sm text-text dark:text-text">
       {{
         $t(
           'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn’t receive the email, we will gladly send you another.',
@@ -41,7 +41,7 @@ const submit = () => {
           :href="route('logout')"
           method="post"
           as="button"
-          class="text-sm text-gray-600 underline hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+          class="text-sm text-text underline hover:text-text dark:text-text dark:hover:text-text">
           {{ $t('Log Out') }}
         </Link>
       </div>

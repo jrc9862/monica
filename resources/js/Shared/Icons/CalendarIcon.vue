@@ -26,7 +26,7 @@ defineProps({
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
-    class="me-1 h-4 w-4 text-gray-400">
+    class="me-1 h-4 w-4 text-text-muted">
     <path
       stroke-linecap="round"
       stroke-linejoin="round"

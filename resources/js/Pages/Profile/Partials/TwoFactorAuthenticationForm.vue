@@ -115,19 +115,19 @@ const disableTwoFactorAuthentication = () => {
     </template>
 
     <template #content>
-      <h3 v-if="twoFactorEnabled && !confirming" class="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 v-if="twoFactorEnabled && !confirming" class="text-lg font-medium text-text dark:text-text">
         {{ $t('You have enabled two factor authentication.') }}
       </h3>
 
-      <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-text dark:text-text">
         {{ $t('Finish enabling two factor authentication.') }}
       </h3>
 
-      <h3 v-else class="text-lg font-medium text-gray-900 dark:text-gray-100">
+      <h3 v-else class="text-lg font-medium text-text dark:text-text">
         {{ $t('You have not enabled two factor authentication.') }}
       </h3>
 
-      <div class="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+      <div class="mt-3 max-w-xl text-sm text-text dark:text-text">
         <p>
           {{
             $t(
@@ -139,7 +139,7 @@ const disableTwoFactorAuthentication = () => {
 
       <div v-if="twoFactorEnabled">
         <div v-if="qrCode">
-          <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+          <div class="mt-4 max-w-xl text-sm text-text dark:text-text">
             <p v-if="confirming" class="font-semibold">
               {{
                 $t(
@@ -159,7 +159,7 @@ const disableTwoFactorAuthentication = () => {
 
           <div class="mt-4" v-html="qrCode" />
 
-          <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400" v-if="setupKey">
+          <div class="mt-4 max-w-xl text-sm text-text dark:text-text" v-if="setupKey">
             <p class="font-semibold">{{ $t('Setup Key:') }} <span v-html="setupKey"></span></p>
           </div>
 
@@ -182,7 +182,7 @@ const disableTwoFactorAuthentication = () => {
         </div>
 
         <div v-if="recoveryCodes.length > 0 && !confirming">
-          <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+          <div class="mt-4 max-w-xl text-sm text-text dark:text-text">
             <p class="font-semibold">
               {{
                 $t(
@@ -192,7 +192,7 @@ const disableTwoFactorAuthentication = () => {
             </p>
           </div>
 
-          <div class="mt-4 grid max-w-xl gap-1 rounded-lg bg-gray-100 px-4 py-4 font-mono text-sm dark:bg-gray-950">
+          <div class="mt-4 grid max-w-xl gap-1 rounded-lg bg-bg px-4 py-4 font-mono text-sm dark:bg-surface">
             <div v-for="code in recoveryCodes" :key="code">
               {{ code }}
             </div>

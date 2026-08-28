@@ -8,7 +8,7 @@ defineProps({
 
 <template>
   <div v-if="data.love_relationships.length !== 0 || data.family_relationships.length !== 0" class="mb-4">
-    <div class="mb-3 items-center justify-between border-b border-gray-200 dark:border-gray-700 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-border dark:border-border sm:flex">
       <div class="mb-1 text-xs">{{ $t('Family summary') }}</div>
     </div>
 
@@ -27,7 +27,7 @@ defineProps({
           <span v-else>{{ relationship.contact.name }}</span>
 
           <!-- age -->
-          <span v-if="relationship.contact.age" class="ms-2 text-xs text-gray-400"
+          <span v-if="relationship.contact.age" class="ms-2 text-xs text-text-muted"
             >({{ relationship.contact.age }})</span
           >
         </li>
@@ -49,7 +49,7 @@ defineProps({
           <span v-else>{{ relationship.contact.name }}</span>
 
           <!-- age -->
-          <span v-if="relationship.contact.age" class="ms-2 text-xs text-gray-400"
+          <span v-if="relationship.contact.age" class="ms-2 text-xs text-text-muted"
             >({{ relationship.contact.age }})</span
           >
         </li>

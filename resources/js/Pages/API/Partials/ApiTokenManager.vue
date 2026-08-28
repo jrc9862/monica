@@ -121,7 +121,7 @@ const copyToClipboard = (token) => {
             <div v-for="permission in availablePermissions" :key="permission">
               <label class="flex items-center">
                 <JetCheckbox v-model:checked="createApiTokenForm.permissions" :value="permission" />
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                <span class="ms-2 text-sm text-text dark:text-text">
                   {{ permission }}
                 </span>
               </label>
@@ -162,13 +162,13 @@ const copyToClipboard = (token) => {
                 </div>
 
                 <div class="flex items-center">
-                  <div v-if="token.last_used_ago" class="text-sm text-gray-400">
+                  <div v-if="token.last_used_ago" class="text-sm text-text-muted">
                     {{ $t('Last used :date', { date: token.last_used_ago }) }}
                   </div>
 
                   <button
                     v-if="availablePermissions.length > 0"
-                    class="ms-6 cursor-pointer text-sm text-gray-400 underline"
+                    class="ms-6 cursor-pointer text-sm text-text-muted underline"
                     @click="manageApiTokenPermissions(token)">
                     {{ $t('Permissions') }}
                   </button>
@@ -197,7 +197,7 @@ const copyToClipboard = (token) => {
 
         <div v-if="$page.props.jetstream.flash.token" class="mt-4 flex">
           <div
-            class="rounded-xs bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500"
+            class="rounded-xs bg-bg px-4 py-2 font-mono text-sm text-text-muted"
             @click.prevent="copyToClipboard($page.props.jetstream.flash.token)">
             {{ $page.props.jetstream.flash.token }}
           </div>
@@ -233,7 +233,7 @@ const copyToClipboard = (token) => {
           <div v-for="permission in availablePermissions" :key="permission">
             <label class="flex items-center">
               <JetCheckbox v-model:checked="updateApiTokenForm.permissions" :value="permission" />
-              <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">
+              <span class="ms-2 text-sm text-text dark:text-text">
                 {{ permission }}
               </span>
             </label>

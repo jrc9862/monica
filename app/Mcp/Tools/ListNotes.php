@@ -16,7 +16,7 @@ class ListNotes extends Tool
 
     public function description(): string
     {
-        return 'List the notes written about a contact, newest first (up to 20).';
+        return 'List the notes written about a contact, newest first. Returns at most 20; there is no pagination, so a full result may mean older notes exist that are not shown.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema

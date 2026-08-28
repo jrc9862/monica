@@ -1,9 +1,9 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <FileImage class="h-4 w-4 text-gray-600" />
+        <FileImage class="h-4 w-4 text-text" />
 
         <span class="font-semibold">
           {{ $t('Photos') }}
@@ -25,8 +25,8 @@
     <!-- not enough space in storage -->
     <div
       v-if="!data.canUploadFile"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <p class="bg-gray-100 p-3 text-center">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+      <p class="bg-bg p-3 text-center">
         <span class="me-1">⚠️</span> {{ $t('You don’t have enough space left in your account.') }}
       </p>
     </div>
@@ -37,7 +37,7 @@
         <div
           v-for="photo in localPhotos"
           :key="photo.id"
-          class="rounded-md border border-gray-200 p-2 shadow-xs hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="rounded-md border border-border p-2 shadow-xs hover:bg-hover hover:shadow-lg dark:border-border dark:bg-surface dark:hover:bg-hover">
           <InertiaLink :href="photo.url.show">
             <img :src="photo.url.display" :alt="photo.name" />
           </InertiaLink>
@@ -48,7 +48,7 @@
       <div class="text-center">
         <InertiaLink
           :href="data.url.index"
-          class="rounded-xs border border-gray-200 px-3 py-1 text-sm text-accent hover:border-gray-500 dark:border-gray-700">
+          class="rounded-xs border border-border px-3 py-1 text-sm text-accent hover:border-accent dark:border-border">
           {{ $t('View all') }}
         </InertiaLink>
       </div>
@@ -57,7 +57,7 @@
     <!-- blank state -->
     <div
       v-if="localPhotos.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_photo.svg" :alt="$t('Photos')" class="mx-auto mt-4 h-16 w-16" />
       <p class="px-5 pb-5 pt-2 text-center">
         {{ $t('There are no photos yet.') }}
@@ -67,7 +67,7 @@
     <!-- uploadcare api key not set -->
     <div
       v-if="!data.uploadcare.publicKey"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="p-5 text-center">
         {{ $t('The keys to manage uploads have not been set in this Monica instance.') }}
       </p>

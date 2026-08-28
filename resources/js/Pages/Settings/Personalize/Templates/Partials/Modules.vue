@@ -20,15 +20,14 @@
     <!-- list of all the existing modules -->
     <ul
       v-if="addModuleModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <li
-        class="item-list border-b border-gray-200 bg-slate-50 py-2 pe-5 ps-2 text-sm dark:border-gray-700 dark:bg-slate-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+      <li class="item-list border-b border-border bg-bg py-2 pe-5 ps-2 text-sm dark:border-border dark:bg-surface">
         {{ $t('Available modules:') }}
       </li>
       <li
         v-for="module in localAllModules"
         :key="module.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 py-2 pe-5 ps-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+        class="item-list flex items-center justify-between border-b border-border py-2 pe-5 ps-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
         <span>{{ module.name }}</span>
         <span
           v-if="!module.already_used"
@@ -45,7 +44,7 @@
     <!-- list of modules -->
     <ul
       v-if="localPageModules.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <draggable
         :list="localPageModules"
         item-key="id"
@@ -54,7 +53,7 @@
         @change="updatePosition">
         <template #item="{ element }">
           <div
-            class="item-list flex items-center border-b border-gray-200 py-2 pe-5 ps-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+            class="item-list flex items-center border-b border-border py-2 pe-5 ps-2 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
             <!-- anchor to move module -->
             <div class="me-2">
               <svg
@@ -94,14 +93,14 @@
 
     <!-- blank state -->
     <div v-if="localPageModules.length === 0 && moduleLoaded">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
+      <p class="rounded-lg border border-border bg-surface p-5 text-center dark:border-border dark:bg-surface">
         {{ $t('Add at least one module.') }}
       </p>
     </div>
 
     <!-- no page selected -->
     <div v-if="!moduleLoaded">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
+      <p class="rounded-lg border border-border bg-surface p-5 text-center dark:border-border dark:bg-surface">
         {{ $t('Please select a page on the left to load modules.') }}
       </p>
     </div>

@@ -14,7 +14,7 @@
     </div>
 
     <!-- help text -->
-    <div class="mb-6 flex rounded-xs border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
+    <div class="mb-6 flex rounded-xs border bg-bg px-3 py-2 text-sm dark:border-border dark:bg-surface">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6 pe-2"
@@ -34,25 +34,25 @@
     </div>
 
     <!-- normal mode -->
-    <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+    <div v-if="!editMode" class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <p class="px-5 py-2">
         <span class="mb-2 block">{{ $t('Current timezone:') }}</span>
-        <span class="mb-2 block rounded-xs bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ localTimezone }}</span>
+        <span class="mb-2 block rounded-xs bg-bg px-5 py-2 text-sm dark:bg-surface">{{ localTimezone }}</span>
       </p>
     </div>
 
     <!-- edit mode -->
     <form
       v-if="editMode"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
+      <div class="border-b border-border px-5 py-2 dark:border-border">
         <errors :errors="form.errors" />
 
         <select
           v-model="form.timezone"
           name="timezone"
-          class="rounded-md border-gray-300 bg-white px-3 py-2 pe-5 ps-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 ltr:bg-[right_3px_center] rtl:bg-[left_3px_center] dark:bg-gray-900 sm:text-sm">
+          class="rounded-md border-border bg-surface px-3 py-2 pe-5 ps-2 shadow-xs focus:border-accent focus:outline-hidden focus:ring-3 focus:ring-accent/30 ltr:bg-[right_3px_center] rtl:bg-[left_3px_center] dark:bg-surface sm:text-sm">
           <optgroup label="General">
             <option value="GMT">GMT timezone</option>
             <option value="UTC">UTC timezone</option>

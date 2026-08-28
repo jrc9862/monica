@@ -28,7 +28,8 @@ class ContactController extends Controller
     public function index(Request $request, Vault $vault)
     {
         $contacts = $vault->contacts()
-            ->where('listed', true);
+            ->where('listed', true)
+            ->with(['labels', 'company']);
 
         $column_to_order = preg_replace('/^%([a-z_]+)%.*$/', '$1', Auth::user()->name_order);
 

@@ -12,14 +12,14 @@ defineProps({
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
-    class="me-2 h-4 w-4 text-gray-500">
+    class="me-2 h-4 w-4 text-text-muted">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 
   <svg
     v-if="time == 'four'"
     xmlns="http://www.w3.org/2000/svg"
-    class="icon-note relative inline h-3 w-3 text-gray-400"
+    class="icon-note relative inline h-3 w-3 text-text-muted"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor">

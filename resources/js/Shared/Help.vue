@@ -27,8 +27,7 @@ const finalURL = computed(() => {
     lang="en"
     rel="noopener noreferrer">
     <Tooltip placement="topLeft" :title="$t('This link will open in a new tab')" arrow-point-at-center>
-      <MessageCircleQuestion
-        class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-600" />
+      <MessageCircleQuestion class="h-4 w-4 text-text-muted hover:text-text dark:text-text dark:hover:text-text" />
     </Tooltip>
   </a>
 </template>

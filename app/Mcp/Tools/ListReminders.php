@@ -16,7 +16,7 @@ class ListReminders extends Tool
 
     public function description(): string
     {
-        return 'List the reminders set for a contact (birthdays, follow-ups, and other recurring or one-time reminders).';
+        return 'List the reminders set for a contact (birthdays, follow-ups, and other recurring or one-time reminders), ordered by month and day. Returns at most 50; there is no pagination.';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema

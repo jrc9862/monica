@@ -12,11 +12,11 @@ defineProps({
 <template>
   <Layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -41,7 +41,7 @@ defineProps({
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <!-- title -->
-        <div class="mb-5 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+        <div class="mb-5 items-center justify-between border-b border-border pb-2 dark:border-border sm:flex">
           <div class="mb-2 sm:mb-0">
             <span class="relative">
               <svg
@@ -50,7 +50,7 @@ defineProps({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-700 dark:hover:text-gray-400">
+                class="icon-sidebar relative inline h-4 w-4 text-text-muted hover:text-text dark:text-text dark:hover:text-text">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -69,13 +69,13 @@ defineProps({
           <!-- important dates -->
           <ul
             v-if="month.important_dates.length > 0"
-            class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
             <li
               v-for="date in month.important_dates"
               :key="date.id"
-              class="item-list flex items-center justify-between border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+              class="item-list flex items-center justify-between border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
               <div>
-                <span class="me-3 font-mono text-xs text-gray-600">{{ date.happened_at }}</span>
+                <span class="me-3 font-mono text-xs text-text">{{ date.happened_at }}</span>
                 <span>{{ date.label }}</span>
               </div>
 
@@ -91,7 +91,7 @@ defineProps({
           <!-- no date in month -->
           <div
             v-else
-            class="rounded-lg border border-gray-200 bg-gray-100 p-3 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+            class="rounded-lg border border-border bg-bg p-3 text-center text-sm text-text-muted dark:border-border dark:bg-surface">
             {{ $t('No dates in this month.') }}
           </div>
         </div>

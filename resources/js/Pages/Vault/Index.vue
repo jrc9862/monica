@@ -1,176 +1,136 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import Layout from '@/Layouts/Layout.vue';
+import CrmCardGrid from '@/Shared/Crm/CrmCardGrid.vue';
+import CrmAvatar from '@/Shared/CrmAvatar.vue';
+import CrmIcon from '@/Shared/Icons/CrmIcon.vue';
+import { Settings } from 'lucide-vue-next';
+import { trans } from 'laravel-vue-i18n';
+
+defineProps({
+  layoutData: Object,
+  data: Object,
+});
+
+// The tint rotates through the design's three accents so a wall of vaults
+// still reads as distinct cards.
+const tints = [
+  { bg: 'var(--blush)', fg: 'var(--pink)', icon: 'heart' },
+  { bg: 'var(--primary-soft)', fg: 'var(--primary)', icon: 'buildings' },
+  { bg: 'var(--sun)', fg: 'var(--yellow)', icon: 'note' },
+];
+const tint = (index) => tints[index % tints.length];
+
+const meta = (vault) => {
+  const total = vault.contacts.length + vault.remaining_contacts;
+  return trans(':count contacts', { count: total });
+};
+</script>
+
 <template>
-  <layout title="Dashboard" :layout-data="layoutData">
-    <main class="relative mt-16 sm:mt-24">
+  <Layout :title="$t('Your vaults')" :layout-data="layoutData">
+    <div class="min-w-0 flex-1 p-6">
       <!-- blank state -->
-      <div v-if="data.vaults.length === 0" class="mx-auto mb-6 max-w-md px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
-        <div class="rounded-t-lg border-x border-t border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
-          <p class="mb-2 text-center text-xl">👋</p>
-          <h2 class="mb-6 text-center text-lg font-semibold">
+      <div v-if="data.vaults.length === 0" class="mx-auto max-w-xl">
+        <div class="crm-card p-6">
+          <h2
+            class="mb-4"
+            style="
+              font:
+                700 22px Inter,
+                sans-serif;
+              color: var(--ink);
+            ">
             {{ $t('Thanks for giving Monica a try.') }}
           </h2>
-          <p class="mb-3">
+          <p class="crm-body mb-3">
             {{ $t('Monica was made to help you document your life and your social interactions.') }}
           </p>
-          <p class="mb-3">
+          <p class="crm-body mb-6">
             {{
               $t('To start, you need to create a vault. A vault is a private space where you can store your contacts.')
             }}
           </p>
-          <div class="mb-1 text-center">
-            <InertiaLink
-              :href="data.url.vault.create"
-              :text="$t('Create a vault')"
-              class="cursor-pointer border border-accent-muted bg-accent px-3 py-2 font-semibold text-bg shadow-pixel-sm hover:bg-accent-hover" />
-          </div>
-        </div>
-
-        <div class="rounded-b-lg border border-gray-200 bg-slate-50 p-5 dark:border-gray-700 dark:bg-slate-900">
-          <p class="mb-3">
-            {{ $t('Monica is open source, made by hundreds of people from all around the world.') }}
-          </p>
-          <p class="mb-3">
-            {{ $t('We hope you will like what we’ve done.') }}
-          </p>
-          <p class="mb-3">
-            {{ $t('All the best,') }}
-          </p>
-          <p>
-            <a href="https://phpc.social/@regis" rel="noopener noreferrer" class="text-accent hover:underline">Régis</a>
-            &amp;
-            <a href="https://mamot.fr/@asbin" rel="noopener noreferrer" class="text-accent hover:underline">Alexis</a>
-          </p>
+          <Link :href="data.url.vault.create" class="crm-press crm-btn">
+            <CrmIcon name="plus" :size="18" />
+            {{ $t('Create a vault') }}
+          </Link>
         </div>
       </div>
 
-      <!-- list of existing vaults -->
-      <div v-else class="mx-auto max-w-4xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
-        <div class="mb-10 items-center justify-between sm:mb-6 sm:flex">
-          <h3 class="mb-3 dark:text-slate-200 sm:mb-0">
-            {{ $t('All the vaults in the account') }}
-          </h3>
-          <InertiaLink
-            :href="data.url.vault.create"
-            :text="$t('Create a vault')"
-            class="cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1 font-semibold text-gray-700 hover:shadow-xs transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-25" />
-        </div>
+      <CrmCardGrid v-else>
+        <div v-for="(vault, index) in data.vaults" :key="vault.id" class="crm-card crm-card-hover flex flex-col">
+          <Link :href="vault.url.show" class="flex flex-1 flex-col gap-3.5 p-6 no-underline">
+            <span class="crm-tint h-[52px] w-[52px]" :style="{ background: tint(index).bg, color: tint(index).fg }">
+              <CrmIcon :name="tint(index).icon" :size="24" />
+            </span>
 
-        <div class="vault-list grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <div
-            v-for="vault in data.vaults"
-            :key="vault.id"
-            class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-            <div class="vault-detail grid relative">
-              <div
-                class="flex items-center justify-between border-b border-gray-200 hover:rounded-t-lg hover:bg-slate-50 dark:hover:bg-slate-800">
-                <InertiaLink
-                  :href="vault.url.show"
-                  class="px-3 py-1 text-lg font-medium dark:border-gray-700 dark:bg-slate-900 dark:text-gray-300">
-                  {{ vault.name }}
-                </InertiaLink>
+            <span
+              style="
+                font:
+                  700 22px Inter,
+                  sans-serif;
+                color: var(--ink);
+              "
+              >{{ vault.name }}</span
+            >
 
-                <!-- Edit button -->
-                <InertiaLink
-                  :href="vault.url.edit"
-                  class="ml-2 px-2 py-1 text-sm font-medium text-accent hover:text-white dark:text-accent dark:border-accent hover:dark:text-slate-900">
-                  <Pencil
-                    class="cursor-pointer h-4 w-4 text-gray-400 hover:text-gray-900 dark:text-gray-600 hover:dark:text-gray-100" />
-                </InertiaLink>
-              </div>
+            <span
+              v-if="vault.description"
+              style="
+                font:
+                  400 15px/26px Inter,
+                  sans-serif;
+                color: var(--ink2);
+              ">
+              {{ vault.description }}
+            </span>
+            <span v-else class="crm-meta-12">{{ $t('No description yet.') }}</span>
 
-              <!-- description -->
-              <div>
-                <div v-if="vault.contacts.length > 0" class="relative flex -space-x-2 overflow-hidden p-3">
-                  <!-- list of contacts -->
-                  <div v-for="contact in vault.contacts" :key="contact.id" class="inline-block">
-                    <avatar
-                      :data="contact.avatar"
-                      :class="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
-                  </div>
-                  <div
-                    v-if="vault.remaining_contacts !== 0"
-                    class="relative -start-[5px] -top-px flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800 dark:bg-gray-300 dark:text-gray-900 dark:hover:bg-gray-400">
-                    + {{ vault.remaining_contacts }}
-                  </div>
-                </div>
-                <p v-if="vault.description" class="p-3 dark:text-gray-300">
-                  {{ vault.description }}
-                </p>
-                <p v-else class="p-3 text-gray-500">
-                  {{ $t('No description yet.') }}
-                </p>
-              </div>
+            <span class="crm-meta-12 mt-auto">{{ meta(vault) }}</span>
+          </Link>
 
-              <!-- actions -->
-              <div class="flex items-center justify-between border-t border-gray-200 px-3 py-2 dark:border-gray-700">
-                <InertiaLink :href="vault.url.settings">
-                  <Settings
-                    class="h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-600 dark:hover:text-gray-100" />
-                </InertiaLink>
-
-                <InertiaLink :href="vault.url.show">
-                  <ArrowRight
-                    class="h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-600 dark:hover:text-gray-100" />
-                </InertiaLink>
-              </div>
+          <div class="flex items-center justify-between px-6 py-3" style="border-top: 1px solid var(--divider)">
+            <div class="flex">
+              <span v-for="contact in vault.contacts" :key="contact.id" class="-ms-2 first:ms-0">
+                <CrmAvatar :data="contact.avatar" :size="24" />
+              </span>
+              <span v-if="vault.remaining_contacts !== 0" class="crm-meta ms-2 self-center">
+                + {{ vault.remaining_contacts }}
+              </span>
             </div>
+
+            <Link :href="vault.url.settings" :title="$t('Settings')" style="color: var(--muted)">
+              <Settings class="h-[18px] w-[18px]" />
+            </Link>
           </div>
         </div>
-      </div>
-    </main>
-  </layout>
+
+        <Link
+          :href="data.url.vault.create"
+          class="crm-create-tile flex min-h-[200px] cursor-pointer flex-col items-center justify-center gap-2.5 rounded-[2px] no-underline"
+          style="border: 1px dashed var(--faint); color: var(--muted)">
+          <CrmIcon name="plus" :size="28" />
+          <span style="font: 500 12px var(--mono); letter-spacing: 0.1em; text-transform: uppercase">
+            {{ $t('Create a vault') }}
+          </span>
+        </Link>
+      </CrmCardGrid>
+    </div>
+  </Layout>
 </template>
 
-<script>
-import { Link } from '@inertiajs/vue3';
-import Layout from '@/Layouts/Layout.vue';
-import Avatar from '@/Shared/Avatar.vue';
-import { Pencil, Settings, ArrowRight } from 'lucide-vue-next';
-
-export default {
-  components: {
-    InertiaLink: Link,
-    Layout,
-    Avatar,
-    Pencil,
-    Settings,
-    ArrowRight,
-  },
-
-  props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-
-  data() {
-    return {
-      addMode: false,
-    };
-  },
-
-  methods: {},
-};
-</script>
-
-<style lang="scss" scoped>
-.vault-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+<style scoped>
+.crm-create-tile {
+  transition:
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.vault-detail {
-  height: 250px;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-}
-
-@media (max-width: 480px) {
-  .vault-list {
-    grid-template-columns: 1fr;
-  }
+.crm-create-tile:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 4px 4px 0 var(--stamp);
+  transform: translate(-1px, -1px);
 }
 </style>

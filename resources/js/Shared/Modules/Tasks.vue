@@ -90,11 +90,11 @@ const destroy = (task) => {
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <LayoutList class="h-4 w-4 text-gray-600" />
+        <LayoutList class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Tasks') }} </span>
+        <span class="crm-title"> {{ $t('Tasks') }} </span>
       </div>
       <PrettyButton :text="$t('Add a task')" :icon="'plus'" :class="'w-full sm:w-fit'" @click="showCreateTaskModal()" />
     </div>
@@ -111,11 +111,11 @@ const destroy = (task) => {
     <!-- tasks -->
     <ul
       v-if="localTasks.length > 0"
-      class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <li
         v-for="task in localTasks"
         :key="task.id"
-        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+        class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
         <div v-if="editedTaskId !== task.id" class="flex items-center justify-between p-3">
           <div class="flex items-center">
             <input
@@ -123,9 +123,9 @@ const destroy = (task) => {
               v-model="task.completed"
               :name="task.id"
               type="checkbox"
-              class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40"
+              class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40"
               @change="toggle(task)" />
-            <label :for="task.id" class="ms-2 flex cursor-pointer text-gray-900 dark:text-gray-50">
+            <label :for="task.id" class="ms-2 flex cursor-pointer text-text dark:text-text">
               {{ task.label }}
 
               <!-- due date -->
@@ -171,7 +171,7 @@ const destroy = (task) => {
       <ul
         v-for="task in localCompletedTasks"
         :key="task.id"
-        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
         <li>
           <div v-if="editedCompletedTaskId !== task.id" class="flex items-center justify-between p-3">
             <div class="flex items-center">
@@ -180,10 +180,10 @@ const destroy = (task) => {
                 v-model="task.completed"
                 :name="task.id"
                 type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40"
+                class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40"
                 @change="toggle(task)" />
 
-              <label :for="task.id" class="ms-2 flex cursor-pointer items-center text-gray-900 dark:text-gray-50">
+              <label :for="task.id" class="ms-2 flex cursor-pointer items-center text-text dark:text-text">
                 {{ task.label }}
 
                 <!-- due date -->
@@ -218,7 +218,7 @@ const destroy = (task) => {
     <!-- blank state -->
     <div
       v-if="localTasks.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/dashboard_blank_tasks.svg" :alt="$t('Tasks')" class="mx-auto mt-4 h-14 w-14" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no tasks yet.') }}</p>
     </div>

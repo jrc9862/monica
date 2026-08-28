@@ -16,9 +16,9 @@
     <!-- modal to add a user -->
     <form
       v-if="addUserModalShown && localUsersInAccount.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
 
         <!-- list of potential new users -->
@@ -33,17 +33,15 @@
             :value="user.id"
             name="user"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label
-            :for="'user' + user.id"
-            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+          <label :for="'user' + user.id" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
             {{ user.name }}
           </label>
         </div>
       </div>
 
       <!-- permissions -->
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <!-- role types -->
         <div>
           <p class="mb-2">
@@ -58,10 +56,10 @@
               value="300"
               name="permission"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label for="viewer" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="viewer" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('Viewer') }}
-              <span class="ms-4 font-normal text-gray-500">
+              <span class="ms-4 font-normal text-text-muted">
                 {{ $t('Can view data, but can’t edit it.') }}
               </span>
             </label>
@@ -75,10 +73,10 @@
               value="200"
               name="permission"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label for="editor" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="editor" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('Editor') }}
-              <span class="ms-4 font-normal text-gray-500">
+              <span class="ms-4 font-normal text-text-muted">
                 {{ $t('Can edit data, but can’t manage the vault.') }}
               </span>
             </label>
@@ -92,10 +90,10 @@
               value="100"
               name="permission"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label for="manager" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+            <label for="manager" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
               {{ $t('Manager') }}
-              <span class="ms-4 font-normal text-gray-500">
+              <span class="ms-4 font-normal text-text-muted">
                 {{ $t('Can do everything, including adding or removing other users.') }}
               </span>
             </label>
@@ -112,17 +110,17 @@
     <!-- blank state -->
     <div
       v-if="addUserModalShown && localUsersInAccount.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface p-5 text-center dark:border-border dark:bg-surface">
       <p>{{ $t('There are no other users in this account.') }}</p>
     </div>
 
     <!-- list of existing users -->
-    <div class="mb-6 rounded-xs border border-gray-200 text-sm dark:border-gray-700">
-      <ul v-if="localUsersInVault.length > 0" class="rounded-b rounded-t bg-white dark:bg-gray-900">
+    <div class="mb-6 rounded-xs border border-border text-sm dark:border-border">
+      <ul v-if="localUsersInVault.length > 0" class="rounded-b rounded-t bg-surface dark:bg-surface">
         <li
           v-for="user in localUsersInVault"
           :key="user.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+          class="item-list border-b border-border hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
           <div v-if="editedUser.id !== user.id" class="flex items-center justify-between px-5 py-2">
             <span>{{ user.name }}</span>
 
@@ -138,8 +136,8 @@
           </div>
 
           <!-- change permission modal -->
-          <form v-if="editedUser.id === user.id" class="bg-white dark:bg-gray-900" @submit.prevent="update(user)">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <form v-if="editedUser.id === user.id" class="bg-surface dark:bg-surface" @submit.prevent="update(user)">
+            <div class="border-b border-border p-5 dark:border-border">
               <errors :errors="form.errors" />
 
               <p class="mb-2">
@@ -154,9 +152,9 @@
                   value="300"
                   name="permission"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
                 {{ $t('Viewer') }}
-                <span class="ms-4 font-normal text-gray-500">
+                <span class="ms-4 font-normal text-text-muted">
                   {{ $t('Can view data, but can’t edit it.') }}
                 </span>
               </div>
@@ -169,12 +167,10 @@
                   value="200"
                   name="permission"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                <label
-                  for="editor"
-                  class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                <label for="editor" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                   {{ $t('Editor') }}
-                  <span class="ms-4 font-normal text-gray-500">
+                  <span class="ms-4 font-normal text-text-muted">
                     {{ $t('Can edit data, but can’t manage the vault.') }}
                   </span>
                 </label>
@@ -188,12 +184,10 @@
                   value="100"
                   name="permission"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-                <label
-                  for="manager"
-                  class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="h-4 w-4 border-border text-sky-500 dark:border-border" />
+                <label for="manager" class="ms-3 block cursor-pointer text-sm font-medium text-text dark:text-text">
                   {{ $t('Manager') }}
-                  <span class="ms-4 font-normal text-gray-500">
+                  <span class="ms-4 font-normal text-text-muted">
                     {{ $t('Can do everything, including adding or removing other users.') }}
                   </span>
                 </label>

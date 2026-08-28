@@ -152,11 +152,11 @@ const destroy = () => {
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -212,7 +212,7 @@ const destroy = () => {
       </div>
     </nav>
 
-    <main class="relative sm:mt-16">
+    <main class="relative">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
@@ -222,11 +222,11 @@ const destroy = () => {
               <!-- list of existing photos -->
               <ul
                 v-if="localPhotos.length > 0"
-                class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                class="mb-2 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
                 <li
                   v-for="photo in localPhotos"
                   :key="photo.id"
-                  class="item-list flex items-center justify-between border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  class="item-list flex items-center justify-between border-b border-border p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                   <div class="flex">
                     <img :src="photo.url.show" class="me-4" width="75" height="75" />
 
@@ -257,27 +257,27 @@ const destroy = () => {
                 <!-- case when there are no photos yet -->
                 <div
                   v-if="localPhotos.length === 0"
-                  class="mb-6 flex cursor-pointer flex-col items-center rounded-lg border border-gray-200 bg-white p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
+                  class="mb-6 flex cursor-pointer flex-col items-center rounded-lg border border-border bg-surface p-3 hover:bg-hover dark:border-border dark:bg-surface dark:hover:bg-hover">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="mb-2 h-8 w-8 text-gray-500">
+                    class="mb-2 h-8 w-8 text-text-muted">
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                   </svg>
 
-                  <p class="text-sm text-gray-500">{{ $t('Add photos') }}</p>
+                  <p class="text-sm text-text-muted">{{ $t('Add photos') }}</p>
                 </div>
 
                 <!-- case when there are photos -->
                 <div v-else class="mb-6 flex items-center">
                   <p
-                    class="inline-block cursor-pointer rounded-lg border bg-slate-200 dark:bg-slate-700 px-1 py-1 text-xs hover:bg-slate-300 dark:hover:bg-slate-800">
+                    class="inline-block cursor-pointer rounded-lg border bg-bg dark:bg-surface px-1 py-1 text-xs hover:bg-hover dark:hover:bg-hover">
                     {{ $t('+ add another photo') }}
                   </p>
                 </div>
@@ -286,7 +286,7 @@ const destroy = () => {
               <!-- uploadcare api key not set -->
               <div
                 v-if="!data.uploadcare.publicKey"
-                class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
                 <p class="p-5 text-center">
                   {{ $t('The keys to manage uploads have not been set in this Monica instance.') }}
                 </p>
@@ -295,8 +295,8 @@ const destroy = () => {
               <!-- not enough storage -->
               <div
                 v-if="!data.canUploadFile"
-                class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-                <p class="bg-gray-100 p-3 text-center">
+                class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
+                <p class="bg-bg p-3 text-center">
                   <span class="me-1">⚠️</span>
                   {{ $t('You don’t have enough space left in your account.') }}
                 </p>
@@ -304,8 +304,8 @@ const destroy = () => {
             </div>
 
             <!-- post body -->
-            <div class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
-              <div class="border-gray-200 p-5 dark:border-gray-700">
+            <div class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface">
+              <div class="border-border p-5 dark:border-border">
                 <!-- title -->
                 <text-input
                   ref="newTitle"
@@ -335,8 +335,8 @@ const destroy = () => {
           <!-- right -->
           <div>
             <!-- Publish action -->
-            <div class="mb-2 rounded-lg border border-gray-200 text-center dark:border-gray-700 dark:bg-gray-900">
-              <div class="rounded-b-lg bg-gray-50 p-5 dark:bg-gray-900">
+            <div class="mb-2 rounded-lg border border-border text-center dark:border-border dark:bg-surface">
+              <div class="rounded-b-lg bg-bg p-5 dark:bg-surface">
                 <pretty-link :href="data.url.show" :text="$t('Close')" :icon="'exit'" />
               </div>
             </div>
@@ -382,7 +382,7 @@ const destroy = () => {
               class="mb-6 inline-block">
               <template #default="{ inputValue, inputEvents }">
                 <input
-                  class="rounded-xs border bg-white px-2 py-1 dark:border-gray-700 dark:bg-gray-900"
+                  class="rounded-xs border bg-surface px-2 py-1 dark:border-border dark:bg-surface"
                   :value="inputValue"
                   v-on="inputEvents" />
               </template>
@@ -399,7 +399,7 @@ const destroy = () => {
               :display-most-consulted-contacts="true"
               :add-multiple-contacts="true"
               :required="true"
-              :class="'mb-8 flex-1 border-gray-200 dark:border-gray-700'" />
+              :class="'mb-8 flex-1 border-border dark:border-border'" />
 
             <!-- slices of life -->
             <slices-of-life :data="data" />

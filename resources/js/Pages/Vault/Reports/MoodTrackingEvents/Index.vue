@@ -11,11 +11,11 @@ defineProps({
 <template>
   <Layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+    <nav class="bg-surface dark:bg-surface sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="me-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-text dark:text-text">
               {{ $t('You are here:') }}
             </li>
             <li class="me-2 inline">
@@ -40,7 +40,7 @@ defineProps({
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <!-- title -->
-        <div class="mb-5 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+        <div class="mb-5 items-center justify-between border-b border-border pb-2 dark:border-border sm:flex">
           <div class="mb-2 sm:mb-0">
             <span class="relative">
               <svg
@@ -49,7 +49,7 @@ defineProps({
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-700 dark:hover:text-gray-400">
+                class="icon-sidebar relative inline h-4 w-4 text-text-muted hover:text-text dark:text-text dark:hover:text-text">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -69,7 +69,7 @@ defineProps({
             <div v-for="day in month.days" :key="day.id">
               <div v-if="day.event" class="me-2 inline-block h-4 w-4 rounded-full" :class="day.event.hex_color" />
               <div v-else class="me-2 inline-block h-4 w-4 rounded-full">
-                <div class="me-2 inline-block h-4 w-4 rounded-full bg-slate-100" />
+                <div class="me-2 inline-block h-4 w-4 rounded-full bg-bg" />
               </div>
             </div>
           </div>

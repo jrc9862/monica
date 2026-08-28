@@ -75,10 +75,8 @@ defineExpose({
 </script>
 
 <template>
-  <form
-    class="rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
-    @submit.prevent="submit()">
-    <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+  <form class="rounded-lg border border-border bg-bg dark:border-border dark:bg-surface" @submit.prevent="submit()">
+    <div class="border-b border-border p-5 dark:border-border">
       <errors :errors="form.errors" />
 
       <!-- title -->
@@ -95,15 +93,15 @@ defineExpose({
     </div>
 
     <!-- due date -->
-    <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+    <div class="border-b border-border p-5 dark:border-border">
       <div class="flex items-center">
         <input
           id="reminder"
           v-model="form.due_at_checked"
           name="reminder"
           type="checkbox"
-          class="focus:ring-3 relative h-4 w-4 rounded-xs border border-gray-300 bg-gray-50 focus:ring-accent/40 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
-        <label for="reminder" class="ms-2 block cursor-pointer text-sm text-gray-900 dark:text-gray-50">
+          class="focus:ring-3 relative h-4 w-4 rounded-xs border border-border bg-bg focus:ring-accent/40 dark:border-border dark:bg-surface dark:ring-offset-gray-800 dark:focus:ring-accent/40" />
+        <label for="reminder" class="ms-2 block cursor-pointer text-sm text-text dark:text-text">
           {{ $t('Add a due date') }}
         </label>
       </div>
@@ -118,7 +116,7 @@ defineExpose({
           :is-dark="isDark()">
           <template #default="{ inputValue, inputEvents }">
             <input
-              class="rounded-xs border bg-white px-2 py-1 dark:bg-gray-900"
+              class="rounded-xs border bg-surface px-2 py-1 dark:bg-surface"
               :value="inputValue"
               v-on="inputEvents" />
           </template>

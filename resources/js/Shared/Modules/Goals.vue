@@ -1,11 +1,11 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
+    <div class="crm-panel-header justify-between">
       <div class="mb-2 sm:mb-0 flex items-center gap-2">
-        <Crosshair class="h-4 w-4 text-gray-600" />
+        <Crosshair class="h-4 w-4 text-text" />
 
-        <span class="font-semibold"> {{ $t('Goals') }} </span>
+        <span class="crm-title"> {{ $t('Goals') }} </span>
       </div>
       <pretty-button :text="$t('Add a goal')" :icon="'plus'" :class="'w-full sm:w-fit'" @click="showCreateGoalModal" />
     </div>
@@ -13,9 +13,9 @@
     <!-- add a note modal -->
     <form
       v-if="createGoalModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+      <div class="border-b border-border p-5 dark:border-border">
         <errors :errors="form.errors" />
         <!-- name -->
         <text-input
@@ -41,10 +41,10 @@
       <div
         v-for="goal in localGoals"
         :key="goal.id"
-        class="mb-4 rounded-xs border border-gray-200 last:mb-0 dark:border-gray-700 dark:bg-gray-900">
+        class="mb-4 rounded-xs border border-border last:mb-0 dark:border-border dark:bg-surface">
         <div v-if="editedGoalId !== goal.id">
-          <div class="flex items-center justify-between border-b border-gray-200 p-3 dark:border-gray-700">
-            <div class="font-semibold text-gray-600 dark:text-gray-400">
+          <div class="flex items-center justify-between border-b border-border p-3 dark:border-border">
+            <div class="font-semibold text-text dark:text-text">
               {{ goal.name }}
             </div>
 
@@ -61,8 +61,8 @@
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
-                class="me-0 flex flex-row items-center justify-between border-b border-gray-200 p-3 text-center dark:border-gray-700 sm:mb-0 sm:me-7 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
-                :class="{ 'text-gray-500': !streak.active }">
+                class="me-0 flex flex-row items-center justify-between border-b border-border p-3 text-center dark:border-border sm:mb-0 sm:me-7 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
+                :class="{ 'text-text-muted': !streak.active }">
                 <div>
                   <span class="mb-0 me-2 block text-xs font-semibold sm:me-0">
                     {{ streak.day }}
@@ -85,8 +85,7 @@
                   v-else
                   class="me-2 cursor-pointer text-center text-2xl sm:me-0"
                   @click="toggleStreak(goal, streak)">
-                  <div
-                    class="rounded-md border border-gray-200 bg-slate-100 px-2 py-1 dark:border-gray-700 dark:bg-slate-900">
+                  <div class="rounded-md border border-border bg-bg px-2 py-1 dark:border-border dark:bg-surface">
                     <FaceIcon />
                   </div>
                 </span>
@@ -96,13 +95,13 @@
             <!-- stats -->
             <div class="flex justify-between p-3">
               <div class="me-6 flex items-center">
-                <div class="me-3 w-14 text-right text-sm text-gray-500">{{ $t('Current streak') }}</div>
+                <div class="me-3 w-14 text-right text-sm text-text-muted">{{ $t('Current streak') }}</div>
                 <div class="text-4xl">
                   {{ goal.streaks_statistics.current_streak }}
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="me-3 w-14 text-right text-sm text-gray-500">{{ $t('Longest streak') }}</div>
+                <div class="me-3 w-14 text-right text-sm text-text-muted">{{ $t('Longest streak') }}</div>
                 <div class="text-4xl">
                   {{ goal.streaks_statistics.max_streak }}
                 </div>
@@ -116,7 +115,7 @@
     <!-- blank state -->
     <div
       v-if="localGoals.length === 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface dark:border-border dark:bg-surface">
       <img src="/img/contact_blank_goal.svg" :alt="$t('Goals')" class="mx-auto mt-4 h-14 w-14" />
       <p class="px-5 pb-5 pt-2 text-center">{{ $t('There are no goals yet.') }}</p>
     </div>

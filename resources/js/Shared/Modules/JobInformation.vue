@@ -1,15 +1,15 @@
 <template>
   <div class="mb-4">
-    <div class="pb-1 mb-2 items-center justify-between border-b border-gray-200 dark:border-gray-700 flex">
+    <div class="pb-1 mb-2 items-center justify-between border-b border-border dark:border-border flex">
       <div class="text-xs">{{ $t('Job information') }}</div>
       <span v-if="!editJobInformation" class="relative cursor-pointer" @click="showEditModal">
-        <Pencil class="h-3 w-3 text-gray-400" />
+        <Pencil class="h-3 w-3 text-text-muted" />
       </span>
 
       <!-- close button -->
       <span
         v-if="editJobInformation"
-        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        class="cursor-pointer text-xs text-text dark:text-text"
         @click="editJobInformation = false">
         {{ $t('Close') }}
       </span>
@@ -18,9 +18,9 @@
     <!-- edit job information -->
     <div
       v-if="editJobInformation"
-      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-bg dark:border-border dark:bg-surface">
       <form @submit.prevent="update">
-        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+        <div class="border-b border-border p-2 dark:border-border">
           <errors :errors="form.errors" />
 
           <!-- companies -->
@@ -55,7 +55,7 @@
             :maxlength="255" />
         </div>
 
-        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+        <div class="border-b border-border p-2 dark:border-border">
           <!-- job position -->
           <text-input
             v-model="form.job_position"
@@ -78,7 +78,7 @@
             :class="'save'" />
         </div>
 
-        <div class="border-t border-gray-200 p-2 dark:border-gray-700">
+        <div class="border-t border-border p-2 dark:border-border">
           <p class="cursor-pointer text-sm text-accent hover:underline" @click="reset()">
             {{ $t('Or reset the fields') }}
           </p>
@@ -87,14 +87,14 @@
     </div>
 
     <!-- blank state -->
-    <p v-if="!form.job_position && !company_name" class="text-sm text-gray-600 dark:text-gray-400">
+    <p v-if="!form.job_position && !company_name" class="text-sm text-text dark:text-text">
       {{ $t('Not set') }}
     </p>
 
     <p v-else>
       <span v-if="form.job_position">
         {{ form.job_position }}
-        <span v-if="company_name" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('at ') }}</span>
+        <span v-if="company_name" class="text-sm text-text dark:text-text">{{ $t('at ') }}</span>
       </span>
       <span v-if="company_name">{{ company_name }}</span>
     </p>

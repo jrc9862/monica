@@ -48,10 +48,10 @@ const showFull = (note) => {
       <li
         v-for="note in localNotes"
         :key="note.id"
-        class="mb-4 rounded-xs border border-gray-200 last:mb-0 dark:border-gray-700">
+        class="mb-4 rounded-xs border border-border last:mb-0 dark:border-border">
         <div
           v-if="note.title"
-          class="mb-1 border-b border-gray-200 p-3 text-xs font-semibold text-gray-600 dark:border-gray-700 dark:text-gray-400">
+          class="mb-1 border-b border-border p-3 text-xs font-semibold text-text dark:border-border dark:text-text">
           {{ note.title }}
         </div>
         <div v-if="!note.show_full_content" class="p-3">
@@ -62,12 +62,12 @@ const showFull = (note) => {
           {{ note.body }}
         </div>
         <div
-          class="flex border-t border-gray-200 px-3 py-2 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800">
+          class="flex border-t border-border px-3 py-2 text-xs text-text hover:rounded-b hover:bg-hover dark:border-border dark:bg-surface dark:text-text dark:hover:bg-hover">
           <!-- date -->
           <div class="relative me-3 inline">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="icon-note relative inline h-4 w-4 text-gray-400"
+              class="icon-note relative inline h-4 w-4 text-text-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
@@ -84,7 +84,7 @@ const showFull = (note) => {
           <div class="relative me-3 inline">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="icon-note relative me-1 inline h-4 w-4 text-gray-400"
+              class="icon-note relative me-1 inline h-4 w-4 text-text-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
@@ -104,7 +104,7 @@ const showFull = (note) => {
     <!-- blank state -->
     <div
       v-else
-      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-border bg-surface p-5 text-center text-text-muted dark:border-border dark:bg-surface">
       {{ $t('No notes found.') }}
     </div>
   </div>
