@@ -47,8 +47,8 @@ class CreateTask extends Tool
 
             $task = (new CreateContactTask)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'label' => $arguments['label'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'label' => $this->required($arguments, 'label'),
                 'description' => $arguments['description'] ?? null,
                 'due_at' => $arguments['due_at'] ?? null,
             ]);

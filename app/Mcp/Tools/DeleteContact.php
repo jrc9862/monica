@@ -36,13 +36,14 @@ class DeleteContact extends Tool
             $this->ensureTokenCan('write');
 
             $author = $this->author();
+            $contactId = $this->required($arguments, 'contact_id');
 
             (new DestroyContact)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
+                'contact_id' => $contactId,
             ]);
 
-            return ToolResult::json(['deleted' => true, 'contact_id' => $arguments['contact_id']]);
+            return ToolResult::json(['deleted' => true, 'contact_id' => $contactId]);
         });
     }
 }

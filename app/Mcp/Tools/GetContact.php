@@ -47,7 +47,7 @@ class GetContact extends Tool
 
             $vault = Vault::where('account_id', $author->account_id)->findOrFail($vaultId);
 
-            $contact = $vault->contacts()->findOrFail($arguments['contact_id']);
+            $contact = $vault->contacts()->findOrFail($this->required($arguments, 'contact_id'));
 
             $notes = $contact->notes()
                 ->latest('created_at')
@@ -63,7 +63,7 @@ class GetContact extends Tool
 
             return ToolResult::json([
                 'id' => $contact->id,
-                'name' => $contact->name,
+                'name' => $this->contactName($author, $contact),
                 'nickname' => $contact->nickname,
                 'job_position' => $contact->job_position,
                 'company' => $contact->company?->name,

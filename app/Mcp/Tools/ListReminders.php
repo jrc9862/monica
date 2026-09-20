@@ -43,7 +43,7 @@ class ListReminders extends Tool
             }
 
             $vault = Vault::where('account_id', $author->account_id)->findOrFail($vaultId);
-            $contact = $vault->contacts()->findOrFail($arguments['contact_id']);
+            $contact = $vault->contacts()->findOrFail($this->required($arguments, 'contact_id'));
 
             $reminders = $contact->reminders()
                 ->orderBy('month')

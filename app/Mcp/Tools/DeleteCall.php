@@ -42,8 +42,8 @@ class DeleteCall extends Tool
 
             (new DestroyCall)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'call_id' => $arguments['call_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'call_id' => $this->required($arguments, 'call_id'),
             ]);
 
             return ToolResult::json(['deleted' => true]);

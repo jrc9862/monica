@@ -205,6 +205,49 @@ class McpAuthTest extends TestCase
     }
 
     /** @test */
+    public function a_tools_call_without_an_arguments_key_is_served_normally(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        // `arguments` is optional in the MCP spec, so this is what a spec-abiding
+        // client sends for a tool that takes no input.
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'tools/call',
+                'params' => ['name' => 'list-vaults'],
+            ]);
+
+        $response->assertJsonMissingPath('error');
+        $response->assertJsonPath('result.isError', false);
+        $this->assertStringContainsString('vaults', $response->getContent());
+    }
+
+    /** @test */
+    public function a_tools_call_with_a_malformed_arguments_key_reports_the_missing_argument(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('mcp', ['read', 'write'])->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
+            ->postJson('/mcp', [
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'tools/call',
+                'params' => ['name' => 'get-contact', 'arguments' => 'not an object'],
+            ]);
+
+        // Treated as an empty argument list, so the tool reports what it is
+        // missing instead of type-erroring against Tool::handle(array).
+        $response->assertJsonMissingPath('error');
+        $response->assertJsonPath('result.isError', true);
+        $this->assertStringContainsString('Validation failed:', $response->getContent());
+        $this->assertStringContainsString('is required', $response->getContent());
+    }
+
+    /** @test */
     public function the_destructive_tools_are_disabled_by_default(): void
     {
         $this->assertEqualsCanonicalizing(

@@ -60,9 +60,9 @@ class CreateReminder extends Tool
 
             $reminder = (new CreateContactReminder)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'label' => $arguments['label'],
-                'type' => $arguments['type'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'label' => $this->required($arguments, 'label'),
+                'type' => $this->required($arguments, 'type'),
                 'day' => $arguments['day'] ?? null,
                 'month' => $arguments['month'] ?? null,
                 'year' => $arguments['year'] ?? null,

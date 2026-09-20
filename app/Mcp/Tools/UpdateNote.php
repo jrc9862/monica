@@ -50,10 +50,10 @@ class UpdateNote extends Tool
 
             $note = (new UpdateNoteService)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'note_id' => $arguments['note_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'note_id' => $this->required($arguments, 'note_id'),
                 'title' => $arguments['title'] ?? null,
-                'body' => $arguments['body'],
+                'body' => $this->required($arguments, 'body'),
             ]);
 
             return ToolResult::json([

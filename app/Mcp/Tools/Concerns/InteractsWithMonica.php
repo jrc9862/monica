@@ -4,6 +4,8 @@ namespace App\Mcp\Tools\Concerns;
 
 use App\Exceptions\CantBeDeletedException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Helpers\NameHelper;
+use App\Models\Contact;
 use App\Models\PassportUser;
 use App\Models\User;
 use App\Models\Vault;
@@ -117,6 +119,47 @@ trait InteractsWithMonica
 
             return ToolResult::error('The request could not be completed. Check the tool arguments and try again.');
         }
+    }
+
+    /**
+     * Read an argument the tool's schema declares as required.
+     *
+     * laravel/mcp hands tools/call arguments to handle() without validating
+     * them against the declared schema, so a client that omits a required key
+     * — or sends an array where a string belongs — would otherwise die on an
+     * undefined index and surface as the generic catch-all error. Fail with a
+     * message the caller can act on instead.
+     */
+    protected function required(array $arguments, string $key): string|int
+    {
+        $value = $arguments[$key] ?? null;
+
+        if ($value === null || $value === '') {
+            throw ValidationException::withMessages([
+                $key => "$key is required.",
+            ]);
+        }
+
+        if (! is_string($value) && ! is_int($value)) {
+            throw ValidationException::withMessages([
+                $key => "$key must be a string or an integer, ".get_debug_type($value).' given.',
+            ]);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Format a contact's name for the author.
+     *
+     * Tools must not read $contact->name: that accessor formats through
+     * Auth::user(), which under the `api` (Passport) guard is a PassportUser
+     * rather than the Monica User the formatter requires. Pass the resolved
+     * author instead, so the user's name_order preference is still honoured.
+     */
+    protected function contactName(User $author, Contact $contact): string
+    {
+        return NameHelper::formatContactName($author, $contact);
     }
 
     /**

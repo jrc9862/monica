@@ -41,8 +41,8 @@ class ToggleTask extends Tool
 
             $task = (new ToggleContactTask)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'contact_task_id' => $arguments['task_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'contact_task_id' => $this->required($arguments, 'task_id'),
             ]);
 
             return ToolResult::json(['task' => $this->taskSummary($task)]);

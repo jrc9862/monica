@@ -39,14 +39,15 @@ class DeleteNote extends Tool
             $this->ensureTokenCan('write');
 
             $author = $this->author();
+            $noteId = $this->required($arguments, 'note_id');
 
             (new DestroyNote)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'note_id' => $arguments['note_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'note_id' => $noteId,
             ]);
 
-            return ToolResult::json(['deleted' => true, 'note_id' => $arguments['note_id']]);
+            return ToolResult::json(['deleted' => true, 'note_id' => $noteId]);
         });
     }
 }

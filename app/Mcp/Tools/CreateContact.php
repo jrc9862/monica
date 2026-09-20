@@ -62,7 +62,7 @@ class CreateContact extends Tool
 
             return ToolResult::json([
                 'id' => $contact->id,
-                'name' => $contact->name,
+                'name' => $this->contactName($author, $contact),
             ]);
         });
     }

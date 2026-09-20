@@ -9,8 +9,12 @@ use App\Mcp\Tools\GetContact;
 use App\Mcp\Tools\SearchContacts;
 use App\Mcp\Tools\UpdateContact;
 use App\Models\Contact;
+use App\Models\PassportUser;
+use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Contracts\ScopeAuthorizable;
 use Tests\TestCase;
 
 class ContactToolsTest extends TestCase
@@ -86,6 +90,223 @@ class ContactToolsTest extends TestCase
             'first_name' => 'New',
             'last_name' => 'Name',
         ]);
+    }
+
+    /** @test */
+    public function it_creates_a_contact_when_authenticated_through_the_passport_guard(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        $this->actAsPassportUser($user);
+
+        $result = (new CreateContact)->handle([
+            'vault_id' => $vault->id,
+            'first_name' => 'Ada',
+            'last_name' => 'Lovelace',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertFalse($result->toArray()['isError']);
+        $this->assertSame('Ada Lovelace', $data['name']);
+    }
+
+    /** @test */
+    public function it_gets_a_contact_when_authenticated_through_the_passport_guard(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        $contact = Contact::factory()->create([
+            'vault_id' => $vault->id,
+            'first_name' => 'Ada',
+            'last_name' => 'Lovelace',
+            'prefix' => null,
+            'suffix' => null,
+        ]);
+        $this->actAsPassportUser($user);
+
+        $result = (new GetContact)->handle([
+            'vault_id' => $vault->id,
+            'contact_id' => $contact->id,
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertFalse($result->toArray()['isError']);
+        $this->assertSame('Ada Lovelace', $data['name']);
+    }
+
+    /** @test */
+    public function it_finds_a_contact_by_a_partial_name(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        Contact::factory()->create([
+            'vault_id' => $vault->id,
+            'first_name' => 'James',
+            'last_name' => 'Collett',
+        ]);
+
+        $result = (new SearchContacts)->handle([
+            'vault_id' => $vault->id,
+            'query' => 'Jam',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertFalse($result->toArray()['isError']);
+        $this->assertCount(1, $data['contacts']);
+    }
+
+    /** @test */
+    public function it_finds_a_contact_despite_a_misspelling(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        $contact = Contact::factory()->create([
+            'vault_id' => $vault->id,
+            'first_name' => 'Ada',
+            'last_name' => 'Lovelace',
+        ]);
+
+        $result = (new SearchContacts)->handle([
+            'vault_id' => $vault->id,
+            'query' => 'Levelace',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertFalse($result->toArray()['isError']);
+        $this->assertSame($contact->id, $data['contacts'][0]['id']);
+    }
+
+    /** @test */
+    public function it_ranks_the_exact_match_first(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        Contact::factory()->create(['vault_id' => $vault->id, 'first_name' => 'Annabel', 'last_name' => 'Lee']);
+        $ann = Contact::factory()->create(['vault_id' => $vault->id, 'first_name' => 'Ann', 'last_name' => 'Smith']);
+        Contact::factory()->create(['vault_id' => $vault->id, 'first_name' => 'Anneliese', 'last_name' => 'Roth']);
+
+        $result = (new SearchContacts)->handle([
+            'vault_id' => $vault->id,
+            'query' => 'Ann',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertCount(3, $data['contacts']);
+        $this->assertSame($ann->id, $data['contacts'][0]['id']);
+    }
+
+    /** @test */
+    public function it_matches_a_nickname(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        $contact = Contact::factory()->create([
+            'vault_id' => $vault->id,
+            'first_name' => 'Margaret',
+            'nickname' => 'Peggy',
+        ]);
+
+        $result = (new SearchContacts)->handle([
+            'vault_id' => $vault->id,
+            'query' => 'Peggy',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertSame($contact->id, $data['contacts'][0]['id']);
+    }
+
+    /** @test */
+    public function it_returns_no_results_when_nothing_resembles_the_query(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        Contact::factory()->create(['vault_id' => $vault->id, 'first_name' => 'Ada', 'last_name' => 'Lovelace']);
+
+        $result = (new SearchContacts)->handle([
+            'vault_id' => $vault->id,
+            'query' => 'Kowalski',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertFalse($result->toArray()['isError']);
+        $this->assertSame([], $data['contacts']);
+    }
+
+    /** @test */
+    public function it_does_not_search_another_vault(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        $other = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+        Contact::factory()->create(['vault_id' => $other->id, 'first_name' => 'Ada', 'last_name' => 'Lovelace']);
+
+        $result = (new SearchContacts)->handle([
+            'vault_id' => $vault->id,
+            'query' => 'Lovelace',
+        ]);
+
+        $data = json_decode($result->toArray()['content'][0]['text'], true);
+
+        $this->assertSame([], $data['contacts']);
+    }
+
+    /** @test */
+    public function it_reports_a_missing_required_argument(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+
+        $result = (new GetContact)->handle(['vault_id' => $vault->id]);
+
+        $this->assertTrue($result->toArray()['isError']);
+        $this->assertStringContainsString('contact_id is required', $result->toArray()['content'][0]['text']);
+    }
+
+    /** @test */
+    public function it_reports_an_argument_of_the_wrong_type(): void
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+
+        $result = (new GetContact)->handle([
+            'vault_id' => $vault->id,
+            'contact_id' => ['not', 'a', 'string'],
+        ]);
+
+        $this->assertTrue($result->toArray()['isError']);
+        $this->assertStringContainsString('contact_id must be a string or an integer', $result->toArray()['content'][0]['text']);
+    }
+
+    /**
+     * Authenticate on the `api` (Passport) guard, the way a real MCP OAuth
+     * request does: Auth::user() is then a PassportUser, not a Monica User.
+     */
+    private function actAsPassportUser(User $user): void
+    {
+        $token = new class implements ScopeAuthorizable
+        {
+            public function can(string $scope): bool
+            {
+                return true;
+            }
+
+            public function cant(string $scope): bool
+            {
+                return ! $this->can($scope);
+            }
+        };
+
+        $passportUser = PassportUser::findOrFail($user->id)->withAccessToken($token);
+
+        Auth::guard('api')->setUser($passportUser);
+        Auth::shouldUse('api');
     }
 
     /** @test */

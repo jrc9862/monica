@@ -432,8 +432,14 @@ class Contact extends VCardResource
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                if (Auth::check()) {
-                    return NameHelper::formatContactName(Auth::user(), $this);
+                // Auth::check() alone is not enough: guards other than `web`
+                // resolve a different Authenticatable (the `api` guard hands
+                // back a PassportUser), and formatContactName() type-errors on
+                // anything that is not a Monica User.
+                $user = Auth::user();
+
+                if ($user instanceof User) {
+                    return NameHelper::formatContactName($user, $this);
                 }
 
                 $firstName = Arr::get($attributes, 'first_name');

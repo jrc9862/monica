@@ -57,8 +57,8 @@ class UpdateContact extends Tool
 
             $contact = (new UpdateContactService)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'first_name' => $arguments['first_name'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'first_name' => $this->required($arguments, 'first_name'),
                 'last_name' => $arguments['last_name'] ?? null,
                 'middle_name' => $arguments['middle_name'] ?? null,
                 'nickname' => $arguments['nickname'] ?? null,
@@ -69,7 +69,7 @@ class UpdateContact extends Tool
 
             return ToolResult::json([
                 'id' => $contact->id,
-                'name' => $contact->name,
+                'name' => $this->contactName($author, $contact),
             ]);
         });
     }

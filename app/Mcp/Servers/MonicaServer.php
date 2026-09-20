@@ -89,15 +89,16 @@ class MonicaServer extends Server
      */
     public function handle(string $rawMessage)
     {
-        return parent::handle($this->downgradeProtocolVersion($rawMessage));
+        return parent::handle($this->rewriteRequest($rawMessage));
     }
 
     /**
-     * Rewrite an unsupported initialize protocolVersion to the newest supported
-     * one. Any message that is not a well-formed initialize is passed through
-     * untouched so the server can produce its own error for it.
+     * Apply the request rewrites laravel/mcp v0.1.1 needs, in one pass.
+     *
+     * A message that is not valid JSON, or that no rewrite touches, is handed
+     * on byte for byte so the server produces its own error for it.
      */
-    private function downgradeProtocolVersion(string $rawMessage): string
+    private function rewriteRequest(string $rawMessage): string
     {
         try {
             $payload = \Safe\json_decode($rawMessage, true);
@@ -105,18 +106,73 @@ class MonicaServer extends Server
             return $rawMessage;
         }
 
-        if (! is_array($payload) || ($payload['method'] ?? null) !== 'initialize') {
+        if (! is_array($payload)) {
             return $rawMessage;
+        }
+
+        $rewritten = $this->defaultToolArguments(
+            $this->downgradeProtocolVersion($payload)
+        );
+
+        return $rewritten === $payload ? $rawMessage : \Safe\json_encode($rewritten);
+    }
+
+    /**
+     * Rewrite an unsupported initialize protocolVersion to the newest supported
+     * one. Anything that is not a well-formed initialize is left alone.
+     *
+     * @param  array<mixed>  $payload
+     * @return array<mixed>
+     */
+    private function downgradeProtocolVersion(array $payload): array
+    {
+        if (($payload['method'] ?? null) !== 'initialize') {
+            return $payload;
         }
 
         $requested = $payload['params']['protocolVersion'] ?? null;
 
         if (! is_string($requested) || in_array($requested, $this->supportedProtocolVersion, true)) {
-            return $rawMessage;
+            return $payload;
         }
 
         $payload['params']['protocolVersion'] = $this->supportedProtocolVersion[0];
 
-        return \Safe\json_encode($payload);
+        return $payload;
+    }
+
+    /**
+     * Give a tools/call an argument list when it arrives without a usable one.
+     *
+     * `arguments` is optional in the MCP spec — a tool that takes no input is
+     * called with `name` alone, which is how list-vaults would be called — but
+     * CallTool reads params['arguments'] unguarded. The undefined key escapes
+     * Server::handle() as a JSON-RPC protocol error carrying a raw PHP warning
+     * ('Undefined array key "arguments"') rather than as a tool result, so the
+     * client cannot tell a missing key from a tool that failed.
+     *
+     * Remove once laravel/mcp guards the read.
+     *
+     * @param  array<mixed>  $payload
+     * @return array<mixed>
+     */
+    private function defaultToolArguments(array $payload): array
+    {
+        if (($payload['method'] ?? null) !== 'tools/call') {
+            return $payload;
+        }
+
+        if (! is_array($payload['params'] ?? null)) {
+            return $payload;
+        }
+
+        // Also covers a non-array `arguments`, which would type-error against
+        // Tool::handle(array $arguments) and surface the same opaque way. The
+        // tools report their own missing arguments with a usable message.
+        if (! is_array($payload['params']['arguments'] ?? null)) {
+            $payload['params']['arguments'] = [];
+        }
+
+        return $payload;
     }
 }

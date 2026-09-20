@@ -42,8 +42,8 @@ class DeleteTask extends Tool
 
             (new DestroyContactTask)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'contact_task_id' => $arguments['task_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'contact_task_id' => $this->required($arguments, 'task_id'),
             ]);
 
             return ToolResult::json(['deleted' => true]);

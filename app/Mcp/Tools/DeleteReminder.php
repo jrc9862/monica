@@ -42,8 +42,8 @@ class DeleteReminder extends Tool
 
             (new DestroyReminder)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'contact_reminder_id' => $arguments['reminder_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'contact_reminder_id' => $this->required($arguments, 'reminder_id'),
             ]);
 
             return ToolResult::json(['deleted' => true]);

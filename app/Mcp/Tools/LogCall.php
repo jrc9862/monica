@@ -63,10 +63,10 @@ class LogCall extends Tool
 
             $call = (new CreateCall)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
-                'called_at' => $arguments['called_at'],
-                'type' => $arguments['type'],
-                'who_initiated' => $arguments['who_initiated'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
+                'called_at' => $this->required($arguments, 'called_at'),
+                'type' => $this->required($arguments, 'type'),
+                'who_initiated' => $this->required($arguments, 'who_initiated'),
                 'answered' => $arguments['answered'] ?? true,
                 'duration' => $arguments['duration'] ?? null,
                 'description' => $arguments['description'] ?? null,

@@ -43,9 +43,9 @@ class CreateNote extends Tool
 
             $note = (new CreateNoteService)->execute($this->baseData($author) + [
                 'vault_id' => $this->resolveVaultId($author, $arguments),
-                'contact_id' => $arguments['contact_id'],
+                'contact_id' => $this->required($arguments, 'contact_id'),
                 'title' => $arguments['title'] ?? null,
-                'body' => $arguments['body'],
+                'body' => $this->required($arguments, 'body'),
             ]);
 
             return ToolResult::json([
